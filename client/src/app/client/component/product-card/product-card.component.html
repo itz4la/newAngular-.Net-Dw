@@ -1,0 +1,63 @@
+@if (!isShowActions) {
+<div [routerLink]="'/client/product-details/' + item.id" class="book-card cursor-pointer group">
+  <div class="book-cover aspect-[2/3] bg-emerald-800 rounded-r-md rounded-l-sm relative overflow-hidden mb-4">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 to-emerald-950"></div>
+    <div class="absolute inset-0 flex items-center justify-center">
+      <div class="w-16 h-16 border border-white/30 rounded-full flex items-center justify-center">
+        <i-lucide [img]="Icons.Leaf" class="text-white/50 w-8 h-8"></i-lucide>
+      </div>
+    </div>
+    <div class="absolute bottom-8 left-0 right-0 text-center px-4">
+      <h3 class="text-white font-serif text-lg leading-tight">{{ item.title }}</h3>
+    </div>
+  </div>
+  <h3 class="font-bold text-stone-800 group-hover:text-forest-800 transition-colors">{{ item.title }}</h3>
+  <p class="text-sm text-stone-500">{{ item.author }}</p>
+</div>
+}
+@else {
+<div [routerLink]="'/client/product-details/' + item.id"
+  class="book-card bg-white p-4 rounded-xl shadow-sm border border-stone-100 flex flex-col h-full">
+  <div class="relative mb-4 group cursor-pointer overflow-hidden rounded-md bg-stone-100 aspect-[2/3]">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 to-teal-900 book-spine">
+    </div>
+    <div class="absolute top-4 left-4">
+      <span class="bg-white/20 backdrop-blur-sm text-white text-[10px] px-2 py-0.5 rounded">Bestseller</span>
+    </div>
+    <div class="absolute top-1/2 -translate-y-1/2 left-0 right-0 text-center px-4">
+      <h3 class="text-white font-sans font-black text-2xl tracking-tighter uppercase leading-none">
+        {{ item.title }}</h3>
+    </div>
+  </div>
+
+  <div class="flex justify-between items-start mb-2">
+    @if (item.isAvailable) {
+    <span
+      class="bg-green-100 text-green-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Available</span>
+    } @else {
+    <span class="bg-red-100 text-red-700 text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wide">Not
+      Available</span>
+    }
+
+  </div>
+
+  <h3 class="font-serif font-bold text-lg text-stone-800 leading-tight mb-1">{{ item.title }}</h3>
+  <p class="text-sm text-stone-500 mb-4">{{ item.author }}</p>
+
+  <div class="mt-auto pt-4 border-t border-stone-100">
+    @if (item.isAvailable) {
+    <button
+      class="w-full py-2.5 rounded-lg border border-forest-800 text-forest-800 font-medium text-sm hover:bg-forest-800 hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group">
+      <i-lucide [img]="Icons.BookPlus" class="w-4 h-4 group-hover:scale-110 transition-transform"></i-lucide>
+      Borrow
+    </button>
+    } @else {
+    <button
+      class="w-full py-2.5 rounded-lg border border-stone-300 text-stone-400 font-medium text-sm cursor-not-allowed flex items-center justify-center gap-2">
+      <i-lucide [img]="Icons.Clock" class="w-4 h-4"></i-lucide>
+      Not Available
+    </button>
+    }
+  </div>
+</div>
+}

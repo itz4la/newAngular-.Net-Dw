@@ -1,0 +1,157 @@
+<!-- Main Content -->
+<main class="flex-grow pt-28 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+
+  <!-- Breadcrumbs -->
+  <nav class="flex mb-8 text-sm text-stone-500" aria-label="Breadcrumb">
+    <ol class="flex items-center space-x-2">
+      <li><a routerLink="/client/browse" class="hover:text-forest-800 transition-colors">Browse</a></li>
+      <li><i-lucide [img]="Icons.ChevronRight" class="w-4 h-4"></i-lucide></li>
+      <li class="font-medium text-forest-800">{{ data.title }}</li>
+    </ol>
+  </nav>
+
+  <!-- Product Hero -->
+  <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+
+    <!-- Left Column: Visual -->
+    <div class="lg:col-span-4 flex flex-col items-center">
+      <div
+        class="relative w-3/4 lg:w-full max-w-sm aspect-[2/3] rounded-r-lg rounded-l-sm overflow-hidden book-3d mb-8 group cursor-pointer bg-indigo-900">
+        <!-- Dynamic Cover Art -->
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 to-slate-900"></div>
+        <div class="absolute inset-0 spine-gradient"></div>
+        <div class="absolute top-12 left-0 right-0 text-center px-6">
+          <h1 class="text-white font-serif text-3xl lg:text-4xl leading-tight mb-2">
+            {{ data.title }}</h1>
+          <p class="text-indigo-200 text-sm uppercase tracking-widest mt-4">{{ data.author }}</p>
+        </div>
+        <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+          <div class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white/50">
+            <i-lucide [img]="Icons.BookOpen" class="w-6 h-6"></i-lucide>
+          </div>
+        </div>
+
+        <!-- Look Inside Overlay -->
+        <div
+          class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+          <button
+            class="bg-white/20 backdrop-blur-md border border-white/50 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-white hover:text-forest-900 transition-all flex items-center gap-2">
+            <i-lucide [img]="Icons.Eye" class="w-4 h-4"></i-lucide> Preview
+          </button>
+        </div>
+      </div>
+
+      <div class="flex gap-4 text-stone-400">
+        <button class="p-2 hover:text-forest-800 hover:bg-stone-100 rounded-full transition-colors" title="Share">
+          <i-lucide [img]="Icons.Share2" class="w-5 h-5"></i-lucide>
+        </button>
+        <button class="p-2 hover:text-forest-800 hover:bg-stone-100 rounded-full transition-colors" title="Add to List">
+          <i-lucide [img]="Icons.ListPlus" class="w-5 h-5"></i-lucide>
+        </button>
+      </div>
+    </div>
+
+    <!-- Right Column: Details -->
+    <div class="lg:col-span-8 space-y-8">
+      <div>
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-stone-900 mb-2">{{ data.title }}</h1>
+        <a href="#" class="text-lg text-forest-800 font-medium hover:underline">{{ data.author }}</a>
+
+        <div class="flex items-center gap-4 mt-4">
+          <div class="flex items-center text-yellow-500">
+            <i-lucide [img]="Icons.Star" class="w-5 h-5 fill-current"></i-lucide>
+            <i-lucide [img]="Icons.Star" class="w-5 h-5 fill-current"></i-lucide>
+            <i-lucide [img]="Icons.Star" class="w-5 h-5 fill-current"></i-lucide>
+            <i-lucide [img]="Icons.Star" class="w-5 h-5 fill-current"></i-lucide>
+            <i-lucide [img]="Icons.StarHalf" class="w-5 h-5 fill-current"></i-lucide>
+          </div>
+          <span class="text-sm text-stone-500 font-medium">4.5 (12,482 ratings)</span>
+          <span class="text-stone-300">|</span>
+          <span class="text-sm text-green-700 bg-green-100 px-2 py-0.5 rounded-full font-semibold">Available</span>
+        </div>
+      </div>
+
+      <!-- Format Selection -->
+      <div class="bg-white border border-stone-200 rounded-xl p-1 grid grid-cols-1 gap-1">
+        <button
+          class="flex flex-col items-center justify-center py-4 px-2 rounded-lg bg-forest-50 border border-forest-200 text-forest-900 relative">
+          <div class="absolute top-2 right-2 text-green-600"><i-lucide [img]="Icons.CheckCircle2"
+              class="w-4 h-4"></i-lucide>
+          </div>
+          <i-lucide [img]="Icons.Book" class="w-6 h-6 mb-2 text-forest-800"></i-lucide>
+          <span class="font-bold text-sm">Hardcover</span>
+          <span class="text-xs text-stone-500 mt-1">Available</span>
+        </button>
+        <!-- <button
+            class="flex flex-col items-center justify-center py-4 px-2 rounded-lg hover:bg-stone-50 transition-colors text-stone-600">
+            <i-lucide [img]="Icons.Tablet" class="w-6 h-6 mb-2"></i-lucide>
+            <span class="font-bold text-sm">eBook</span>
+            <span class="text-xs text-stone-400 mt-1">Waitlist (2 days)</span>
+          </button>
+          <button
+            class="flex flex-col items-center justify-center py-4 px-2 rounded-lg hover:bg-stone-50 transition-colors text-stone-600">
+            <i-lucide [img]="Icons.Headphones" class="w-6 h-6 mb-2"></i-lucide>
+            <span class="font-bold text-sm">Audiobook</span>
+            <span class="text-xs text-stone-400 mt-1">Available</span>
+          </button> -->
+      </div>
+
+      <!-- Actions -->
+      <div class="flex gap-4">
+        <button
+          class="flex-1 bg-forest-800 hover:bg-forest-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-forest-800/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+          <i-lucide [img]="Icons.BookPlus" class="w-5 h-5"></i-lucide>
+          Borrow Hardcover
+        </button>
+        <!-- <button
+            class="bg-white border border-stone-300 hover:border-red-400 hover:text-red-500 text-stone-500 p-4 rounded-xl transition-colors"
+            title="Add to Wishlist">
+            <i-lucide [img]="Icons.Heart" class="w-6 h-6"></i-lucide>
+          </button> -->
+      </div>
+
+      <!-- Synopsis -->
+      <div class="prose prose-stone max-w-none">
+        <h3 class="font-serif text-xl font-bold text-stone-800 mb-3">Description</h3>
+        <p class="text-stone-600 leading-relaxed">
+          {{ data.description }}
+        </p>
+        <p class="text-stone-600 leading-relaxed mt-4">
+          A dazzling novel about all the choices that go into a life well lived, from the internationally
+          bestselling author of Reasons to Stay Alive and How To Stop Time.
+        </p>
+      </div>
+
+      <!-- Metadata Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 py-6 border-t border-b border-stone-200">
+        <div>
+          <span class="block text-xs text-stone-400 uppercase tracking-wide">Author</span>
+          <span class="font-medium text-stone-800">{{ data.author }}</span>
+        </div>
+        <div>
+          <span class="block text-xs text-stone-400 uppercase tracking-wide">Published</span>
+          <span class="font-medium text-stone-800">{{ data.publishedDate }}</span>
+        </div>
+        <div>
+          <span class="block text-xs text-stone-400 uppercase tracking-wide">Genre</span>
+          <span class="font-medium text-stone-800">{{ data.genreName }}</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Related Books -->
+  <section class="border-t border-stone-200 pt-16">
+    <h2 class="text-2xl font-serif font-bold text-stone-900 mb-8">You might also like</h2>
+
+    <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6 lg:gap-8">
+
+      @for (item of relatedData; track $index) {
+        <app-product-card [item]="item" [isShowActions]="false"></app-product-card>
+      }
+
+    </div>
+  </section>
+
+</main>

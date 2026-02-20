@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Midnight Library | Libris</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        forest: {
+                            50: '#f2fcf5',
+                            100: '#e1f8e8',
+                            800: '#1c4a33', // Primary Brand Color
+                            900: '#143625',
+                        },
+                        stone: {
+                            50: '#fafaf9',
+                            100: '#f5f5f4',
+                            200: '#e7e5e4',
+                            300: '#d6d3d1',
+                            800: '#292524',
+                            900: '#1c1917',
+                        },
+                        gold: {
+                            500: '#d4a373',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafaf9;
+        }
+
+        .glass-nav {
+            background: rgba(250, 250, 249, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* 3D Book Cover Effect */
+        .book-3d {
+            box-shadow:
+                -10px 0 20px rgba(0, 0, 0, 0.1),
+                inset 2px 0 5px rgba(255, 255, 255, 0.1),
+                inset -2px 0 5px rgba(0, 0, 0, 0.1);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .book-3d:hover {
+            transform: perspective(1000px) rotateY(0deg) scale(1.02);
+        }
+
+        /* Spine gradient for generic covers */
+        .spine-gradient {
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 0) 95%, rgba(0, 0, 0, 0.2) 100%);
+        }
+    </style>
+</head>
+
+<body class="text-stone-800 antialiased font-sans min-h-screen flex flex-col">
+
+    <!-- Navigation -->
+    <nav class="glass-nav fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center cursor-pointer group">
+                    <div
+                        class="w-10 h-10 bg-forest-800 rounded-lg flex items-center justify-center text-white mr-3 shadow-sm group-hover:bg-forest-900 transition-colors">
+                        <i data-lucide="library" class="w-6 h-6"></i>
+                    </div>
+                    <span class="font-serif text-2xl font-bold text-forest-800 tracking-tight">Libris</span>
+                </div>
+                <div class="hidden md:flex space-x-8 items-center">
+                    <a href="#" class="text-stone-600 hover:text-forest-800 font-medium transition-colors">Home</a>
+                    <a href="#" class="text-forest-800 font-semibold">Browse</a>
+                    <a href="#" class="text-stone-600 hover:text-forest-800 font-medium transition-colors">My Loans</a>
+                </div>
+                <div class="hidden md:flex items-center space-x-4">
+                    <button class="p-2 text-stone-500 hover:text-forest-800 transition-colors">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+                    <div class="w-px h-6 bg-stone-300 mx-2"></div>
+                    <div class="flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-stone-200 overflow-hidden">
+                            <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-28 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+
+        <!-- Breadcrumbs -->
+        <nav class="flex mb-8 text-sm text-stone-500" aria-label="Breadcrumb">
+            <ol class="flex items-center space-x-2">
+                <li><a href="#" class="hover:text-forest-800 transition-colors">Browse</a></li>
+                <li><i data-lucide="chevron-right" class="w-4 h-4"></i></li>
+                <li><a href="#" class="hover:text-forest-800 transition-colors">Fiction</a></li>
+                <li><i data-lucide="chevron-right" class="w-4 h-4"></i></li>
+                <li class="font-medium text-forest-800">The Midnight Library</li>
+            </ol>
+        </nav>
+
+        <!-- Product Hero -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 mb-20">
+
+            <!-- Left Column: Visual -->
+            <div class="lg:col-span-4 flex flex-col items-center">
+                <div
+                    class="relative w-3/4 lg:w-full max-w-sm aspect-[2/3] rounded-r-lg rounded-l-sm overflow-hidden book-3d mb-8 group cursor-pointer bg-indigo-900">
+                    <!-- Dynamic Cover Art -->
+                    <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 to-slate-900"></div>
+                    <div class="absolute inset-0 spine-gradient"></div>
+                    <div class="absolute top-12 left-0 right-0 text-center px-6">
+                        <h1 class="text-white font-serif text-3xl lg:text-4xl leading-tight mb-2">
+                            The<br>Midnight<br>Library</h1>
+                        <p class="text-indigo-200 text-sm uppercase tracking-widest mt-4">Matt Haig</p>
+                    </div>
+                    <div class="absolute bottom-8 left-0 right-0 flex justify-center">
+                        <div
+                            class="w-12 h-12 rounded-full border border-white/30 flex items-center justify-center text-white/50">
+                            <i data-lucide="book-open" class="w-6 h-6"></i>
+                        </div>
+                    </div>
+
+                    <!-- Look Inside Overlay -->
+                    <div
+                        class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                        <button
+                            class="bg-white/20 backdrop-blur-md border border-white/50 text-white px-6 py-2 rounded-full text-sm font-semibold hover:bg-white hover:text-forest-900 transition-all flex items-center gap-2">
+                            <i data-lucide="eye" class="w-4 h-4"></i> Preview
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex gap-4 text-stone-400">
+                    <button class="p-2 hover:text-forest-800 hover:bg-stone-100 rounded-full transition-colors"
+                        title="Share">
+                        <i data-lucide="share-2" class="w-5 h-5"></i>
+                    </button>
+                    <button class="p-2 hover:text-forest-800 hover:bg-stone-100 rounded-full transition-colors"
+                        title="Add to List">
+                        <i data-lucide="list-plus" class="w-5 h-5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Column: Details -->
+            <div class="lg:col-span-8 space-y-8">
+                <div>
+                    <h1 class="text-4xl md:text-5xl font-serif font-bold text-stone-900 mb-2">The Midnight Library</h1>
+                    <a href="#" class="text-lg text-forest-800 font-medium hover:underline">Matt Haig</a>
+
+                    <div class="flex items-center gap-4 mt-4">
+                        <div class="flex items-center text-yellow-500">
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star" class="w-5 h-5 fill-current"></i>
+                            <i data-lucide="star-half" class="w-5 h-5 fill-current"></i>
+                        </div>
+                        <span class="text-sm text-stone-500 font-medium">4.5 (12,482 ratings)</span>
+                        <span class="text-stone-300">|</span>
+                        <span
+                            class="text-sm text-green-700 bg-green-100 px-2 py-0.5 rounded-full font-semibold">Available</span>
+                    </div>
+                </div>
+
+                <!-- Format Selection -->
+                <div class="bg-white border border-stone-200 rounded-xl p-1 grid grid-cols-1 sm:grid-cols-3 gap-1">
+                    <button
+                        class="flex flex-col items-center justify-center py-4 px-2 rounded-lg bg-forest-50 border border-forest-200 text-forest-900 relative">
+                        <div class="absolute top-2 right-2 text-green-600"><i data-lucide="check-circle-2"
+                                class="w-4 h-4"></i></div>
+                        <i data-lucide="book" class="w-6 h-6 mb-2 text-forest-800"></i>
+                        <span class="font-bold text-sm">Hardcover</span>
+                        <span class="text-xs text-stone-500 mt-1">Available</span>
+                    </button>
+                    <button
+                        class="flex flex-col items-center justify-center py-4 px-2 rounded-lg hover:bg-stone-50 transition-colors text-stone-600">
+                        <i data-lucide="tablet" class="w-6 h-6 mb-2"></i>
+                        <span class="font-bold text-sm">eBook</span>
+                        <span class="text-xs text-stone-400 mt-1">Waitlist (2 days)</span>
+                    </button>
+                    <button
+                        class="flex flex-col items-center justify-center py-4 px-2 rounded-lg hover:bg-stone-50 transition-colors text-stone-600">
+                        <i data-lucide="headphones" class="w-6 h-6 mb-2"></i>
+                        <span class="font-bold text-sm">Audiobook</span>
+                        <span class="text-xs text-stone-400 mt-1">Available</span>
+                    </button>
+                </div>
+
+                <!-- Actions -->
+                <div class="flex gap-4">
+                    <button
+                        class="flex-1 bg-forest-800 hover:bg-forest-900 text-white font-bold py-4 px-8 rounded-xl shadow-lg shadow-forest-800/20 transition-all transform hover:-translate-y-1 flex items-center justify-center gap-3">
+                        <i data-lucide="book-plus" class="w-5 h-5"></i>
+                        Borrow Hardcover
+                    </button>
+                    <button
+                        class="bg-white border border-stone-300 hover:border-red-400 hover:text-red-500 text-stone-500 p-4 rounded-xl transition-colors"
+                        title="Add to Wishlist">
+                        <i data-lucide="heart" class="w-6 h-6"></i>
+                    </button>
+                </div>
+
+                <!-- Synopsis -->
+                <div class="prose prose-stone max-w-none">
+                    <h3 class="font-serif text-xl font-bold text-stone-800 mb-3">Synopsis</h3>
+                    <p class="text-stone-600 leading-relaxed">
+                        Between life and death there is a library, and within that library, the shelves go on forever.
+                        Every book provides a chance to try another life you could have lived. To see how things would
+                        be if you had made other choices... Would you have done anything different, if you had the
+                        chance to undo your regrets?
+                    </p>
+                    <p class="text-stone-600 leading-relaxed mt-4">
+                        A dazzling novel about all the choices that go into a life well lived, from the internationally
+                        bestselling author of Reasons to Stay Alive and How To Stop Time.
+                    </p>
+                </div>
+
+                <!-- Metadata Grid -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 py-6 border-t border-b border-stone-200">
+                    <div>
+                        <span class="block text-xs text-stone-400 uppercase tracking-wide">Publisher</span>
+                        <span class="font-medium text-stone-800">Viking</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-stone-400 uppercase tracking-wide">Published</span>
+                        <span class="font-medium text-stone-800">Sept 2020</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-stone-400 uppercase tracking-wide">Pages</span>
+                        <span class="font-medium text-stone-800">304</span>
+                    </div>
+                    <div>
+                        <span class="block text-xs text-stone-400 uppercase tracking-wide">ISBN</span>
+                        <span class="font-medium text-stone-800">9780525559474</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Secondary Content Area (Tabs) -->
+        <div class="max-w-4xl mx-auto mb-20">
+            <div class="flex border-b border-stone-200 mb-8 overflow-x-auto">
+                <button class="px-6 py-3 border-b-2 border-forest-800 text-forest-800 font-bold text-sm">Community
+                    Reviews</button>
+                <button
+                    class="px-6 py-3 text-stone-500 hover:text-stone-800 font-medium text-sm transition-colors">Author
+                    Biography</button>
+                <button
+                    class="px-6 py-3 text-stone-500 hover:text-stone-800 font-medium text-sm transition-colors">Discussions</button>
+            </div>
+
+            <div class="space-y-8">
+                <!-- Review 1 -->
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-200 overflow-hidden">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Sarah" alt="Sarah" />
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-bold text-stone-900">Sarah Jenkins</span>
+                            <div class="flex text-yellow-500 text-xs">
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                            </div>
+                            <span class="text-xs text-stone-400">2 weeks ago</span>
+                        </div>
+                        <p class="text-stone-600 text-sm leading-relaxed">
+                            This book completely changed my perspective on regret. Haig has a way of writing about heavy
+                            topics with such lightness and hope. Highly recommend for anyone feeling a bit lost.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="flex gap-4">
+                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-stone-200 overflow-hidden">
+                        <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Mike" alt="Mike" />
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="font-bold text-stone-900">Mike Ross</span>
+                            <div class="flex text-yellow-500 text-xs">
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 fill-current"></i>
+                                <i data-lucide="star" class="w-3 h-3 text-stone-300"></i>
+                            </div>
+                            <span class="text-xs text-stone-400">1 month ago</span>
+                        </div>
+                        <p class="text-stone-600 text-sm leading-relaxed">
+                            A bit repetitive in the middle, but the concept is solid. The ending wrapped up a little too
+                            neatly for my taste, but still an enjoyable read.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 text-center">
+                <button class="text-forest-800 font-medium text-sm hover:underline">Read all 1,240 reviews</button>
+            </div>
+        </div>
+
+        <!-- Related Books -->
+        <section class="border-t border-stone-200 pt-16">
+            <h2 class="text-2xl font-serif font-bold text-stone-900 mb-8">You might also like</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Related Book 1 -->
+                <div class="group cursor-pointer">
+                    <div class="aspect-[2/3] bg-rose-900 rounded-md mb-3 relative overflow-hidden book-3d">
+                        <div class="absolute inset-0 bg-gradient-to-br from-rose-900 to-amber-900"></div>
+                        <div class="absolute top-1/2 left-0 right-0 text-center -translate-y-1/2 px-2">
+                            <h3 class="text-white font-serif italic">The Invisible Life of Addie LaRue</h3>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-sm text-stone-800 group-hover:text-forest-800">The Invisible Life...</h3>
+                    <p class="text-xs text-stone-500">V.E. Schwab</p>
+                </div>
+
+                <!-- Related Book 2 -->
+                <div class="group cursor-pointer">
+                    <div class="aspect-[2/3] bg-emerald-900 rounded-md mb-3 relative overflow-hidden book-3d">
+                        <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 to-teal-900"></div>
+                        <div class="absolute top-4 left-0 right-0 text-center px-2">
+                            <h3 class="text-white font-serif">Circe</h3>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-sm text-stone-800 group-hover:text-forest-800">Circe</h3>
+                    <p class="text-xs text-stone-500">Madeline Miller</p>
+                </div>
+
+                <!-- Related Book 3 -->
+                <div class="group cursor-pointer">
+                    <div class="aspect-[2/3] bg-amber-900 rounded-md mb-3 relative overflow-hidden book-3d">
+                        <div class="absolute inset-0 bg-gradient-to-br from-amber-800 to-orange-900"></div>
+                        <div class="absolute bottom-4 left-0 right-0 text-center px-2">
+                            <h3 class="text-white font-serif">Anxious People</h3>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-sm text-stone-800 group-hover:text-forest-800">Anxious People</h3>
+                    <p class="text-xs text-stone-500">Fredrik Backman</p>
+                </div>
+
+                <!-- Related Book 4 -->
+                <div class="group cursor-pointer">
+                    <div class="aspect-[2/3] bg-blue-900 rounded-md mb-3 relative overflow-hidden book-3d">
+                        <div class="absolute inset-0 bg-gradient-to-br from-blue-800 to-indigo-900"></div>
+                        <div class="absolute top-1/2 left-0 right-0 text-center -translate-y-1/2 px-2">
+                            <h3 class="text-white font-sans font-bold uppercase">Dark Matter</h3>
+                        </div>
+                    </div>
+                    <h3 class="font-bold text-sm text-stone-800 group-hover:text-forest-800">Dark Matter</h3>
+                    <p class="text-xs text-stone-500">Blake Crouch</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-stone-900 text-stone-400 py-12 border-t border-stone-800 mt-auto">
+        <div
+            class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="flex items-center text-white">
+                <i data-lucide="library" class="w-6 h-6 mr-2"></i>
+                <span class="font-serif text-xl font-bold">Libris</span>
+            </div>
+            <div class="text-sm">
+                &copy; 2024 Libris Inc. All rights reserved.
+            </div>
+            <div class="flex gap-4">
+                <a href="#" class="hover:text-white transition-colors"><i data-lucide="twitter" class="w-5 h-5"></i></a>
+                <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram"
+                        class="w-5 h-5"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+
+</html>

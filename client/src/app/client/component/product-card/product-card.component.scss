@@ -1,0 +1,29 @@
+
+/* Book Spine Effect */
+.book-card {
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.15);
+}
+
+.book-cover {
+  box-shadow:
+    inset 4px 0 2px rgba(0, 0, 0, 0.1),
+    /* Spine highlight */ inset -1px 0 2px rgba(0, 0, 0, 0.1),
+    /* Right edge definition */ 5px 5px 15px rgba(0, 0, 0, 0.15);
+  /* Drop shadow */
+}
+
+.scroll-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scroll-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

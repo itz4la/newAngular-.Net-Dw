@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Midnight Library | Libris</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        libris: {
+                            stone: '#fafaf9',   /* Warm Stone */
+                            cream: '#f5f5f4',   /* Soft Cream */
+                            green: '#1c4a33',   /* Deep Forest Green */
+                            greenLight: '#2a6b4a',
+                            charcoal: '#374151',/* Charcoal Gray */
+                            gold: '#d4a373',    /* Muted Gold */
+                            paper: '#fffdf5',   /* Slight yellowish paper tone for books */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'book': '2px 4px 8px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'book-hover': '4px 8px 12px -2px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
+                        '3d': '20px 20px 60px #d6d6d3, -20px -20px 60px #ffffff',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafaf9;
+            /* libris-stone */
+            color: #374151;
+            /* libris-charcoal */
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Large Book Cover Style */
+        .book-cover-hero {
+            background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+            box-shadow:
+                -10px 0 20px rgba(0, 0, 0, 0.2),
+                5px 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-spine-large {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 20%, rgba(0, 0, 0, 0.1) 100%);
+            box-shadow: inset 3px 0 6px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Smaller cards for related section */
+        .book-cover-1 {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+        }
+
+        .book-cover-2 {
+            background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
+        }
+
+        .book-cover-3 {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .book-cover-4 {
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+        }
+
+        /* Custom Scrollbar for Tabs content if needed */
+        .tab-content {
+            animation: fadeIn 0.3s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(5px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased selection:bg-libris-gold/30 flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 shadow-sm" id="navbar">
+        <div class="absolute inset-0 bg-libris-stone/90 backdrop-blur-md border-b border-libris-charcoal/10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2 cursor-pointer group">
+                    <div
+                        class="w-10 h-10 bg-libris-green text-libris-stone rounded-lg flex items-center justify-center shadow-md group-hover:bg-libris-greenLight transition-colors">
+                        <i data-lucide="library" size="20"></i>
+                    </div>
+                    <span class="font-serif text-2xl font-bold text-libris-green tracking-tight">Libris</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="browse.html"
+                        class="text-libris-charcoal hover:text-libris-green font-medium transition-colors">Browse</a>
+                    <a href="#" class="text-libris-charcoal hover:text-libris-green font-medium transition-colors">How
+                        It Works</a>
+                    <a href="#" class="text-libris-charcoal hover:text-libris-green font-medium transition-colors">My
+                        Loans</a>
+                    <div class="h-6 w-px bg-libris-charcoal/20"></div>
+                    <button class="text-libris-charcoal hover:text-libris-green transition-colors">
+                        <i data-lucide="search" size="20"></i>
+                    </button>
+                    <button
+                        class="bg-libris-green text-white px-6 py-2.5 rounded-full font-medium hover:bg-libris-greenLight transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        Sign In
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-libris-charcoal hover:text-libris-green p-2">
+                        <i data-lucide="menu" size="24"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden absolute top-20 left-0 w-full bg-libris-stone border-b border-libris-charcoal/10 shadow-lg animate-fade-in-down">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="browse.html"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-charcoal hover:bg-libris-cream hover:text-libris-green">Browse
+                    Collection</a>
+                <a href="#"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-charcoal hover:bg-libris-cream hover:text-libris-green">How
+                    It Works</a>
+                <a href="#"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-charcoal hover:bg-libris-cream hover:text-libris-green">My
+                    Loans</a>
+                <div class="border-t border-libris-charcoal/10 my-2"></div>
+                <button
+                    class="w-full text-left block px-3 py-3 rounded-md text-base font-medium text-libris-green font-bold">Sign
+                    In</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Breadcrumb -->
+            <nav class="flex text-sm text-gray-500 mb-8" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2 flex-wrap">
+                    <li><a href="index.html" class="hover:text-libris-green transition-colors">Home</a></li>
+                    <li><i data-lucide="chevron-right" size="14"></i></li>
+                    <li><a href="browse.html" class="hover:text-libris-green transition-colors">Browse</a></li>
+                    <li><i data-lucide="chevron-right" size="14"></i></li>
+                    <li><a href="browse.html" class="hover:text-libris-green transition-colors">Fiction</a></li>
+                    <li><i data-lucide="chevron-right" size="14"></i></li>
+                    <li
+                        class="font-medium text-libris-charcoal text-ellipsis overflow-hidden whitespace-nowrap max-w-[150px] sm:max-w-none">
+                        The Midnight Library</li>
+                </ol>
+            </nav>
+
+            <!-- Book Hero Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16">
+
+                <!-- Left: Visual (Cover) -->
+                <div class="md:col-span-4 lg:col-span-4 flex flex-col items-center">
+                    <div
+                        class="relative w-full max-w-[320px] aspect-[2/3] rounded-r-lg rounded-l-sm book-cover-hero flex flex-col overflow-hidden border-l-[6px] border-[#0f171f] transform transition-transform duration-500 hover:rotate-y-6 hover:scale-[1.02] cursor-pointer group">
+                        <div class="book-spine-large absolute top-0 left-0 w-5 h-full z-10"></div>
+
+                        <!-- Cover Content -->
+                        <div
+                            class="flex-1 flex flex-col items-center justify-center p-8 text-center border-2 border-white/10 m-4 rounded-sm">
+                            <h2 class="font-serif text-3xl text-gray-100 leading-tight mb-2">The<br>Midnight<br>Library
+                            </h2>
+                            <div class="w-8 h-px bg-libris-gold my-4"></div>
+                            <p class="text-xs tracking-[0.2em] text-gray-400 uppercase">Matt Haig</p>
+                        </div>
+
+                        <!-- Look Inside Overlay -->
+                        <div
+                            class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
+                            <button
+                                class="bg-white/90 text-libris-charcoal px-6 py-3 rounded-full font-medium flex items-center gap-2 hover:bg-white hover:scale-105 transition-all shadow-lg">
+                                <i data-lucide="eye" size="18"></i> Look Inside
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Social Share -->
+                    <div class="mt-8 flex items-center gap-4">
+                        <span class="text-sm text-gray-500 font-medium">Share:</span>
+                        <div class="flex gap-2">
+                            <button
+                                class="p-2 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-libris-green hover:border-libris-green transition-colors">
+                                <i data-lucide="facebook" size="18"></i>
+                            </button>
+                            <button
+                                class="p-2 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-libris-green hover:border-libris-green transition-colors">
+                                <i data-lucide="twitter" size="18"></i>
+                            </button>
+                            <button
+                                class="p-2 rounded-full bg-white border border-gray-200 text-gray-500 hover:text-libris-green hover:border-libris-green transition-colors">
+                                <i data-lucide="link" size="18"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Details -->
+                <div class="md:col-span-8 lg:col-span-7">
+                    <h1 class="font-serif text-4xl md:text-5xl font-bold text-libris-charcoal mb-2 leading-tight">The
+                        Midnight Library</h1>
+                    <a href="#"
+                        class="text-xl text-libris-green font-medium hover:underline hover:text-libris-greenLight mb-4 inline-block">Matt
+                        Haig</a>
+
+                    <!-- Rating -->
+                    <div class="flex items-center gap-2 mb-8">
+                        <div class="flex text-libris-gold">
+                            <i data-lucide="star" size="18" fill="currentColor"></i>
+                            <i data-lucide="star" size="18" fill="currentColor"></i>
+                            <i data-lucide="star" size="18" fill="currentColor"></i>
+                            <i data-lucide="star" size="18" fill="currentColor"></i>
+                            <i data-lucide="star-half" size="18" fill="currentColor"></i>
+                        </div>
+                        <span class="text-gray-600 text-sm font-medium">4.5</span>
+                        <span class="text-gray-400 text-sm">•</span>
+                        <a href="#reviews" class="text-gray-500 text-sm hover:text-libris-green underline">2,492
+                            Reviews</a>
+                    </div>
+
+                    <!-- Synopsis -->
+                    <div class="prose prose-stone text-gray-600 mb-8 leading-relaxed">
+                        <p>
+                            Between life and death there is a library, and within that library, the shelves go on
+                            forever. Every book provides a chance to try another life you could have lived. To see how
+                            things would be if you had made other choices... Would you have done anything different, if
+                            you had the chance to undo your regrets?
+                        </p>
+                    </div>
+
+                    <!-- Format Selector -->
+                    <div class="mb-8">
+                        <h3 class="text-xs font-bold text-gray-400 uppercase tracking-wide mb-3">Select Format</h3>
+                        <div class="flex flex-wrap gap-4">
+                            <!-- eBook (Available) -->
+                            <label class="cursor-pointer">
+                                <input type="radio" name="format" class="peer sr-only" checked>
+                                <div
+                                    class="w-full sm:w-auto p-4 rounded-xl border-2 border-libris-green bg-green-50/50 peer-checked:bg-libris-green peer-checked:text-white transition-all hover:border-libris-green hover:shadow-md flex flex-col gap-1 min-w-[140px]">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-bold font-serif text-lg">eBook</span>
+                                        <i data-lucide="tablet" size="18"></i>
+                                    </div>
+                                    <span
+                                        class="text-xs font-medium uppercase tracking-wide opacity-80">Available</span>
+                                </div>
+                            </label>
+
+                            <!-- Hardcover (Waitlist) -->
+                            <label class="cursor-pointer">
+                                <input type="radio" name="format" class="peer sr-only">
+                                <div
+                                    class="w-full sm:w-auto p-4 rounded-xl border-2 border-orange-200 bg-white text-gray-500 peer-checked:border-orange-500 peer-checked:bg-orange-50 peer-checked:text-orange-900 transition-all hover:border-orange-300 hover:shadow-md flex flex-col gap-1 min-w-[140px]">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-bold font-serif text-lg">Hardcover</span>
+                                        <i data-lucide="book" size="18"></i>
+                                    </div>
+                                    <span class="text-xs font-medium uppercase tracking-wide text-orange-600">Waitlist
+                                        (3 wks)</span>
+                                </div>
+                            </label>
+
+                            <!-- Audiobook (Available) -->
+                            <label class="cursor-pointer">
+                                <input type="radio" name="format" class="peer sr-only">
+                                <div
+                                    class="w-full sm:w-auto p-4 rounded-xl border-2 border-gray-200 bg-white text-gray-500 peer-checked:border-libris-green peer-checked:bg-libris-green peer-checked:text-white transition-all hover:border-libris-green hover:shadow-md flex flex-col gap-1 min-w-[140px]">
+                                    <div class="flex justify-between items-center mb-1">
+                                        <span class="font-bold font-serif text-lg">Audio</span>
+                                        <i data-lucide="headphones" size="18"></i>
+                                    </div>
+                                    <span
+                                        class="text-xs font-medium uppercase tracking-wide opacity-80">Available</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <!-- Action Area -->
+                    <div class="flex flex-col sm:flex-row gap-4 mb-10">
+                        <button
+                            class="flex-1 bg-libris-green text-white py-4 px-8 rounded-full font-bold text-lg hover:bg-libris-greenLight shadow-lg shadow-green-900/10 hover:shadow-xl hover:-translate-y-0.5 transition-all flex justify-center items-center gap-2">
+                            <span>Borrow Now</span>
+                            <i data-lucide="arrow-right" size="20"></i>
+                        </button>
+                        <button
+                            class="flex-none p-4 rounded-full border-2 border-gray-200 text-gray-400 hover:border-rose-300 hover:text-rose-500 hover:bg-rose-50 transition-all">
+                            <i data-lucide="heart" size="24"></i>
+                        </button>
+                    </div>
+
+                    <!-- Metadata Grid -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 py-6 border-t border-b border-gray-200">
+                        <div>
+                            <span class="block text-xs text-gray-400 uppercase tracking-wider mb-1">Publisher</span>
+                            <span class="block text-sm font-medium text-libris-charcoal">Viking</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-400 uppercase tracking-wider mb-1">Published</span>
+                            <span class="block text-sm font-medium text-libris-charcoal">Sept 2020</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-400 uppercase tracking-wider mb-1">ISBN</span>
+                            <span class="block text-sm font-medium text-libris-charcoal">9780525559474</span>
+                        </div>
+                        <div>
+                            <span class="block text-xs text-gray-400 uppercase tracking-wider mb-1">Pages</span>
+                            <span class="block text-sm font-medium text-libris-charcoal">304</span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Tabs Section -->
+            <div class="mt-20">
+                <div class="border-b border-gray-200">
+                    <nav class="-mb-px flex space-x-8" aria-label="Tabs">
+                        <button onclick="switchTab('reviews')" id="tab-reviews"
+                            class="border-libris-green text-libris-green whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                            Reviews <span
+                                class="bg-gray-100 text-gray-600 py-0.5 px-2 rounded-full text-xs ml-2">24</span>
+                        </button>
+                        <button onclick="switchTab('bio')" id="tab-bio"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                            Author Bio
+                        </button>
+                        <button onclick="switchTab('community')" id="tab-community"
+                            class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors">
+                            Community
+                        </button>
+                    </nav>
+                </div>
+
+                <!-- Tab Contents -->
+                <div class="py-8 min-h-[300px]">
+
+                    <!-- Reviews Tab -->
+                    <div id="content-reviews" class="tab-content block">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Review 1 -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-sm">
+                                            JS</div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-gray-900">Jessica S.</h4>
+                                            <p class="text-xs text-gray-500">2 days ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex text-libris-gold text-xs">
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm leading-relaxed">
+                                    "Absolutely enchanting. A beautiful exploration of regret and the choices that make
+                                    us who we are. I couldn't put it down!"
+                                </p>
+                            </div>
+                            <!-- Review 2 -->
+                            <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                                <div class="flex items-center justify-between mb-4">
+                                    <div class="flex items-center gap-3">
+                                        <div
+                                            class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 font-bold text-sm">
+                                            MR</div>
+                                        <div>
+                                            <h4 class="text-sm font-bold text-gray-900">Mark R.</h4>
+                                            <p class="text-xs text-gray-500">1 week ago</p>
+                                        </div>
+                                    </div>
+                                    <div class="flex text-libris-gold text-xs">
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                        <i data-lucide="star" size="14" fill="currentColor"></i>
+                                        <i data-lucide="star" size="14" class="text-gray-300"></i>
+                                    </div>
+                                </div>
+                                <p class="text-gray-600 text-sm leading-relaxed">
+                                    "A comforting read. While some parts felt a bit predictable, the overall message is
+                                    one we all need to hear sometimes."
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bio Tab -->
+                    <div id="content-bio" class="tab-content hidden">
+                        <div class="flex flex-col md:flex-row gap-8 items-start">
+                            <div class="w-24 h-24 rounded-full bg-gray-200 shrink-0 overflow-hidden">
+                                <!-- Placeholder for author image -->
+                                <div
+                                    class="w-full h-full bg-libris-green flex items-center justify-center text-white text-2xl font-serif">
+                                    MH</div>
+                            </div>
+                            <div>
+                                <h3 class="font-serif text-xl font-bold text-libris-charcoal mb-3">Matt Haig</h3>
+                                <p class="text-gray-600 leading-relaxed mb-4">
+                                    Matt Haig is an English author and journalist. He has written both fiction and
+                                    non-fiction for children and adults, often in the speculative fiction genre. His
+                                    work has been translated into over 40 languages.
+                                </p>
+                                <a href="#" class="text-libris-green font-medium text-sm hover:underline">View all books
+                                    by Matt Haig &rarr;</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Community Tab -->
+                    <div id="content-community" class="tab-content hidden">
+                        <div class="bg-libris-cream border border-gray-200 rounded-xl p-6">
+                            <h3 class="font-bold text-libris-charcoal mb-4">Discussion Topics</h3>
+                            <div class="space-y-4">
+                                <a href="#" class="block group">
+                                    <div class="flex justify-between items-center">
+                                        <span
+                                            class="text-gray-700 font-medium group-hover:text-libris-green transition-colors">The
+                                            ending interpretation (Spoilers)</span>
+                                        <span class="text-xs text-gray-400">128 replies</span>
+                                    </div>
+                                </a>
+                                <div class="border-t border-gray-200"></div>
+                                <a href="#" class="block group">
+                                    <div class="flex justify-between items-center">
+                                        <span
+                                            class="text-gray-700 font-medium group-hover:text-libris-green transition-colors">Favorite
+                                            quote from the library keeper?</span>
+                                        <span class="text-xs text-gray-400">45 replies</span>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- You Might Also Like -->
+            <div class="mt-12 pt-12 border-t border-gray-200">
+                <h3 class="font-serif text-2xl font-bold text-libris-charcoal mb-8">You Might Also Like</h3>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+                    <!-- Card 1 -->
+                    <div class="group cursor-pointer">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-1 flex flex-col overflow-hidden border-l-4 border-purple-900">
+                            <div class="book-spine absolute top-0 left-0 w-2 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-4 text-center border border-white/20 m-2 rounded-sm">
+                                <h4 class="font-serif text-lg text-white leading-tight">Starlight<br>Dust</h4>
+                            </div>
+                        </div>
+                        <h5 class="mt-3 font-serif font-bold text-libris-charcoal group-hover:text-libris-green">
+                            Starlight Dust</h5>
+                        <p class="text-xs text-gray-500">E.J. Halloway</p>
+                    </div>
+
+                    <!-- Card 2 -->
+                    <div class="group cursor-pointer">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-2 flex flex-col overflow-hidden border-l-4 border-orange-900">
+                            <div class="book-spine absolute top-0 left-0 w-2 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-4 text-center m-2 rounded-sm relative">
+                                <h4 class="font-serif text-lg font-bold text-white z-10">Modern<br>Rust</h4>
+                            </div>
+                        </div>
+                        <h5 class="mt-3 font-serif font-bold text-libris-charcoal group-hover:text-libris-green">Modern
+                            Rust</h5>
+                        <p class="text-xs text-gray-500">Sarah Field</p>
+                    </div>
+
+                    <!-- Card 3 -->
+                    <div class="group cursor-pointer">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-3 flex flex-col overflow-hidden border-l-4 border-green-900">
+                            <div class="book-spine absolute top-0 left-0 w-2 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-4 text-center m-2 rounded-sm">
+                                <h4 class="font-sans font-light text-xl text-white">Botany<br>& Soul</h4>
+                            </div>
+                        </div>
+                        <h5 class="mt-3 font-serif font-bold text-libris-charcoal group-hover:text-libris-green">Botany
+                            & Soul</h5>
+                        <p class="text-xs text-gray-500">Sarah Field</p>
+                    </div>
+
+                    <!-- Card 4 -->
+                    <div class="group cursor-pointer">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-4 flex flex-col overflow-hidden border-l-4 border-red-900">
+                            <div class="book-spine absolute top-0 left-0 w-2 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-4 text-center m-2 rounded-sm">
+                                <h4 class="font-serif text-lg font-bold text-white uppercase tracking-wider">
+                                    Red<br>Horizon</h4>
+                            </div>
+                        </div>
+                        <h5 class="mt-3 font-serif font-bold text-libris-charcoal group-hover:text-libris-green">Red
+                            Horizon</h5>
+                        <p class="text-xs text-gray-500">Sarah J. Connor</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-libris-green text-white/80 py-12 border-t-4 border-libris-gold mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4 text-white">
+                        <i data-lucide="library" size="24"></i>
+                        <span class="font-serif text-2xl font-bold">Libris</span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-white/60">
+                        Connecting minds through the power of shared stories.
+                        A modern approach to the timeless library.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Discover</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Best Sellers</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Collections</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Reading Lists</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Delivery Info</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Return Policy</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Stay Informed</h4>
+                    <div class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email address"
+                            class="bg-white/10 border border-white/20 text-white px-4 py-2 rounded focus:outline-none focus:border-libris-gold text-sm placeholder-white/40">
+                        <button
+                            class="bg-libris-gold text-libris-charcoal font-bold px-4 py-2 rounded hover:bg-white transition-colors text-sm">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
+                <p>&copy; 2024 Libris Borrowing Service. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram" size="18"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="twitter" size="18"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="facebook" size="18"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Tab Switching Logic
+        function switchTab(tabName) {
+            // 1. Hide all tab contents
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => {
+                content.classList.add('hidden');
+            });
+
+            // 2. Remove active state from all buttons
+            const buttons = document.querySelectorAll('nav[aria-label="Tabs"] button');
+            buttons.forEach(btn => {
+                btn.classList.remove('border-libris-green', 'text-libris-green');
+                btn.classList.add('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+            });
+
+            // 3. Show selected content
+            document.getElementById(`content-${tabName}`).classList.remove('hidden');
+
+            // 4. Set active state for selected button
+            const activeBtn = document.getElementById(`tab-${tabName}`);
+            activeBtn.classList.remove('border-transparent', 'text-gray-500', 'hover:text-gray-700', 'hover:border-gray-300');
+            activeBtn.classList.add('border-libris-green', 'text-libris-green');
+        }
+    </script>
+</body>
+
+</html>

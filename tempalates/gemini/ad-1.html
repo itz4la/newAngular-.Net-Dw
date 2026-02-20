@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frosted Day Admin Dashboard</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts: Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        glass: {
+                            border: 'rgba(255, 255, 255, 0.8)',
+                            surface: 'rgba(255, 255, 255, 0.65)',
+                            highlight: 'rgba(255, 255, 255, 0.9)',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8fafc;
+            /* Smooth scrolling */
+            scroll-behavior: smooth;
+        }
+
+        /* Ambient Background Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: -1;
+            opacity: 0.6;
+            animation: float 10s infinite ease-in-out alternate;
+        }
+
+        .orb-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            background: #ffe4e6;
+            animation-delay: 0s;
+        }
+
+        /* Rose */
+        .orb-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 40vw;
+            height: 40vw;
+            background: #e0e7ff;
+            animation-delay: -2s;
+        }
+
+        /* Indigo */
+        .orb-3 {
+            top: 40%;
+            left: 40%;
+            width: 30vw;
+            height: 30vw;
+            background: #eff6ff;
+            animation-delay: -4s;
+        }
+
+        /* Blue */
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(30px, 50px);
+            }
+        }
+
+        /* Glass Utility Class */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+
+        /* Skeleton Loading Animation */
+        .skeleton {
+            background: linear-gradient(90deg,
+                    rgba(202,202,202, 0.4) 25%,
+                    rgba(202,202,202, 0.8) 50%,
+                    rgba(202,202,202, 0.4) 75%);
+            background-size: 200% 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 0.375rem;
+            /* rounded-md */
+        }
+
+        @keyframes shimmer {
+            0% {
+                background-position: 200% 0;
+            }
+
+            100% {
+                background-position: -200% 0;
+            }
+        }
+
+        /* Fade In Animation for Content */
+        .fade-in {
+            animation: fadeIn 0.4s ease-out forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(148, 163, 184, 0.5);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(148, 163, 184, 0.8);
+        }
+    </style>
+</head>
+
+<body class="text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row">
+
+    <!-- Background Decoration -->
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <!-- Mobile Header -->
+    <header class="md:hidden glass-panel flex items-center justify-between p-4 sticky top-0 z-50">
+        <div class="flex items-center gap-2 font-bold text-xl text-indigo-700">
+            <i data-lucide="layout-dashboard"></i> <span>FrostedUI</span>
+        </div>
+        <button id="mobile-menu-btn" class="p-2 text-slate-600 hover:bg-white/50 rounded-lg">
+            <i data-lucide="menu"></i>
+        </button>
+    </header>
+
+    <!-- Sidebar (Desktop Fixed / Mobile Hidden initially) -->
+    <aside id="sidebar" class="hidden md:flex w-64 flex-col glass-panel h-full z-40 transition-transform duration-300">
+        <div class="p-6 flex items-center gap-3 border-b border-glass-border">
+            <div
+                class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+                <i data-lucide="hexagon" size="18"></i>
+            </div>
+            <h1 class="font-bold text-xl tracking-tight text-slate-800">Frosted<span class="text-indigo-600">UI</span>
+            </h1>
+        </div>
+
+        <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+            <button onclick="loadView('dashboard')"
+                class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-indigo-700 bg-indigo-50/50 shadow-sm border border-indigo-100">
+                <i data-lucide="layout-grid" size="20"></i> Dashboard
+            </button>
+            <button onclick="loadView('users')"
+                class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
+                <i data-lucide="users" size="20"></i> Users
+            </button>
+            <button onclick="loadView('products')"
+                class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
+                <i data-lucide="package" size="20"></i> Products
+            </button>
+            <button onclick="loadView('orders')"
+                class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
+                <i data-lucide="shopping-cart" size="20"></i> Orders
+            </button>
+            <button onclick="loadView('settings')"
+                class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
+                <i data-lucide="settings" size="20"></i> Settings
+            </button>
+        </nav>
+
+        <div class="p-4 border-t border-glass-border">
+            <div
+                class="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-white/40 to-white/10 border border-white/60">
+                <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" alt="User"
+                    class="w-10 h-10 rounded-full shadow-sm">
+                <div class="flex-1 min-w-0">
+                    <p class="text-sm font-semibold text-slate-800 truncate">Admin User</p>
+                    <p class="text-xs text-slate-500 truncate">admin@frosted.ui</p>
+                </div>
+                <button class="text-slate-400 hover:text-slate-600"><i data-lucide="log-out" size="18"></i></button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Mobile Sidebar Overlay & Menu -->
+    <div id="mobile-overlay"
+        class="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 hidden md:hidden opacity-0 transition-opacity"></div>
+    <div id="mobile-sidebar"
+        class="fixed inset-y-0 left-0 w-64 glass-panel z-40 transform -translate-x-full transition-transform duration-300 md:hidden flex flex-col">
+        <!-- Cloned Content for Mobile via JS or hardcoded structure below -->
+        <div class="p-6 flex justify-between items-center border-b border-glass-border">
+            <span class="font-bold text-xl text-slate-800">Menu</span>
+            <button id="close-mobile-menu" class="p-1 text-slate-500"><i data-lucide="x"></i></button>
+        </div>
+        <nav class="flex-1 p-4 space-y-2" id="mobile-nav-container">
+            <!-- Mobile Nav Items will be handled by JS to mirror desktop -->
+        </nav>
+    </div>
+
+
+    <!-- Main Content Area -->
+    <main class="flex-1 h-full overflow-y-auto relative p-4 md:p-8">
+        <!-- Top Bar (Desktop) -->
+        <div class="hidden md:flex justify-between items-center mb-8">
+            <div>
+                <h2 id="page-title" class="text-2xl font-bold text-slate-800">Overview</h2>
+                <p class="text-slate-500 text-sm">Welcome back to your frosted dashboard.</p>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative group">
+                    <button class="p-2.5 rounded-xl glass-panel text-slate-500 hover:text-indigo-600 transition-colors">
+                        <i data-lucide="bell" size="20"></i>
+                        <span class="absolute top-2 right-2.5 w-2 h-2 bg-rose-500 rounded-full"></span>
+                    </button>
+                </div>
+                <button
+                    class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-200 transition-all active:scale-95">
+                    <i data-lucide="plus" size="18"></i> <span class="text-sm font-medium">New Project</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Dynamic Content Container -->
+        <div id="content-area" class="w-full max-w-7xl mx-auto pb-10">
+            <!-- Content Injected via JS -->
+        </div>
+    </main>
+
+    <!-- Templates -->
+
+    <!-- DASHBOARD VIEW -->
+    <template id="tmpl-dashboard">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8 fade-in">
+            <!-- Stat Card 1 -->
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-blue-100/50 rounded-xl text-blue-600">
+                        <i data-lucide="users" size="24"></i>
+                    </div>
+                    <span
+                        class="flex items-center text-xs font-semibold text-emerald-600 bg-emerald-100/50 px-2 py-1 rounded-lg">
+                        +12% <i data-lucide="arrow-up-right" size="14" class="ml-1"></i>
+                    </span>
+                </div>
+                <h3 class="text-slate-500 text-sm font-medium">Total Users</h3>
+                <p class="text-3xl font-bold text-slate-800 mt-1">24,593</p>
+            </div>
+
+            <!-- Stat Card 2 -->
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-indigo-100/50 rounded-xl text-indigo-600">
+                        <i data-lucide="dollar-sign" size="24"></i>
+                    </div>
+                    <span
+                        class="flex items-center text-xs font-semibold text-emerald-600 bg-emerald-100/50 px-2 py-1 rounded-lg">
+                        +8.2% <i data-lucide="arrow-up-right" size="14" class="ml-1"></i>
+                    </span>
+                </div>
+                <h3 class="text-slate-500 text-sm font-medium">Total Revenue</h3>
+                <p class="text-3xl font-bold text-slate-800 mt-1">$84,230</p>
+            </div>
+
+            <!-- Stat Card 3 -->
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-rose-100/50 rounded-xl text-rose-600">
+                        <i data-lucide="shopping-bag" size="24"></i>
+                    </div>
+                    <span
+                        class="flex items-center text-xs font-semibold text-rose-600 bg-rose-100/50 px-2 py-1 rounded-lg">
+                        -2.4% <i data-lucide="arrow-down-right" size="14" class="ml-1"></i>
+                    </span>
+                </div>
+                <h3 class="text-slate-500 text-sm font-medium">Orders</h3>
+                <p class="text-3xl font-bold text-slate-800 mt-1">1,482</p>
+            </div>
+
+            <!-- Stat Card 4 -->
+            <div class="glass-panel p-6 rounded-2xl">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-3 bg-amber-100/50 rounded-xl text-amber-600">
+                        <i data-lucide="activity" size="24"></i>
+                    </div>
+                    <span
+                        class="flex items-center text-xs font-semibold text-emerald-600 bg-emerald-100/50 px-2 py-1 rounded-lg">
+                        +5% <i data-lucide="arrow-up-right" size="14" class="ml-1"></i>
+                    </span>
+                </div>
+                <h3 class="text-slate-500 text-sm font-medium">Active Sessions</h3>
+                <p class="text-3xl font-bold text-slate-800 mt-1">543</p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 fade-in" style="animation-delay: 100ms;">
+            <!-- Main Chart Area -->
+            <div class="glass-panel p-6 rounded-2xl lg:col-span-2 flex flex-col h-96">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="font-bold text-slate-800 text-lg">Revenue Overview</h3>
+                    <select
+                        class="bg-white/50 border border-white/80 text-sm rounded-lg p-2 focus:ring-2 focus:ring-indigo-500 outline-none text-slate-600">
+                        <option>This Week</option>
+                        <option>This Month</option>
+                        <option>This Year</option>
+                    </select>
+                </div>
+                <!-- CSS-only simple chart visualization -->
+                <div class="flex-1 flex items-end justify-between gap-2 px-2">
+                    <div class="w-full bg-indigo-500/20 rounded-t-lg relative group h-[40%]">
+                        <div
+                            class="absolute bottom-0 w-full bg-indigo-500 rounded-t-lg transition-all duration-500 h-full group-hover:bg-indigo-600">
+                        </div>
+                        <span
+                            class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 opacity-0 group-hover:opacity-100">Mon</span>
+                    </div>
+                    <div class="w-full bg-indigo-500/20 rounded-t-lg relative group h-[65%]">
+                        <div
+                            class="absolute bottom-0 w-full bg-indigo-500 rounded-t-lg transition-all duration-500 h-full group-hover:bg-indigo-600">
+                        </div>
+                        <span
+                            class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 opacity-0 group-hover:opacity-100">Tue</span>
+                    </div>
+                    <div class="w-full bg-indigo-500/20 rounded-t-lg relative group h-[45%]">
+                        <div
+                            class="absolute bottom-0 w-full bg-indigo-500 rounded-t-lg transition-all duration-500 h-full group-hover:bg-indigo-600">
+                        </div>
+                        <span
+                            class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 opacity-0 group-hover:opacity-100">Wed</span>
+                    </div>
+                    <div class="w-full bg-indigo-500/20 rounded-t-lg relative group h-[85%]">
+                        <div
+                            class="absolute bottom-0 w-full bg-indigo-500 rounded-t-lg transition-all duration-500 h-full group-hover:bg-indigo-600">
+                        </div>
+                        <span
+                            class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 opacity-0 group-hover:opacity-100">Thu</span>
+                    </div>
+                    <div class="w-full bg-indigo-500/20 rounded-t-lg relative group h-[60%]">
+                        <div
+                            class="absolute bottom-0 w-full bg-indigo-500 rounded-t-lg transition-all duration-500 h-full group-hover:bg-indigo-600">
+                        </div>
+                        <span
+                            class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 opacity-0 group-hover:opacity-100">Fri</span>
+                    </div>
+                    <div class="w-full bg-indigo-500/20 rounded-t-lg relative group h-[75%]">
+                        <div
+                            class="absolute bottom-0 w-full bg-indigo-500 rounded-t-lg transition-all duration-500 h-full group-hover:bg-indigo-600">
+                        </div>
+                        <span
+                            class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 opacity-0 group-hover:opacity-100">Sat</span>
+                    </div>
+                    <div class="w-full bg-indigo-500/20 rounded-t-lg relative group h-[90%]">
+                        <div
+                            class="absolute bottom-0 w-full bg-indigo-500 rounded-t-lg transition-all duration-500 h-full group-hover:bg-indigo-600">
+                        </div>
+                        <span
+                            class="absolute -top-6 left-1/2 -translate-x-1/2 text-xs text-slate-500 opacity-0 group-hover:opacity-100">Sun</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="glass-panel p-6 rounded-2xl h-96 flex flex-col">
+                <h3 class="font-bold text-slate-800 text-lg mb-4">Recent Activity</h3>
+                <div class="flex-1 overflow-y-auto space-y-4 pr-2">
+                    <div class="flex gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-indigo-100 text-indigo-600 flex items-center justify-center shrink-0 text-xs">
+                            JD</div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-800">John Doe placed an order</p>
+                            <p class="text-xs text-slate-500">2 mins ago</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center shrink-0 text-xs">
+                            AS</div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-800">Alice Smith registered</p>
+                            <p class="text-xs text-slate-500">15 mins ago</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0 text-xs">
+                            <i data-lucide="check" size="14"></i></div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-800">System update completed</p>
+                            <p class="text-xs text-slate-500">1 hour ago</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center shrink-0 text-xs">
+                            MK</div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-800">Mike K. commented</p>
+                            <p class="text-xs text-slate-500">3 hours ago</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div
+                            class="w-8 h-8 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center shrink-0 text-xs">
+                            ⚠️</div>
+                        <div>
+                            <p class="text-sm font-medium text-slate-800">Server load warning</p>
+                            <p class="text-xs text-slate-500">5 hours ago</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- DASHBOARD SKELETON -->
+    <template id="tmpl-dashboard-skeleton">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="glass-panel p-6 rounded-2xl h-36 flex flex-col justify-between">
+                <div class="flex justify-between">
+                    <div class="skeleton w-10 h-10 rounded-xl"></div>
+                    <div class="skeleton w-16 h-6 rounded-lg"></div>
+                </div>
+                <div>
+                    <div class="skeleton w-24 h-4 rounded mb-2"></div>
+                    <div class="skeleton w-32 h-8 rounded"></div>
+                </div>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl h-36 flex flex-col justify-between">
+                <div class="flex justify-between">
+                    <div class="skeleton w-10 h-10 rounded-xl"></div>
+                    <div class="skeleton w-16 h-6 rounded-lg"></div>
+                </div>
+                <div>
+                    <div class="skeleton w-24 h-4 rounded mb-2"></div>
+                    <div class="skeleton w-32 h-8 rounded"></div>
+                </div>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl h-36 flex flex-col justify-between">
+                <div class="flex justify-between">
+                    <div class="skeleton w-10 h-10 rounded-xl"></div>
+                    <div class="skeleton w-16 h-6 rounded-lg"></div>
+                </div>
+                <div>
+                    <div class="skeleton w-24 h-4 rounded mb-2"></div>
+                    <div class="skeleton w-32 h-8 rounded"></div>
+                </div>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl h-36 flex flex-col justify-between">
+                <div class="flex justify-between">
+                    <div class="skeleton w-10 h-10 rounded-xl"></div>
+                    <div class="skeleton w-16 h-6 rounded-lg"></div>
+                </div>
+                <div>
+                    <div class="skeleton w-24 h-4 rounded mb-2"></div>
+                    <div class="skeleton w-32 h-8 rounded"></div>
+                </div>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="glass-panel p-6 rounded-2xl lg:col-span-2 h-96">
+                <div class="flex justify-between mb-6">
+                    <div class="skeleton w-40 h-6 rounded"></div>
+                    <div class="skeleton w-24 h-8 rounded-lg"></div>
+                </div>
+                <div class="h-64 flex items-end justify-between gap-4">
+                    <div class="skeleton w-full h-[40%] rounded-t-lg"></div>
+                    <div class="skeleton w-full h-[60%] rounded-t-lg"></div>
+                    <div class="skeleton w-full h-[30%] rounded-t-lg"></div>
+                    <div class="skeleton w-full h-[80%] rounded-t-lg"></div>
+                    <div class="skeleton w-full h-[50%] rounded-t-lg"></div>
+                    <div class="skeleton w-full h-[70%] rounded-t-lg"></div>
+                    <div class="skeleton w-full h-[90%] rounded-t-lg"></div>
+                </div>
+            </div>
+            <div class="glass-panel p-6 rounded-2xl h-96">
+                <div class="skeleton w-32 h-6 rounded mb-6"></div>
+                <div class="space-y-4">
+                    <div class="flex gap-3">
+                        <div class="skeleton w-8 h-8 rounded-full shrink-0"></div>
+                        <div class="w-full">
+                            <div class="skeleton w-3/4 h-4 rounded mb-1"></div>
+                            <div class="skeleton w-1/4 h-3 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="skeleton w-8 h-8 rounded-full shrink-0"></div>
+                        <div class="w-full">
+                            <div class="skeleton w-3/4 h-4 rounded mb-1"></div>
+                            <div class="skeleton w-1/4 h-3 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="skeleton w-8 h-8 rounded-full shrink-0"></div>
+                        <div class="w-full">
+                            <div class="skeleton w-3/4 h-4 rounded mb-1"></div>
+                            <div class="skeleton w-1/4 h-3 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div class="skeleton w-8 h-8 rounded-full shrink-0"></div>
+                        <div class="w-full">
+                            <div class="skeleton w-3/4 h-4 rounded mb-1"></div>
+                            <div class="skeleton w-1/4 h-3 rounded"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- USERS VIEW -->
+    <template id="tmpl-users">
+        <div class="glass-panel rounded-2xl overflow-hidden fade-in">
+            <div class="p-5 border-b border-glass-border flex justify-between items-center">
+                <div class="relative w-64">
+                    <i data-lucide="search" class="absolute left-3 top-2.5 text-slate-400" size="18"></i>
+                    <input type="text" placeholder="Search users..."
+                        class="w-full pl-10 pr-4 py-2 rounded-xl bg-white/40 border border-white/60 focus:ring-2 focus:ring-indigo-500 focus:bg-white/70 outline-none transition-all text-sm text-slate-700">
+                </div>
+                <button
+                    class="px-4 py-2 bg-white/50 hover:bg-white/80 border border-white/80 rounded-xl text-slate-600 text-sm font-medium transition-colors">
+                    Filters <i data-lucide="filter" size="14" class="inline ml-1"></i>
+                </button>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-slate-600">
+                    <thead class="bg-indigo-50/30 text-xs uppercase font-semibold text-slate-500">
+                        <tr>
+                            <th class="px-6 py-4">User</th>
+                            <th class="px-6 py-4">Status</th>
+                            <th class="px-6 py-4">Role</th>
+                            <th class="px-6 py-4">Joined</th>
+                            <th class="px-6 py-4 text-right">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-indigo-50/50">
+                        <tr class="hover:bg-indigo-50/30 transition-colors group">
+                            <td class="px-6 py-4 flex items-center gap-3">
+                                <img src="https://ui-avatars.com/api/?name=Emma+W&background=random"
+                                    class="w-9 h-9 rounded-full">
+                                <div>
+                                    <div class="font-medium text-slate-800">Emma Watson</div>
+                                    <div class="text-xs text-slate-500">emma@example.com</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4"><span
+                                    class="px-2 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-600">Active</span>
+                            </td>
+                            <td class="px-6 py-4">Admin</td>
+                            <td class="px-6 py-4">Oct 24, 2023</td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-slate-400 hover:text-indigo-600"><i data-lucide="more-horizontal"
+                                        size="18"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-indigo-50/30 transition-colors group">
+                            <td class="px-6 py-4 flex items-center gap-3">
+                                <img src="https://ui-avatars.com/api/?name=James+C&background=random"
+                                    class="w-9 h-9 rounded-full">
+                                <div>
+                                    <div class="font-medium text-slate-800">James Cameron</div>
+                                    <div class="text-xs text-slate-500">james.c@example.com</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4"><span
+                                    class="px-2 py-1 rounded-full text-xs font-semibold bg-amber-100 text-amber-600">Pending</span>
+                            </td>
+                            <td class="px-6 py-4">Editor</td>
+                            <td class="px-6 py-4">Nov 12, 2023</td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-slate-400 hover:text-indigo-600"><i data-lucide="more-horizontal"
+                                        size="18"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-indigo-50/30 transition-colors group">
+                            <td class="px-6 py-4 flex items-center gap-3">
+                                <img src="https://ui-avatars.com/api/?name=Sarah+J&background=random"
+                                    class="w-9 h-9 rounded-full">
+                                <div>
+                                    <div class="font-medium text-slate-800">Sarah Jenkins</div>
+                                    <div class="text-xs text-slate-500">s.jenkins@example.com</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4"><span
+                                    class="px-2 py-1 rounded-full text-xs font-semibold bg-rose-100 text-rose-600">Inactive</span>
+                            </td>
+                            <td class="px-6 py-4">Viewer</td>
+                            <td class="px-6 py-4">Dec 01, 2023</td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-slate-400 hover:text-indigo-600"><i data-lucide="more-horizontal"
+                                        size="18"></i></button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-indigo-50/30 transition-colors group">
+                            <td class="px-6 py-4 flex items-center gap-3">
+                                <img src="https://ui-avatars.com/api/?name=Robert+F&background=random"
+                                    class="w-9 h-9 rounded-full">
+                                <div>
+                                    <div class="font-medium text-slate-800">Robert Fox</div>
+                                    <div class="text-xs text-slate-500">r.fox@example.com</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4"><span
+                                    class="px-2 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-600">Active</span>
+                            </td>
+                            <td class="px-6 py-4">Editor</td>
+                            <td class="px-6 py-4">Dec 15, 2023</td>
+                            <td class="px-6 py-4 text-right">
+                                <button class="text-slate-400 hover:text-indigo-600"><i data-lucide="more-horizontal"
+                                        size="18"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <!-- USERS SKELETON -->
+    <template id="tmpl-users-skeleton">
+        <div class="glass-panel rounded-2xl overflow-hidden">
+            <div class="p-5 border-b border-glass-border flex justify-between items-center">
+                <div class="skeleton w-64 h-10 rounded-xl"></div>
+                <div class="skeleton w-24 h-9 rounded-xl"></div>
+            </div>
+            <div class="p-0">
+                <div class="flex justify-between px-6 py-4 border-b border-indigo-50/30">
+                    <div class="skeleton w-20 h-4 rounded"></div>
+                    <div class="skeleton w-16 h-4 rounded"></div>
+                    <div class="skeleton w-16 h-4 rounded"></div>
+                    <div class="skeleton w-20 h-4 rounded"></div>
+                    <div class="skeleton w-10 h-4 rounded"></div>
+                </div>
+                <!-- Rows -->
+                <div class="flex justify-between px-6 py-4 border-b border-indigo-50/30 items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="skeleton w-9 h-9 rounded-full"></div>
+                        <div class="space-y-1">
+                            <div class="skeleton w-24 h-3 rounded"></div>
+                            <div class="skeleton w-32 h-2 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton w-16 h-5 rounded-full"></div>
+                    <div class="skeleton w-12 h-3 rounded"></div>
+                    <div class="skeleton w-20 h-3 rounded"></div>
+                    <div class="skeleton w-6 h-6 rounded"></div>
+                </div>
+                <div class="flex justify-between px-6 py-4 border-b border-indigo-50/30 items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="skeleton w-9 h-9 rounded-full"></div>
+                        <div class="space-y-1">
+                            <div class="skeleton w-24 h-3 rounded"></div>
+                            <div class="skeleton w-32 h-2 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton w-16 h-5 rounded-full"></div>
+                    <div class="skeleton w-12 h-3 rounded"></div>
+                    <div class="skeleton w-20 h-3 rounded"></div>
+                    <div class="skeleton w-6 h-6 rounded"></div>
+                </div>
+                <div class="flex justify-between px-6 py-4 border-b border-indigo-50/30 items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="skeleton w-9 h-9 rounded-full"></div>
+                        <div class="space-y-1">
+                            <div class="skeleton w-24 h-3 rounded"></div>
+                            <div class="skeleton w-32 h-2 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton w-16 h-5 rounded-full"></div>
+                    <div class="skeleton w-12 h-3 rounded"></div>
+                    <div class="skeleton w-20 h-3 rounded"></div>
+                    <div class="skeleton w-6 h-6 rounded"></div>
+                </div>
+                <div class="flex justify-between px-6 py-4 items-center">
+                    <div class="flex items-center gap-3">
+                        <div class="skeleton w-9 h-9 rounded-full"></div>
+                        <div class="space-y-1">
+                            <div class="skeleton w-24 h-3 rounded"></div>
+                            <div class="skeleton w-32 h-2 rounded"></div>
+                        </div>
+                    </div>
+                    <div class="skeleton w-16 h-5 rounded-full"></div>
+                    <div class="skeleton w-12 h-3 rounded"></div>
+                    <div class="skeleton w-20 h-3 rounded"></div>
+                    <div class="skeleton w-6 h-6 rounded"></div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- PRODUCTS VIEW -->
+    <template id="tmpl-products">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 fade-in">
+            <!-- Product Card 1 -->
+            <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div class="h-48 bg-indigo-100 relative overflow-hidden">
+                    <!-- Placeholder visual for product -->
+                    <div
+                        class="absolute inset-0 flex items-center justify-center text-indigo-300 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="headphones" size="64"></i>
+                    </div>
+                    <div
+                        class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-bold text-slate-700">
+                        $129</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-slate-800">Pro Audio headset</h3>
+                        <span class="text-xs text-slate-400">Elec.</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 line-clamp-2">High fidelity audio with noise cancellation
+                        technology.</p>
+                    <div class="flex gap-2">
+                        <button
+                            class="flex-1 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors">Edit</button>
+                        <button
+                            class="p-2 rounded-lg border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 transition-colors"><i
+                                data-lucide="trash-2" size="18"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 2 -->
+            <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div class="h-48 bg-rose-100 relative overflow-hidden">
+                    <div
+                        class="absolute inset-0 flex items-center justify-center text-rose-300 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="watch" size="64"></i>
+                    </div>
+                    <div
+                        class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-bold text-slate-700">
+                        $299</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-slate-800">Smart Watch V2</h3>
+                        <span class="text-xs text-slate-400">Tech</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 line-clamp-2">Track your fitness and health metrics in
+                        real-time.</p>
+                    <div class="flex gap-2">
+                        <button
+                            class="flex-1 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors">Edit</button>
+                        <button
+                            class="p-2 rounded-lg border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 transition-colors"><i
+                                data-lucide="trash-2" size="18"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 3 -->
+            <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div class="h-48 bg-emerald-100 relative overflow-hidden">
+                    <div
+                        class="absolute inset-0 flex items-center justify-center text-emerald-300 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="camera" size="64"></i>
+                    </div>
+                    <div
+                        class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-bold text-slate-700">
+                        $899</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-slate-800">DSLR Camera</h3>
+                        <span class="text-xs text-slate-400">Photo</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 line-clamp-2">Professional photography equipment for
+                        enthusiasts.</p>
+                    <div class="flex gap-2">
+                        <button
+                            class="flex-1 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors">Edit</button>
+                        <button
+                            class="p-2 rounded-lg border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 transition-colors"><i
+                                data-lucide="trash-2" size="18"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Product Card 4 -->
+            <div class="glass-panel rounded-2xl overflow-hidden group hover:shadow-xl transition-all duration-300">
+                <div class="h-48 bg-amber-100 relative overflow-hidden">
+                    <div
+                        class="absolute inset-0 flex items-center justify-center text-amber-300 group-hover:scale-110 transition-transform duration-500">
+                        <i data-lucide="armchair" size="64"></i>
+                    </div>
+                    <div
+                        class="absolute top-3 right-3 bg-white/80 backdrop-blur-sm px-2 py-1 rounded-lg text-xs font-bold text-slate-700">
+                        $450</div>
+                </div>
+                <div class="p-5">
+                    <div class="flex justify-between items-start mb-2">
+                        <h3 class="font-bold text-slate-800">Lounge Chair</h3>
+                        <span class="text-xs text-slate-400">Home</span>
+                    </div>
+                    <p class="text-xs text-slate-500 mb-4 line-clamp-2">Modern aesthetic lounge chair for your living
+                        room.</p>
+                    <div class="flex gap-2">
+                        <button
+                            class="flex-1 py-2 rounded-lg bg-indigo-600 text-white text-sm font-medium hover:bg-indigo-700 transition-colors">Edit</button>
+                        <button
+                            class="p-2 rounded-lg border border-slate-200 text-slate-400 hover:text-rose-500 hover:border-rose-200 transition-colors"><i
+                                data-lucide="trash-2" size="18"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- PRODUCTS SKELETON -->
+    <template id="tmpl-products-skeleton">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Skeleton Card -->
+            <div class="glass-panel rounded-2xl overflow-hidden">
+                <div class="h-48 skeleton w-full"></div>
+                <div class="p-5">
+                    <div class="flex justify-between mb-2">
+                        <div class="skeleton w-32 h-5 rounded"></div>
+                        <div class="skeleton w-10 h-4 rounded"></div>
+                    </div>
+                    <div class="skeleton w-full h-3 rounded mb-2"></div>
+                    <div class="skeleton w-2/3 h-3 rounded mb-4"></div>
+                    <div class="flex gap-2">
+                        <div class="skeleton w-full h-9 rounded-lg"></div>
+                        <div class="skeleton w-10 h-9 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Skeleton Card -->
+            <div class="glass-panel rounded-2xl overflow-hidden">
+                <div class="h-48 skeleton w-full"></div>
+                <div class="p-5">
+                    <div class="flex justify-between mb-2">
+                        <div class="skeleton w-32 h-5 rounded"></div>
+                        <div class="skeleton w-10 h-4 rounded"></div>
+                    </div>
+                    <div class="skeleton w-full h-3 rounded mb-2"></div>
+                    <div class="skeleton w-2/3 h-3 rounded mb-4"></div>
+                    <div class="flex gap-2">
+                        <div class="skeleton w-full h-9 rounded-lg"></div>
+                        <div class="skeleton w-10 h-9 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Skeleton Card -->
+            <div class="glass-panel rounded-2xl overflow-hidden">
+                <div class="h-48 skeleton w-full"></div>
+                <div class="p-5">
+                    <div class="flex justify-between mb-2">
+                        <div class="skeleton w-32 h-5 rounded"></div>
+                        <div class="skeleton w-10 h-4 rounded"></div>
+                    </div>
+                    <div class="skeleton w-full h-3 rounded mb-2"></div>
+                    <div class="skeleton w-2/3 h-3 rounded mb-4"></div>
+                    <div class="flex gap-2">
+                        <div class="skeleton w-full h-9 rounded-lg"></div>
+                        <div class="skeleton w-10 h-9 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Skeleton Card -->
+            <div class="glass-panel rounded-2xl overflow-hidden">
+                <div class="h-48 skeleton w-full"></div>
+                <div class="p-5">
+                    <div class="flex justify-between mb-2">
+                        <div class="skeleton w-32 h-5 rounded"></div>
+                        <div class="skeleton w-10 h-4 rounded"></div>
+                    </div>
+                    <div class="skeleton w-full h-3 rounded mb-2"></div>
+                    <div class="skeleton w-2/3 h-3 rounded mb-4"></div>
+                    <div class="flex gap-2">
+                        <div class="skeleton w-full h-9 rounded-lg"></div>
+                        <div class="skeleton w-10 h-9 rounded-lg"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <!-- GENERIC PLACEHOLDER for Orders/Settings -->
+    <template id="tmpl-generic">
+        <div
+            class="glass-panel p-10 rounded-2xl flex flex-col items-center justify-center text-center fade-in min-h-[400px]">
+            <div class="p-6 bg-indigo-50 rounded-full text-indigo-400 mb-6">
+                <i data-lucide="construction" size="48"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-slate-800 mb-2">Under Construction</h3>
+            <p class="text-slate-500 max-w-md mx-auto">This module is currently being built with the same frosted glass
+                care as the rest of the application.</p>
+            <button
+                class="mt-6 px-6 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">Notify
+                Me</button>
+        </div>
+    </template>
+
+    <template id="tmpl-generic-skeleton">
+        <div class="glass-panel p-10 rounded-2xl flex flex-col items-center justify-center text-center min-h-[400px]">
+            <div class="skeleton w-24 h-24 rounded-full mb-6"></div>
+            <div class="skeleton w-64 h-8 rounded mb-3"></div>
+            <div class="skeleton w-96 h-4 rounded mb-2"></div>
+            <div class="skeleton w-48 h-4 rounded mb-6"></div>
+            <div class="skeleton w-32 h-10 rounded-xl"></div>
+        </div>
+    </template>
+
+
+    <script>
+        // --- Setup & Utilities ---
+        document.addEventListener('DOMContentLoaded', () => {
+            lucide.createIcons();
+            loadView('dashboard'); // Initial Load
+            setupMobileMenu();
+        });
+
+        // --- State Management ---
+        const state = {
+            currentView: '',
+            isLoading: false
+        };
+
+        const titles = {
+            'dashboard': 'Dashboard Overview',
+            'users': 'User Management',
+            'products': 'Product Inventory',
+            'orders': 'Order History',
+            'settings': 'System Settings'
+        };
+
+        // --- Core Logic: Load View with Skeleton Simulation ---
+        function loadView(viewName) {
+            if (state.isLoading || state.currentView === viewName) return;
+
+            state.isLoading = true;
+            state.currentView = viewName;
+
+            // Update UI Sidebar Active State
+            updateSidebar(viewName);
+
+            // Update Page Title
+            document.getElementById('page-title').textContent = titles[viewName] || 'Overview';
+
+            // 1. Inject Skeleton
+            const contentArea = document.getElementById('content-area');
+            const skeletonId = `tmpl-${['orders', 'settings'].includes(viewName) ? 'generic' : viewName}-skeleton`;
+            const skeletonTemplate = document.getElementById(skeletonId) || document.getElementById('tmpl-generic-skeleton');
+
+            contentArea.innerHTML = '';
+            contentArea.appendChild(skeletonTemplate.content.cloneNode(true));
+            lucide.createIcons(); // In case skeletons have icons (though usually shapes)
+
+            // 2. Simulate Network Delay (800ms)
+            setTimeout(() => {
+                // 3. Inject Actual Content
+                const templateId = `tmpl-${['orders', 'settings'].includes(viewName) ? 'generic' : viewName}`;
+                const contentTemplate = document.getElementById(templateId);
+
+                contentArea.innerHTML = '';
+                contentArea.appendChild(contentTemplate.content.cloneNode(true));
+
+                // Re-init icons for new content
+                lucide.createIcons();
+
+                state.isLoading = false;
+            }, 800);
+
+            // Close mobile menu if open
+            closeMobileMenu();
+        }
+
+        // --- UI Logic ---
+        function updateSidebar(activeView) {
+            const buttons = document.querySelectorAll('.nav-item');
+
+            buttons.forEach(btn => {
+                // Check if this button calls the activeView
+                const onclickAttr = btn.getAttribute('onclick');
+                const isTarget = onclickAttr && onclickAttr.includes(`'${activeView}'`);
+
+                if (isTarget) {
+                    // Active Styles
+                    btn.className = 'nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-indigo-700 bg-indigo-50/50 shadow-sm border border-indigo-100';
+                } else {
+                    // Inactive Styles
+                    btn.className = 'nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200';
+                }
+            });
+        }
+
+        // --- Mobile Menu Handling ---
+        function setupMobileMenu() {
+            const btn = document.getElementById('mobile-menu-btn');
+            const closeBtn = document.getElementById('close-mobile-menu');
+            const sidebar = document.getElementById('mobile-sidebar');
+            const overlay = document.getElementById('mobile-overlay');
+            const navContainer = document.getElementById('mobile-nav-container');
+
+            // Clone desktop nav items to mobile
+            const desktopNav = document.querySelector('aside nav').innerHTML;
+            navContainer.innerHTML = desktopNav;
+
+            function open() {
+                sidebar.classList.remove('-translate-x-full');
+                overlay.classList.remove('hidden');
+                setTimeout(() => overlay.classList.remove('opacity-0'), 10);
+            }
+
+            function close() {
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('opacity-0');
+                setTimeout(() => overlay.classList.add('hidden'), 300);
+            }
+
+            btn.addEventListener('click', open);
+            closeBtn.addEventListener('click', close);
+            overlay.addEventListener('click', close);
+
+            // Expose close globally for the loadView function
+            window.closeMobileMenu = close;
+        }
+
+    </script>
+</body>
+
+</html>

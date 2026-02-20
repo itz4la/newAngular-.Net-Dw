@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Libris | Borrow Knowledge, Share Worlds</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        libris: {
+                            stone: '#fafaf9',   /* Warm Stone */
+                            cream: '#f5f5f4',   /* Soft Cream */
+                            green: '#1c4a33',   /* Deep Forest Green */
+                            greenLight: '#2a6b4a',
+                            charcoal: '#374151',/* Charcoal Gray */
+                            gold: '#d4a373',    /* Muted Gold */
+                            paper: '#fffdf5',   /* Slight yellowish paper tone for books */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'book': '2px 4px 8px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'book-hover': '4px 8px 12px -2px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafaf9;
+            /* libris-stone */
+            color: #374151;
+            /* libris-charcoal */
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Book Cover Spine Effect */
+        .book-spine {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 20%, rgba(0, 0, 0, 0.1) 100%);
+            box-shadow: inset 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Texture for paper sections */
+        .paper-texture {
+            background-color: #f5f5f4;
+            background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d4a373' fill-opacity='0.1' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        /* Hide scrollbar for horizontal scroll areas */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased selection:bg-libris-gold/30">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+        <div class="absolute inset-0 bg-libris-stone/80 backdrop-blur-md border-b border-libris-charcoal/10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-2 cursor-pointer group">
+                    <div
+                        class="w-10 h-10 bg-libris-green text-libris-stone rounded-lg flex items-center justify-center shadow-md group-hover:bg-libris-greenLight transition-colors">
+                        <i data-lucide="library" size="20"></i>
+                    </div>
+                    <span class="font-serif text-2xl font-bold text-libris-green tracking-tight">Libris</span>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#featured"
+                        class="text-libris-charcoal hover:text-libris-green font-medium transition-colors">Browse</a>
+                    <a href="#how-it-works"
+                        class="text-libris-charcoal hover:text-libris-green font-medium transition-colors">How It
+                        Works</a>
+                    <a href="#" class="text-libris-charcoal hover:text-libris-green font-medium transition-colors">My
+                        Loans</a>
+                    <div class="h-6 w-px bg-libris-charcoal/20"></div>
+                    <button class="text-libris-charcoal hover:text-libris-green transition-colors">
+                        <i data-lucide="search" size="20"></i>
+                    </button>
+                    <button
+                        class="bg-libris-green text-white px-6 py-2.5 rounded-full font-medium hover:bg-libris-greenLight transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        Sign In
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-libris-charcoal hover:text-libris-green p-2">
+                        <i data-lucide="menu" size="24"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden absolute top-20 left-0 w-full bg-libris-stone border-b border-libris-charcoal/10 shadow-lg animate-fade-in-down">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-charcoal hover:bg-libris-cream hover:text-libris-green">Browse
+                    Collection</a>
+                <a href="#"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-charcoal hover:bg-libris-cream hover:text-libris-green">How
+                    It Works</a>
+                <a href="#"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-charcoal hover:bg-libris-cream hover:text-libris-green">My
+                    Loans</a>
+                <div class="border-t border-libris-charcoal/10 my-2"></div>
+                <button
+                    class="w-full text-left block px-3 py-3 rounded-md text-base font-medium text-libris-green font-bold">Sign
+                    In</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden">
+        <!-- Decorative Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 pointer-events-none">
+            <div class="absolute -top-[10%] -right-[5%] w-[40rem] h-[40rem] bg-libris-gold/10 rounded-full blur-3xl">
+            </div>
+            <div class="absolute top-[20%] -left-[10%] w-[30rem] h-[30rem] bg-libris-green/5 rounded-full blur-3xl">
+            </div>
+        </div>
+
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <span
+                class="inline-block py-1 px-3 rounded-full bg-libris-green/10 text-libris-green text-sm font-semibold tracking-wide mb-6">
+                Redefining the Library Experience
+            </span>
+            <h1 class="font-serif text-5xl md:text-7xl font-bold text-libris-charcoal mb-6 leading-tight">
+                Borrow Knowledge, <br />
+                <span class="text-libris-green italic">Share Worlds.</span>
+            </h1>
+            <p class="text-lg md:text-xl text-gray-600 mb-10 max-w-2xl mx-auto font-light leading-relaxed">
+                Access a curated collection of timeless classics and modern bestsellers.
+                Delivered to your door, or available for digital reading instantly.
+            </p>
+
+            <!-- Search Bar -->
+            <div class="max-w-2xl mx-auto relative group mb-8">
+                <div
+                    class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-gray-400 group-focus-within:text-libris-green transition-colors">
+                    <i data-lucide="search" size="20"></i>
+                </div>
+                <input type="text"
+                    class="block w-full pl-12 pr-32 py-4 border-2 border-gray-200 rounded-full leading-5 bg-white placeholder-gray-400 focus:outline-none focus:border-libris-green focus:ring-1 focus:ring-libris-green sm:text-lg shadow-sm transition-all"
+                    placeholder="Search by title, author, or ISBN...">
+                <div class="absolute inset-y-1.5 right-1.5">
+                    <button type="button"
+                        class="inline-flex items-center px-6 py-2 border border-transparent text-base font-medium rounded-full text-white bg-libris-green hover:bg-libris-greenLight focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-libris-green h-full shadow-sm transition-all">
+                        Search
+                    </button>
+                </div>
+            </div>
+
+            <!-- Tags -->
+            <div class="flex justify-center gap-3 flex-wrap">
+                <a href="#"
+                    class="px-4 py-1.5 rounded-full border border-gray-300 bg-white text-sm text-gray-600 hover:border-libris-gold hover:text-libris-green transition-colors">History</a>
+                <a href="#"
+                    class="px-4 py-1.5 rounded-full border border-gray-300 bg-white text-sm text-gray-600 hover:border-libris-gold hover:text-libris-green transition-colors">Science
+                    Fiction</a>
+                <a href="#"
+                    class="px-4 py-1.5 rounded-full border border-gray-300 bg-white text-sm text-gray-600 hover:border-libris-gold hover:text-libris-green transition-colors">Philosophy</a>
+                <a href="#"
+                    class="px-4 py-1.5 rounded-full border border-gray-300 bg-white text-sm text-gray-600 hover:border-libris-gold hover:text-libris-green transition-colors">Modern
+                    Art</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 paper-texture border-y border-libris-charcoal/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-libris-charcoal mb-4">Simple, Seamless
+                    Borrowing</h2>
+                <div class="w-24 h-1 bg-libris-gold mx-auto rounded-full"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-12">
+                <!-- Step 1 -->
+                <div class="text-center group">
+                    <div
+                        class="w-20 h-20 mx-auto bg-white rounded-2xl shadow-book flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-300 border border-gray-100">
+                        <i data-lucide="search-check" size="32" class="text-libris-green"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-libris-charcoal mb-3">1. Discover</h3>
+                    <p class="text-gray-600 leading-relaxed px-4">Browse our extensive catalog or use our smart search
+                        to find your next great read.</p>
+                </div>
+
+                <!-- Step 2 -->
+                <div class="text-center group">
+                    <div
+                        class="w-20 h-20 mx-auto bg-white rounded-2xl shadow-book flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-300 border border-gray-100">
+                        <i data-lucide="book-open-check" size="32" class="text-libris-green"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-libris-charcoal mb-3">2. Borrow</h3>
+                    <p class="text-gray-600 leading-relaxed px-4">Request physical copies for delivery or access digital
+                        versions instantly on any device.</p>
+                </div>
+
+                <!-- Step 3 -->
+                <div class="text-center group">
+                    <div
+                        class="w-20 h-20 mx-auto bg-white rounded-2xl shadow-book flex items-center justify-center mb-6 group-hover:-translate-y-2 transition-transform duration-300 border border-gray-100">
+                        <i data-lucide="rotate-ccw" size="32" class="text-libris-green"></i>
+                    </div>
+                    <h3 class="font-serif text-xl font-bold text-libris-charcoal mb-3">3. Return</h3>
+                    <p class="text-gray-600 leading-relaxed px-4">Done reading? Drop it off at a local hub or schedule a
+                        free pickup from your doorstep.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Collection (Horizontal Scroll) -->
+    <section id="featured" class="py-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-10 flex justify-between items-end">
+            <div>
+                <h2 class="font-serif text-3xl md:text-4xl font-bold text-libris-charcoal mb-2">Curator's Picks</h2>
+                <p class="text-gray-500">Hand-selected volumes for the discerning mind.</p>
+            </div>
+            <div class="hidden md:flex gap-2">
+                <button id="scroll-left"
+                    class="p-2 rounded-full border border-gray-300 hover:bg-libris-green hover:border-libris-green hover:text-white transition-colors">
+                    <i data-lucide="chevron-left" size="20"></i>
+                </button>
+                <button id="scroll-right"
+                    class="p-2 rounded-full border border-gray-300 hover:bg-libris-green hover:border-libris-green hover:text-white transition-colors">
+                    <i data-lucide="chevron-right" size="20"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Books Container -->
+        <div id="books-scroll"
+            class="flex gap-8 overflow-x-auto px-4 sm:px-6 lg:px-8 pb-12 no-scrollbar snap-x snap-mandatory">
+            <!-- Book 1 -->
+            <div class="flex-none w-64 snap-center group cursor-pointer">
+                <div
+                    class="relative h-96 w-full rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-2 bg-[#2c3e50] flex flex-col overflow-hidden border-l-4 border-[#1a252f]">
+                    <!-- Cover Design -->
+                    <div class="book-spine absolute top-0 left-0 w-4 h-full z-10"></div>
+                    <div
+                        class="p-6 flex flex-col h-full items-center justify-center text-center border-2 border-white/10 m-3 rounded-sm">
+                        <h3 class="font-serif text-2xl text-[#ecf0f1] mb-2 leading-tight">The Silent Ocean</h3>
+                        <div class="w-8 h-px bg-libris-gold my-4"></div>
+                        <p class="text-xs tracking-widest text-gray-400 uppercase">Arthur Vance</p>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <h4 class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                        The Silent Ocean</h4>
+                    <p class="text-sm text-gray-500">Fiction • 2023</p>
+                </div>
+            </div>
+
+            <!-- Book 2 -->
+            <div class="flex-none w-64 snap-center group cursor-pointer">
+                <div
+                    class="relative h-96 w-full rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-2 bg-[#8e44ad] flex flex-col overflow-hidden border-l-4 border-[#6c3483]">
+                    <div class="book-spine absolute top-0 left-0 w-4 h-full z-10"></div>
+                    <div
+                        class="p-6 flex flex-col h-full items-center justify-between text-center border border-white/20 m-3 rounded-sm">
+                        <div class="mt-8 text-white/80"><i data-lucide="star" size="24"></i></div>
+                        <h3 class="font-serif text-3xl italic text-white mb-2 leading-none">Starlight<br>Dust</h3>
+                        <p class="text-xs tracking-widest text-white/70 uppercase mb-8">E.J. Halloway</p>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <h4 class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                        Starlight Dust</h4>
+                    <p class="text-sm text-gray-500">Sci-Fi • 2021</p>
+                </div>
+            </div>
+
+            <!-- Book 3 -->
+            <div class="flex-none w-64 snap-center group cursor-pointer">
+                <div
+                    class="relative h-96 w-full rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-2 bg-[#d35400] flex flex-col overflow-hidden border-l-4 border-[#a04000]">
+                    <div class="book-spine absolute top-0 left-0 w-4 h-full z-10"></div>
+                    <div
+                        class="p-6 flex flex-col h-full items-center justify-center text-center m-3 rounded-sm relative">
+                        <!-- Pattern -->
+                        <div class="absolute inset-0 opacity-10"
+                            style="background-image: radial-gradient(circle, white 2px, transparent 2.5px); background-size: 20px 20px;">
+                        </div>
+                        <h3
+                            class="font-serif text-2xl font-bold text-white z-10 uppercase tracking-widest border-4 border-white p-4">
+                            Modern<br>Rust</h3>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <h4 class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                        Modern Rust</h4>
+                    <p class="text-sm text-gray-500">Architecture • 2022</p>
+                </div>
+            </div>
+
+            <!-- Book 4 -->
+            <div class="flex-none w-64 snap-center group cursor-pointer">
+                <div
+                    class="relative h-96 w-full rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-2 bg-[#27ae60] flex flex-col overflow-hidden border-l-4 border-[#1e8449]">
+                    <div class="book-spine absolute top-0 left-0 w-4 h-full z-10"></div>
+                    <div class="p-6 flex flex-col h-full items-center justify-start text-center m-3 rounded-sm">
+                        <div class="w-16 h-16 rounded-full bg-white/20 mt-10 mb-6"></div>
+                        <h3 class="font-sans font-light text-3xl text-white mb-2 leading-tight">Botany<br>& Soul</h3>
+                        <p class="text-xs tracking-widest text-green-100 uppercase mt-auto mb-4">Sarah Field</p>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <h4 class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                        Botany & Soul</h4>
+                    <p class="text-sm text-gray-500">Nature • 2020</p>
+                </div>
+            </div>
+
+            <!-- Book 5 -->
+            <div class="flex-none w-64 snap-center group cursor-pointer">
+                <div
+                    class="relative h-96 w-full rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-2 bg-[#34495e] flex flex-col overflow-hidden border-l-4 border-[#2c3e50]">
+                    <div class="book-spine absolute top-0 left-0 w-4 h-full z-10"></div>
+                    <div
+                        class="p-6 flex flex-col h-full items-center justify-center text-center m-3 rounded-sm border-y-4 border-libris-gold">
+                        <h3 class="font-serif text-2xl text-libris-gold mb-2 leading-tight">The Last<br>Emperor</h3>
+                        <p class="text-xs tracking-widest text-gray-400 uppercase mt-4">P.K. Dick</p>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <h4 class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                        The Last Emperor</h4>
+                    <p class="text-sm text-gray-500">History • 2019</p>
+                </div>
+            </div>
+            <!-- Book 5 -->
+            <div class="flex-none w-64 snap-center group cursor-pointer">
+                <div
+                    class="relative h-96 w-full rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-2 bg-[#34495e] flex flex-col overflow-hidden border-l-4 border-[#2c3e50]">
+                    <div class="book-spine absolute top-0 left-0 w-4 h-full z-10"></div>
+                    <div
+                        class="p-6 flex flex-col h-full items-center justify-center text-center m-3 rounded-sm border-y-4 border-libris-gold">
+                        <h3 class="font-serif text-2xl text-libris-gold mb-2 leading-tight">The Last<br>Emperor</h3>
+                        <p class="text-xs tracking-widest text-gray-400 uppercase mt-4">P.K. Dick</p>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <h4 class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                        The Last Emperor</h4>
+                    <p class="text-sm text-gray-500">History • 2019</p>
+                </div>
+            </div>
+            <!-- Book 5 -->
+            <div class="flex-none w-64 snap-center group cursor-pointer">
+                <div
+                    class="relative h-96 w-full rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-2 bg-[#34495e] flex flex-col overflow-hidden border-l-4 border-[#2c3e50]">
+                    <div class="book-spine absolute top-0 left-0 w-4 h-full z-10"></div>
+                    <div
+                        class="p-6 flex flex-col h-full items-center justify-center text-center m-3 rounded-sm border-y-4 border-libris-gold">
+                        <h3 class="font-serif text-2xl text-libris-gold mb-2 leading-tight">The Last<br>Emperor</h3>
+                        <p class="text-xs tracking-widest text-gray-400 uppercase mt-4">P.K. Dick</p>
+                    </div>
+                </div>
+                <div class="mt-4 text-center">
+                    <h4 class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                        The Last Emperor</h4>
+                    <p class="text-sm text-gray-500">History • 2019</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals & Status -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h2 class="font-serif text-3xl md:text-4xl font-bold text-libris-charcoal mb-10 text-center">New Arrivals
+            </h2>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Item 1 -->
+                <div
+                    class="flex gap-4 p-4 rounded-xl hover:bg-libris-stone transition-colors border border-transparent hover:border-gray-100 group">
+                    <div class="w-24 h-36 bg-gray-200 rounded shadow-md shrink-0 bg-cover bg-center"
+                        style="background-image: linear-gradient(135deg, #1c4a33 0%, #2a6b4a 100%)">
+                        <!-- Abstract Cover -->
+                        <div
+                            class="w-full h-full flex items-center justify-center text-white/50 text-xs text-center p-1">
+                            <span class="font-serif">Algorithms of Life</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between py-1 w-full">
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <h3
+                                    class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    Algorithms of Life</h3>
+                                <span
+                                    class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full font-medium border border-green-200">Available</span>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-2">by Marcus Chen</p>
+                            <div class="flex text-yellow-400 text-xs">
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star-half" size="14" fill="currentColor"></i>
+                                <span class="text-gray-400 ml-1">(4.8)</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-xs text-gray-400">Non-Fiction</span>
+                            <button
+                                class="text-libris-green hover:text-libris-gold text-sm font-semibold flex items-center gap-1 transition-colors">
+                                Details <i data-lucide="arrow-right" size="14"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div
+                    class="flex gap-4 p-4 rounded-xl hover:bg-libris-stone transition-colors border border-transparent hover:border-gray-100 group">
+                    <div class="w-24 h-36 bg-gray-200 rounded shadow-md shrink-0 bg-cover bg-center"
+                        style="background-image: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%)">
+                        <div
+                            class="w-full h-full flex items-center justify-center text-white/50 text-xs text-center p-1">
+                            <span class="font-serif">Red Horizon</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between py-1 w-full">
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <h3
+                                    class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    Red Horizon</h3>
+                                <span
+                                    class="bg-orange-100 text-orange-800 text-xs px-2 py-0.5 rounded-full font-medium border border-orange-200">Waitlist
+                                    (2)</span>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-2">by Sarah J. Connor</p>
+                            <div class="flex text-yellow-400 text-xs">
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <span class="text-gray-400 ml-1">(5.0)</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-xs text-gray-400">Thriller</span>
+                            <button
+                                class="text-libris-green hover:text-libris-gold text-sm font-semibold flex items-center gap-1 transition-colors">
+                                Details <i data-lucide="arrow-right" size="14"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div
+                    class="flex gap-4 p-4 rounded-xl hover:bg-libris-stone transition-colors border border-transparent hover:border-gray-100 group">
+                    <div class="w-24 h-36 bg-gray-200 rounded shadow-md shrink-0 bg-cover bg-center"
+                        style="background-image: linear-gradient(135deg, #2980b9 0%, #3498db 100%)">
+                        <div
+                            class="w-full h-full flex items-center justify-center text-white/50 text-xs text-center p-1">
+                            <span class="font-serif">Deep Water</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col justify-between py-1 w-full">
+                        <div>
+                            <div class="flex justify-between items-start">
+                                <h3
+                                    class="font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    Deep Water</h3>
+                                <span
+                                    class="bg-green-100 text-green-800 text-xs px-2 py-0.5 rounded-full font-medium border border-green-200">Available</span>
+                            </div>
+                            <p class="text-gray-500 text-sm mb-2">by T.K. Rowling</p>
+                            <div class="flex text-yellow-400 text-xs">
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" class="text-gray-300"></i>
+                                <span class="text-gray-400 ml-1">(4.2)</span>
+                            </div>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-xs text-gray-400">Mystery</span>
+                            <button
+                                class="text-libris-green hover:text-libris-gold text-sm font-semibold flex items-center gap-1 transition-colors">
+                                Details <i data-lucide="arrow-right" size="14"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-libris-green text-white/80 py-12 border-t-4 border-libris-gold">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4 text-white">
+                        <i data-lucide="library" size="24"></i>
+                        <span class="font-serif text-2xl font-bold">Libris</span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-white/60">
+                        Connecting minds through the power of shared stories.
+                        A modern approach to the timeless library.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Discover</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Best Sellers</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Collections</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Reading Lists</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Delivery Info</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Return Policy</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Stay Informed</h4>
+                    <div class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email address"
+                            class="bg-white/10 border border-white/20 text-white px-4 py-2 rounded focus:outline-none focus:border-libris-gold text-sm placeholder-white/40">
+                        <button
+                            class="bg-libris-gold text-libris-charcoal font-bold px-4 py-2 rounded hover:bg-white transition-colors text-sm">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
+                <p>&copy; 2024 Libris Borrowing Service. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram" size="18"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="twitter" size="18"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="facebook" size="18"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            // Animate Icon change if desired, strictly strictly toggle for now
+        });
+
+        // Horizontal Scroll Buttons
+        const scrollContainer = document.getElementById('books-scroll');
+        const leftBtn = document.getElementById('scroll-left');
+        const rightBtn = document.getElementById('scroll-right');
+
+        if (scrollContainer && leftBtn && rightBtn) {
+            leftBtn.addEventListener('click', () => {
+                scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+            });
+
+            rightBtn.addEventListener('click', () => {
+                scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+            });
+        }
+    </script>
+</body>
+
+</html>

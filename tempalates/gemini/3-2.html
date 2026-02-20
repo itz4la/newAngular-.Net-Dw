@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Collection | Libris</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap"
+        rel="stylesheet">
+
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        libris: {
+                            stone: '#fafaf9',   /* Warm Stone */
+                            cream: '#f5f5f4',   /* Soft Cream */
+                            green: '#1c4a33',   /* Deep Forest Green */
+                            greenLight: '#2a6b4a',
+                            charcoal: '#374151',/* Charcoal Gray */
+                            gold: '#d4a373',    /* Muted Gold */
+                            paper: '#fffdf5',   /* Slight yellowish paper tone for books */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    boxShadow: {
+                        'book': '2px 4px 8px -1px rgba(0, 0, 0, 0.15), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        'book-hover': '4px 8px 12px -2px rgba(0, 0, 0, 0.2), 0 4px 6px -2px rgba(0, 0, 0, 0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #fafaf9;
+            /* libris-stone */
+            color: #374151;
+            /* libris-charcoal */
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Book Cover Gradients & Spines */
+        .book-cover-1 {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+        }
+
+        .book-cover-2 {
+            background: linear-gradient(135deg, #8e44ad 0%, #9b59b6 100%);
+        }
+
+        .book-cover-3 {
+            background: linear-gradient(135deg, #d35400 0%, #e67e22 100%);
+        }
+
+        .book-cover-4 {
+            background: linear-gradient(135deg, #27ae60 0%, #2ecc71 100%);
+        }
+
+        .book-cover-5 {
+            background: linear-gradient(135deg, #c0392b 0%, #e74c3c 100%);
+        }
+
+        .book-cover-6 {
+            background: linear-gradient(135deg, #2980b9 0%, #3498db 100%);
+        }
+
+        .book-spine {
+            background: linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 20%, rgba(0, 0, 0, 0.1) 100%);
+            box-shadow: inset 2px 0 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Form Checkbox Styling */
+        .checkbox-custom:checked {
+            background-color: #1c4a33;
+            border-color: #1c4a33;
+        }
+
+        /* Toggle Switch */
+        .toggle-checkbox:checked {
+            right: 0;
+            border-color: #1c4a33;
+        }
+
+        .toggle-checkbox:checked+.toggle-label {
+            background-color: #1c4a33;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased selection:bg-libris-gold/30 flex flex-col min-h-screen">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 top-0 transition-all duration-300 shadow-sm" id="navbar">
+        <div class="absolute inset-0 bg-libris-stone/90 backdrop-blur-md border-b border-libris-charcoal/10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="flex justify-between items-center h-20">
+                <!-- Logo -->
+                <a href="index.html" class="flex-shrink-0 flex items-center gap-2 cursor-pointer group">
+                    <div
+                        class="w-10 h-10 bg-libris-green text-libris-stone rounded-lg flex items-center justify-center shadow-md group-hover:bg-libris-greenLight transition-colors">
+                        <i data-lucide="library" size="20"></i>
+                    </div>
+                    <span class="font-serif text-2xl font-bold text-libris-green tracking-tight">Libris</span>
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="text-libris-green font-medium transition-colors">Browse</a>
+                    <a href="#" class="text-libris-charcoal hover:text-libris-green font-medium transition-colors">How
+                        It Works</a>
+                    <a href="#" class="text-libris-charcoal hover:text-libris-green font-medium transition-colors">My
+                        Loans</a>
+                    <div class="h-6 w-px bg-libris-charcoal/20"></div>
+                    <button class="text-libris-charcoal hover:text-libris-green transition-colors">
+                        <i data-lucide="search" size="20"></i>
+                    </button>
+                    <button
+                        class="bg-libris-green text-white px-6 py-2.5 rounded-full font-medium hover:bg-libris-greenLight transition-all shadow-md hover:shadow-lg transform hover:-translate-y-0.5">
+                        Sign In
+                    </button>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-libris-charcoal hover:text-libris-green p-2">
+                        <i data-lucide="menu" size="24"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu"
+            class="hidden md:hidden absolute top-20 left-0 w-full bg-libris-stone border-b border-libris-charcoal/10 shadow-lg animate-fade-in-down">
+            <div class="px-4 pt-2 pb-6 space-y-2">
+                <a href="#"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-green bg-libris-cream">Browse
+                    Collection</a>
+                <a href="#"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-charcoal hover:bg-libris-cream hover:text-libris-green">How
+                    It Works</a>
+                <a href="#"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-libris-charcoal hover:bg-libris-cream hover:text-libris-green">My
+                    Loans</a>
+                <div class="border-t border-libris-charcoal/10 my-2"></div>
+                <button
+                    class="w-full text-left block px-3 py-3 rounded-md text-base font-medium text-libris-green font-bold">Sign
+                    In</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="pt-32 pb-10 bg-libris-cream/50 border-b border-libris-charcoal/5">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex text-sm text-gray-500 mb-4" aria-label="Breadcrumb">
+                <ol class="flex items-center space-x-2">
+                    <li><a href="index.html" class="hover:text-libris-green transition-colors">Home</a></li>
+                    <li><i data-lucide="chevron-right" size="14"></i></li>
+                    <li class="font-medium text-libris-charcoal">Browse</li>
+                </ol>
+            </nav>
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+                <div>
+                    <h1 class="font-serif text-4xl md:text-5xl font-bold text-libris-charcoal">Explore our Library</h1>
+                    <p class="mt-2 text-gray-600 font-light">Curated collections for the modern intellectual.</p>
+                </div>
+                <!-- Mobile Filter Toggle -->
+                <button id="filter-toggle"
+                    class="md:hidden flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-lg shadow-sm text-libris-charcoal font-medium">
+                    <i data-lucide="sliders-horizontal" size="18"></i> Filters
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Layout -->
+    <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-8 lg:gap-12">
+
+            <!-- Sidebar / Filters -->
+            <aside id="sidebar-filters" class="hidden md:block col-span-1 space-y-8">
+                <!-- Categories -->
+                <div>
+                    <h3
+                        class="font-serif text-lg font-bold text-libris-charcoal mb-4 border-b border-libris-charcoal/10 pb-2">
+                        Categories</h3>
+                    <div class="space-y-3">
+                        <label class="flex items-center space-x-3 cursor-pointer group">
+                            <input type="checkbox"
+                                class="form-checkbox h-4 w-4 text-libris-green border-gray-300 rounded focus:ring-libris-green checkbox-custom transition duration-150 ease-in-out">
+                            <span class="text-gray-600 group-hover:text-libris-green transition-colors">Fiction</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group">
+                            <input type="checkbox"
+                                class="form-checkbox h-4 w-4 text-libris-green border-gray-300 rounded focus:ring-libris-green checkbox-custom transition duration-150 ease-in-out">
+                            <span class="text-gray-600 group-hover:text-libris-green transition-colors">Science &
+                                Tech</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group">
+                            <input type="checkbox"
+                                class="form-checkbox h-4 w-4 text-libris-green border-gray-300 rounded focus:ring-libris-green checkbox-custom transition duration-150 ease-in-out">
+                            <span class="text-gray-600 group-hover:text-libris-green transition-colors">History</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group">
+                            <input type="checkbox"
+                                class="form-checkbox h-4 w-4 text-libris-green border-gray-300 rounded focus:ring-libris-green checkbox-custom transition duration-150 ease-in-out">
+                            <span class="text-gray-600 group-hover:text-libris-green transition-colors">Biography</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group">
+                            <input type="checkbox"
+                                class="form-checkbox h-4 w-4 text-libris-green border-gray-300 rounded focus:ring-libris-green checkbox-custom transition duration-150 ease-in-out">
+                            <span
+                                class="text-gray-600 group-hover:text-libris-green transition-colors">Philosophy</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer group">
+                            <input type="checkbox"
+                                class="form-checkbox h-4 w-4 text-libris-green border-gray-300 rounded focus:ring-libris-green checkbox-custom transition duration-150 ease-in-out">
+                            <span class="text-gray-600 group-hover:text-libris-green transition-colors">Arts &
+                                Design</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Availability Toggle -->
+                <div>
+                    <h3
+                        class="font-serif text-lg font-bold text-libris-charcoal mb-4 border-b border-libris-charcoal/10 pb-2">
+                        Availability</h3>
+                    <div class="flex items-center justify-between">
+                        <span class="text-gray-600 text-sm">Available Now</span>
+                        <div
+                            class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                            <input type="checkbox" name="toggle" id="toggle"
+                                class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-4 appearance-none cursor-pointer border-gray-300 transition-all duration-300" />
+                            <label for="toggle"
+                                class="toggle-label block overflow-hidden h-5 rounded-full bg-gray-300 cursor-pointer transition-colors duration-300"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Rating -->
+                <div>
+                    <h3
+                        class="font-serif text-lg font-bold text-libris-charcoal mb-4 border-b border-libris-charcoal/10 pb-2">
+                        Rating</h3>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-2 cursor-pointer group">
+                            <input type="radio" name="rating" class="text-libris-green focus:ring-libris-green">
+                            <div class="flex text-libris-gold text-xs">
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                            </div>
+                            <span class="text-sm text-gray-500">(5.0)</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer group">
+                            <input type="radio" name="rating" class="text-libris-green focus:ring-libris-green">
+                            <div class="flex text-libris-gold text-xs">
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" class="text-gray-300"></i>
+                            </div>
+                            <span class="text-sm text-gray-500">(4.0+)</span>
+                        </label>
+                        <label class="flex items-center space-x-2 cursor-pointer group">
+                            <input type="radio" name="rating" class="text-libris-green focus:ring-libris-green">
+                            <div class="flex text-libris-gold text-xs">
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" fill="currentColor"></i>
+                                <i data-lucide="star" size="14" class="text-gray-300"></i>
+                                <i data-lucide="star" size="14" class="text-gray-300"></i>
+                            </div>
+                            <span class="text-sm text-gray-500">(3.0+)</span>
+                        </label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Product Grid -->
+            <div class="col-span-1 md:col-span-3">
+
+                <!-- Sort Bar -->
+                <div class="flex justify-between items-center mb-6 pb-4 border-b border-gray-200">
+                    <span class="text-sm text-gray-500">Showing <span
+                            class="font-semibold text-libris-charcoal">12</span> of <span
+                            class="font-semibold text-libris-charcoal">84</span> results</span>
+                    <select
+                        class="bg-transparent text-sm text-libris-charcoal border-none focus:ring-0 cursor-pointer font-medium hover:text-libris-green transition-colors">
+                        <option>Sort by: Featured</option>
+                        <option>Newest Arrivals</option>
+                        <option>Rating: High to Low</option>
+                        <option>Alphabetical</option>
+                    </select>
+                </div>
+
+                <!-- The Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <!-- Book Card 1 -->
+                    <div class="group flex flex-col">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-1 flex flex-col overflow-hidden border-l-4 border-gray-800">
+                            <div class="book-spine absolute top-0 left-0 w-3 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-6 text-center border-2 border-white/10 m-3 rounded-sm">
+                                <h3 class="font-serif text-xl text-gray-100 leading-tight mb-2">The Silent<br>Ocean</h3>
+                                <div class="w-6 h-px bg-libris-gold my-2"></div>
+                                <p class="text-[10px] tracking-widest text-gray-400 uppercase">Arthur Vance</p>
+                            </div>
+                            <div class="absolute top-2 right-2">
+                                <span
+                                    class="bg-white/90 backdrop-blur text-libris-green text-[10px] font-bold px-2 py-0.5 rounded shadow-sm">NEW</span>
+                            </div>
+                        </div>
+                        <div class="mt-4 space-y-1">
+                            <div class="flex justify-between items-start">
+                                <h4
+                                    class="font-serif font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    The Silent Ocean</h4>
+                                <span
+                                    class="text-xs font-medium text-libris-green bg-green-50 px-2 py-0.5 rounded border border-green-100">Available</span>
+                            </div>
+                            <p class="text-sm text-gray-500">Arthur Vance</p>
+                            <button
+                                class="w-full mt-3 py-2 border border-libris-green text-libris-green font-medium text-sm rounded hover:bg-libris-green hover:text-white transition-all duration-200">
+                                Borrow
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Book Card 2 -->
+                    <div class="group flex flex-col">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-2 flex flex-col overflow-hidden border-l-4 border-purple-900">
+                            <div class="book-spine absolute top-0 left-0 w-3 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-between p-6 text-center border border-white/20 m-3 rounded-sm">
+                                <div class="mt-4 text-white/80"><i data-lucide="star" size="16"></i></div>
+                                <h3 class="font-serif text-2xl italic text-white leading-none">Starlight<br>Dust</h3>
+                                <p class="text-[10px] tracking-widest text-white/70 uppercase mb-4">E.J. Halloway</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 space-y-1">
+                            <div class="flex justify-between items-start">
+                                <h4
+                                    class="font-serif font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    Starlight Dust</h4>
+                                <span
+                                    class="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-0.5 rounded border border-orange-100">Waitlist</span>
+                            </div>
+                            <p class="text-sm text-gray-500">E.J. Halloway</p>
+                            <button
+                                class="w-full mt-3 py-2 border border-libris-green text-libris-green font-medium text-sm rounded hover:bg-libris-green hover:text-white transition-all duration-200">
+                                Join Waitlist
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Book Card 3 -->
+                    <div class="group flex flex-col">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-3 flex flex-col overflow-hidden border-l-4 border-orange-900">
+                            <div class="book-spine absolute top-0 left-0 w-3 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-4 text-center m-3 rounded-sm relative">
+                                <div class="absolute inset-0 opacity-10"
+                                    style="background-image: radial-gradient(circle, white 2px, transparent 2.5px); background-size: 15px 15px;">
+                                </div>
+                                <h3
+                                    class="font-serif text-xl font-bold text-white z-10 uppercase tracking-widest border-2 border-white p-2">
+                                    Modern<br>Rust</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 space-y-1">
+                            <div class="flex justify-between items-start">
+                                <h4
+                                    class="font-serif font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    Modern Rust</h4>
+                                <span
+                                    class="text-xs font-medium text-libris-green bg-green-50 px-2 py-0.5 rounded border border-green-100">Available</span>
+                            </div>
+                            <p class="text-sm text-gray-500">Sarah Field</p>
+                            <button
+                                class="w-full mt-3 py-2 border border-libris-green text-libris-green font-medium text-sm rounded hover:bg-libris-green hover:text-white transition-all duration-200">
+                                Borrow
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Book Card 4 -->
+                    <div class="group flex flex-col">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-4 flex flex-col overflow-hidden border-l-4 border-green-900">
+                            <div class="book-spine absolute top-0 left-0 w-3 h-full z-10"></div>
+                            <div class="flex-1 flex flex-col items-center justify-start p-6 text-center m-3 rounded-sm">
+                                <div class="w-12 h-12 rounded-full bg-white/20 mt-4 mb-4"></div>
+                                <h3 class="font-sans font-light text-2xl text-white leading-tight">Botany<br>& Soul</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 space-y-1">
+                            <div class="flex justify-between items-start">
+                                <h4
+                                    class="font-serif font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    Botany & Soul</h4>
+                                <span
+                                    class="text-xs font-medium text-libris-green bg-green-50 px-2 py-0.5 rounded border border-green-100">Available</span>
+                            </div>
+                            <p class="text-sm text-gray-500">Sarah Field</p>
+                            <button
+                                class="w-full mt-3 py-2 border border-libris-green text-libris-green font-medium text-sm rounded hover:bg-libris-green hover:text-white transition-all duration-200">
+                                Borrow
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Book Card 5 -->
+                    <div class="group flex flex-col">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-5 flex flex-col overflow-hidden border-l-4 border-red-900">
+                            <div class="book-spine absolute top-0 left-0 w-3 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-6 text-center m-3 rounded-sm">
+                                <h3 class="font-serif text-xl font-bold text-white uppercase tracking-wider mb-1">
+                                    Red<br>Horizon</h3>
+                            </div>
+                        </div>
+                        <div class="mt-4 space-y-1">
+                            <div class="flex justify-between items-start">
+                                <h4
+                                    class="font-serif font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    Red Horizon</h4>
+                                <span
+                                    class="text-xs font-medium text-libris-green bg-green-50 px-2 py-0.5 rounded border border-green-100">Available</span>
+                            </div>
+                            <p class="text-sm text-gray-500">Sarah J. Connor</p>
+                            <button
+                                class="w-full mt-3 py-2 border border-libris-green text-libris-green font-medium text-sm rounded hover:bg-libris-green hover:text-white transition-all duration-200">
+                                Borrow
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Book Card 6 -->
+                    <div class="group flex flex-col">
+                        <div
+                            class="relative w-full aspect-[2/3] rounded-r-lg rounded-l-sm shadow-book group-hover:shadow-book-hover transition-all duration-300 transform group-hover:-translate-y-1 book-cover-6 flex flex-col overflow-hidden border-l-4 border-blue-900">
+                            <div class="book-spine absolute top-0 left-0 w-3 h-full z-10"></div>
+                            <div
+                                class="flex-1 flex flex-col items-center justify-center p-6 text-center m-3 rounded-sm">
+                                <h3 class="font-serif text-xl font-bold text-white mb-1">Deep<br>Water</h3>
+                                <div class="w-full h-px bg-white/30 my-2"></div>
+                                <p class="text-[10px] text-white/80">A Mystery</p>
+                            </div>
+                        </div>
+                        <div class="mt-4 space-y-1">
+                            <div class="flex justify-between items-start">
+                                <h4
+                                    class="font-serif font-bold text-lg text-libris-charcoal group-hover:text-libris-green transition-colors">
+                                    Deep Water</h4>
+                                <span
+                                    class="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-0.5 rounded border border-orange-100">Waitlist</span>
+                            </div>
+                            <p class="text-sm text-gray-500">T.K. Rowling</p>
+                            <button
+                                class="w-full mt-3 py-2 border border-libris-green text-libris-green font-medium text-sm rounded hover:bg-libris-green hover:text-white transition-all duration-200">
+                                Join Waitlist
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Pagination -->
+                <div class="mt-16 flex justify-center">
+                    <nav class="flex items-center space-x-2">
+                        <button
+                            class="p-2 rounded-md border border-gray-300 text-gray-500 hover:bg-libris-green hover:text-white hover:border-libris-green transition-colors disabled:opacity-50">
+                            <span class="sr-only">Previous</span>
+                            <i data-lucide="chevron-left" size="18"></i>
+                        </button>
+                        <button
+                            class="px-4 py-2 rounded-md border border-libris-green bg-libris-green text-white font-medium">1</button>
+                        <button
+                            class="px-4 py-2 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors">2</button>
+                        <button
+                            class="px-4 py-2 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors">3</button>
+                        <span class="px-2 text-gray-400">...</span>
+                        <button
+                            class="px-4 py-2 rounded-md border border-gray-300 text-gray-600 hover:bg-gray-50 transition-colors">12</button>
+                        <button
+                            class="p-2 rounded-md border border-gray-300 text-gray-500 hover:bg-libris-green hover:text-white hover:border-libris-green transition-colors">
+                            <span class="sr-only">Next</span>
+                            <i data-lucide="chevron-right" size="18"></i>
+                        </button>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-libris-green text-white/80 py-12 border-t-4 border-libris-gold mt-auto">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="col-span-1 md:col-span-1">
+                    <div class="flex items-center gap-2 mb-4 text-white">
+                        <i data-lucide="library" size="24"></i>
+                        <span class="font-serif text-2xl font-bold">Libris</span>
+                    </div>
+                    <p class="text-sm leading-relaxed text-white/60">
+                        Connecting minds through the power of shared stories.
+                        A modern approach to the timeless library.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Discover</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">New Arrivals</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Best Sellers</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Collections</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Reading Lists</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Support</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Delivery Info</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Return Policy</a></li>
+                        <li><a href="#" class="hover:text-libris-gold transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-serif font-bold mb-4">Stay Informed</h4>
+                    <div class="flex flex-col gap-2">
+                        <input type="email" placeholder="Your email address"
+                            class="bg-white/10 border border-white/20 text-white px-4 py-2 rounded focus:outline-none focus:border-libris-gold text-sm placeholder-white/40">
+                        <button
+                            class="bg-libris-gold text-libris-charcoal font-bold px-4 py-2 rounded hover:bg-white transition-colors text-sm">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-white/10 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-white/40">
+                <p>&copy; 2024 Libris Borrowing Service. All rights reserved.</p>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="instagram" size="18"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="twitter" size="18"></i></a>
+                    <a href="#" class="hover:text-white transition-colors"><i data-lucide="facebook" size="18"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 20) {
+                navbar.classList.add('shadow-md');
+            } else {
+                navbar.classList.remove('shadow-md');
+            }
+        });
+
+        // Mobile Menu Toggle
+        const mobileBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        if (mobileBtn && mobileMenu) {
+            mobileBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+
+        // Mobile Filter Drawer Toggle
+        const filterToggle = document.getElementById('filter-toggle');
+        const sidebarFilters = document.getElementById('sidebar-filters');
+
+        if (filterToggle && sidebarFilters) {
+            filterToggle.addEventListener('click', () => {
+                // For simplicity in this vanilla JS demo, we just toggle visibility
+                // In a real drawer implementation, we'd add overlay/animations
+                sidebarFilters.classList.toggle('hidden');
+
+                // Add specific styling if showing on mobile
+                if (!sidebarFilters.classList.contains('hidden')) {
+                    sidebarFilters.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        }
+    </script>
+</body>
+
+</html>

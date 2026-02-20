@@ -1,0 +1,89 @@
+<div class="text-stone-800 antialiased font-sans min-h-screen flex flex-col">
+  <!-- Navigation -->
+  <nav class="glass-nav fixed w-full z-50 top-0 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <div class="flex items-center cursor-pointer group" routerLink="/client/home">
+          <div
+            class="w-10 h-10 bg-forest-800 rounded-lg flex items-center justify-center text-white mr-3 shadow-sm group-hover:bg-forest-900 transition-colors">
+            <i-lucide [img]="Icons.Library" class="w-6 h-6"></i-lucide>
+          </div>
+          <span class="font-serif text-2xl font-bold text-forest-800 tracking-tight">Libris</span>
+        </div>
+
+        <!-- Desktop Links -->
+        <div class="hidden md:flex space-x-8 items-center">
+          <a  routerLink="/client/home" routerLinkActive="text-forest-800" class="text-stone-600 hover:text-forest-800 font-medium transition-colors">Home</a>
+          <a  routerLink="/client/browse" routerLinkActive="text-forest-800" class="text-stone-600 hover:text-forest-800 font-medium transition-colors">Browse</a>
+          <a  routerLink="/client/my-purchase" routerLinkActive="text-forest-800" class="text-stone-600 hover:text-forest-800 font-medium transition-colors">My Loans</a>
+        </div>
+
+        <!-- Actions -->
+        <div class="hidden md:flex items-center space-x-4">
+          <button class="p-2 text-stone-500 hover:text-forest-800 transition-colors">
+            <i-lucide [img]="Icons.Search" class="w-5 h-5"></i-lucide>
+          </button>
+          <div class="w-px h-6 bg-stone-300 mx-2"></div>
+          <div class="flex items-center gap-3" routerLink="/client/profile">
+            <div class="w-8 h-8 rounded-full bg-stone-200 overflow-hidden ring-2 ring-forest-800/10">
+              <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User" />
+            </div>
+            <span class="text-sm font-medium text-forest-800">Felix</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <router-outlet></router-outlet>
+
+  <!-- Footer -->
+  <footer class="bg-stone-900 text-stone-400 py-12 border-t border-stone-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+      <div class="col-span-1 md:col-span-1">
+        <div class="flex items-center text-white mb-4">
+          <i-lucide [img]="Icons.Library" class="w-6 h-6 mr-2"></i-lucide>
+          <span class="font-serif text-xl font-bold">Libris</span>
+        </div>
+        <p class="text-sm leading-relaxed">Connecting people with knowledge. We believe in the power of books to
+          change lives.</p>
+      </div>
+
+      <div>
+        <h4 class="text-white font-bold mb-4">Discover</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">New Arrivals</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Best Sellers</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Staff Picks</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Collections</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-bold mb-4">Support</h4>
+        <ul class="space-y-2 text-sm">
+          <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Return Policy</a></li>
+          <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-white font-bold mb-4">Newsletter</h4>
+          <div class="flex gap-2">
+          <input type="email" placeholder="Email address"
+            class="bg-stone-800 border-none rounded-lg px-3 py-2 text-sm w-full focus:ring-1 focus:ring-forest-500 outline-none">
+          <button class="bg-forest-800 text-white px-3 py-2 rounded-lg hover:bg-forest-700 transition-colors">
+            <i-lucide [img]="Icons.ArrowRight" class="w-4 h-4"></i-lucide>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 pt-8 border-t border-stone-800 text-center text-xs">
+      &copy; 2024 Libris Inc. All rights reserved.
+    </div>
+  </footer>
+
+
+</div>
