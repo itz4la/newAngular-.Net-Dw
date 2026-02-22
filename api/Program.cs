@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using api.models;
+using api.Repositories.Analytics;
 using api.Repositories.Book;
 using api.Repositories.Genre;
 using api.Repositories.Loan;
@@ -27,9 +28,13 @@ namespace api
             var chaine = builder.Configuration.GetConnectionString("cnx");
             builder.Services.AddDbContext<ApplicationContext>(options => options.UseSqlServer(chaine));
 
+            builder.Services.AddDbContext<DWContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DataWarehouseDb")));
+
             builder.Services.AddScoped<IBookRepository, BookRepository>();
             builder.Services.AddScoped<IGenreRepository, GenreRepository>();
             builder.Services.AddScoped<ILoanRepository, LoanRepository>();
+            builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
 
             builder.Services.AddSwaggerGen();
 

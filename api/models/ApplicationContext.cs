@@ -5,7 +5,7 @@ namespace api.models
     {
     public class ApplicationContext : IdentityDbContext<ApplicationUser>
         {
-        public ApplicationContext(DbContextOptions options) : base(options) { }
+        public ApplicationContext(DbContextOptions<ApplicationContext> options) : base(options) { }
 
         public DbSet<Book> Books { get; set; }
         public DbSet<Genre> Genres { get; set; }

@@ -10,3 +10,15 @@ C:\iit\project\Angular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.dll
 C:\iit\project\Angular-.Net-Dw\domaine\obj\Debug\net10.0\refint\domaine.dll
 C:\iit\project\Angular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.pdb
 C:\iit\project\Angular-.Net-Dw\domaine\obj\Debug\net10.0\ref\domaine.dll
+C:\iit\project\newAngular-.Net-Dw\domaine\bin\Debug\net10.0\domaine.deps.json
+C:\iit\project\newAngular-.Net-Dw\domaine\bin\Debug\net10.0\domaine.dll
+C:\iit\project\newAngular-.Net-Dw\domaine\bin\Debug\net10.0\domaine.pdb
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.GeneratedMSBuildEditorConfig.editorconfig
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.AssemblyInfoInputs.cache
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.AssemblyInfo.cs
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.csproj.CoreCompileInputs.cache
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.sourcelink.json
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.dll
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\refint\domaine.dll
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\domaine.pdb
+C:\iit\project\newAngular-.Net-Dw\domaine\obj\Debug\net10.0\ref\domaine.dll

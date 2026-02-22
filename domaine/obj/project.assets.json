@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\iit\\project\\Angular-.Net-Dw\\domaine\\domaine.csproj",
+      "projectUniqueName": "C:\\iit\\project\\newAngular-.Net-Dw\\domaine\\domaine.csproj",
       "projectName": "domaine",
-      "projectPath": "C:\\iit\\project\\Angular-.Net-Dw\\domaine\\domaine.csproj",
+      "projectPath": "C:\\iit\\project\\newAngular-.Net-Dw\\domaine\\domaine.csproj",
       "packagesPath": "C:\\Users\\alame\\.nuget\\packages\\",
-      "outputPath": "C:\\iit\\project\\Angular-.Net-Dw\\domaine\\obj\\",
+      "outputPath": "C:\\iit\\project\\newAngular-.Net-Dw\\domaine\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
