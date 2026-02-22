@@ -1,0 +1,10 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="Source_WWI"
+  DTS:DTSID="{23BA4DE6-59CE-46ED-B03A-3872D1383876}"
+  DTS:CreationName="ADO">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectionString="Data Source=itsala;Initial Catalog=WideWorldImporters;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-etl-{23BA4DE6-59CE-46ED-B03A-3872D1383876}itsala.WideWorldImporters;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>
