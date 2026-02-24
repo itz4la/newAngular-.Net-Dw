@@ -13,7 +13,7 @@
     <div class="flex flex-col md:flex-row md:items-end justify-between gap-4">
       <div>
         <h1 class="text-3xl md:text-4xl font-serif font-bold text-forest-900">Explore Our Library</h1>
-        <p class="text-stone-500 mt-2">Showing 1-12 of 1,248 books</p>
+        <p class="text-stone-500 mt-2">Showing {{ showingFrom }}-{{ showingTo }} of {{ totalCount }} books</p>
       </div>
 
 
@@ -28,6 +28,8 @@
       <!-- Search within results -->
       <div class="relative">
         <input type="text" placeholder="Filter titles..."
+          [value]="titleFilter"
+          (input)="onTitleInput($any($event.target).value)"
           class="w-full bg-white border border-stone-200 rounded-lg pl-9 pr-3 py-2 text-sm focus:outline-none focus:border-forest-800 focus:ring-1 focus:ring-forest-800">
         <i-lucide [img]="Icons.Search" class="w-4 h-4 text-stone-400 absolute left-3 top-2.5"></i-lucide>
       </div>
@@ -39,64 +41,23 @@
           <i-lucide [img]="Icons.ChevronDown" class="w-4 h-4 text-stone-400"></i-lucide>
         </h3>
         <div class="space-y-2.5">
-          <label class="flex items-center group cursor-pointer">
-            <input type="checkbox"
-              class="w-4 h-4 rounded border-stone-300 text-forest-800 focus:ring-forest-800 cursor-pointer">
-            <span class="ml-3 text-stone-600 text-sm group-hover:text-forest-800 transition-colors">Fiction
-              & Literature</span>
-            <span class="ml-auto text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">420</span>
-          </label>
-          <label class="flex items-center group cursor-pointer">
-            <input type="checkbox" checked
-              class="w-4 h-4 rounded border-stone-300 text-forest-800 focus:ring-forest-800 cursor-pointer">
-            <span class="ml-3 text-stone-600 text-sm group-hover:text-forest-800 transition-colors">Science
-              Fiction</span>
-            <span class="ml-auto text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">128</span>
-          </label>
-          <label class="flex items-center group cursor-pointer">
-            <input type="checkbox"
-              class="w-4 h-4 rounded border-stone-300 text-forest-800 focus:ring-forest-800 cursor-pointer">
-            <span class="ml-3 text-stone-600 text-sm group-hover:text-forest-800 transition-colors">History</span>
-            <span class="ml-auto text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">85</span>
-          </label>
-          <label class="flex items-center group cursor-pointer">
-            <input type="checkbox"
-              class="w-4 h-4 rounded border-stone-300 text-forest-800 focus:ring-forest-800 cursor-pointer">
-            <span class="ml-3 text-stone-600 text-sm group-hover:text-forest-800 transition-colors">Biography</span>
-            <span class="ml-auto text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">64</span>
-          </label>
+          @for (item of genre; track $index) {
+            <label class="flex items-center group cursor-pointer" (click)="onGenreSelect(item.id)">
+              <input type="checkbox" [checked]="selectedGenreId === item.id"
+                class="w-4 h-4 rounded border-stone-300 text-forest-800 focus:ring-forest-800 cursor-pointer"
+                (click)="$event.preventDefault()">
+              <span class="ml-3 text-sm transition-colors"
+                [class.text-forest-800]="selectedGenreId === item.id"
+                [class.font-semibold]="selectedGenreId === item.id"
+                [class.text-stone-600]="selectedGenreId !== item.id"
+                [class.group-hover\:text-forest-800]="selectedGenreId !== item.id">
+                {{ item.name }}</span>
+              <span class="ml-auto text-xs text-stone-400 bg-stone-100 px-2 py-0.5 rounded-full">{{ item.booksCount }}</span>
+            </label>
+          }
         </div>
       </div>
 
-      <!-- Availability Toggle -->
-      <div class="border-t border-stone-200 pt-6">
-        <label class="flex items-center justify-between cursor-pointer group">
-          <span class="font-medium text-stone-700 text-sm">Available Now</span>
-          <div class="relative">
-            <input type="checkbox" class="sr-only peer">
-            <div
-              class="w-11 h-6 bg-stone-200 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-forest-800/20 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-forest-800">
-            </div>
-          </div>
-        </label>
-      </div>
-
-      <!-- Rating Filter -->
-      <div class="border-t border-stone-200 pt-6">
-        <h3 class="font-serif font-bold text-stone-800 mb-4">Rating</h3>
-        <div class="space-y-2">
-          <label class="flex items-center cursor-pointer hover:bg-white p-1 rounded transition-colors">
-            <input type="radio" name="rating" class="w-4 h-4 border-stone-300 text-forest-800 focus:ring-forest-800">
-            <div class="ml-3 flex items-center">
-              <i-lucide [img]="Icons.Star" class="w-3 h-3 text-yellow-400 fill-yellow-400"></i-lucide>
-              <i-lucide [img]="Icons.Star" class="w-3 h-3 text-yellow-400 fill-yellow-400 ml-0.5"></i-lucide>
-              <i-lucide [img]="Icons.Star" class="w-3 h-3 text-yellow-400 fill-yellow-400 ml-0.5"></i-lucide>
-              <i-lucide [img]="Icons.Star" class="w-3 h-3 text-yellow-400 fill-yellow-400 ml-0.5"></i-lucide>
-              <span class="ml-2 text-sm text-stone-600">& Up</span>
-            </div>
-          </label>
-        </div>
-      </div>
     </aside>
 
     <!-- Product Grid -->
@@ -112,25 +73,50 @@
       </div>
 
       <!-- Pagination -->
-      <div class="mt-12 flex justify-center items-center gap-2">
-        <button
-          class="w-10 h-10 rounded-lg border border-stone-200 flex items-center justify-center text-stone-400 hover:text-forest-800 hover:border-forest-800 transition-colors">
-          <i-lucide [img]="Icons.ChevronLeft" class="w-4 h-4"></i-lucide>
-        </button>
-        <button
-          class="w-10 h-10 rounded-lg bg-forest-800 text-white font-bold flex items-center justify-center">1</button>
-        <button
-          class="w-10 h-10 rounded-lg border border-stone-200 text-stone-600 font-medium hover:bg-stone-50 flex items-center justify-center transition-colors">2</button>
-        <button
-          class="w-10 h-10 rounded-lg border border-stone-200 text-stone-600 font-medium hover:bg-stone-50 flex items-center justify-center transition-colors">3</button>
-        <span class="text-stone-400 px-2">...</span>
-        <button
-          class="w-10 h-10 rounded-lg border border-stone-200 text-stone-600 font-medium hover:bg-stone-50 flex items-center justify-center transition-colors">12</button>
-        <button
-          class="w-10 h-10 rounded-lg border border-stone-200 flex items-center justify-center text-stone-600 hover:text-forest-800 hover:border-forest-800 transition-colors">
-          <i-lucide [img]="Icons.ChevronRight" class="w-4 h-4"></i-lucide>
-        </button>
-      </div>
+      @if (totalPages > 1) {
+        <div class="mt-12 flex justify-center items-center gap-2">
+          <!-- Prev -->
+          <button (click)="goToPage(currentPage - 1)" [disabled]="!hasPreviousPage"
+            class="w-10 h-10 rounded-lg border border-stone-200 flex items-center justify-center transition-colors"
+            [class.text-stone-300]="!hasPreviousPage"
+            [class.cursor-not-allowed]="!hasPreviousPage"
+            [class.text-stone-600]="hasPreviousPage"
+            [class.hover:text-forest-800]="hasPreviousPage"
+            [class.hover:border-forest-800]="hasPreviousPage">
+            <i-lucide [img]="Icons.ChevronLeft" class="w-4 h-4"></i-lucide>
+          </button>
+
+          <!-- Page numbers -->
+          @for (page of getPageNumbers(); track $index) {
+            @if (page === '...') {
+              <span class="text-stone-400 px-2">...</span>
+            } @else {
+              <button (click)="goToPage(page)"
+                class="w-10 h-10 rounded-lg font-medium flex items-center justify-center transition-colors"
+                [class.bg-forest-800]="page === currentPage"
+                [class.text-white]="page === currentPage"
+                [class.font-bold]="page === currentPage"
+                [class.border]="page !== currentPage"
+                [class.border-stone-200]="page !== currentPage"
+                [class.text-stone-600]="page !== currentPage"
+                [class.hover:bg-stone-50]="page !== currentPage">
+                {{ page }}
+              </button>
+            }
+          }
+
+          <!-- Next -->
+          <button (click)="goToPage(currentPage + 1)" [disabled]="!hasNextPage"
+            class="w-10 h-10 rounded-lg border border-stone-200 flex items-center justify-center transition-colors"
+            [class.text-stone-300]="!hasNextPage"
+            [class.cursor-not-allowed]="!hasNextPage"
+            [class.text-stone-600]="hasNextPage"
+            [class.hover:text-forest-800]="hasNextPage"
+            [class.hover:border-forest-800]="hasNextPage">
+            <i-lucide [img]="Icons.ChevronRight" class="w-4 h-4"></i-lucide>
+          </button>
+        </div>
+      }
     </div>
   </div>
 </main>

@@ -1,274 +1,162 @@
+﻿<!-- Main Content -->
+<main class="flex-grow pt-28 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
 
-  <!-- Main Content -->
-  <main class="flex-grow pt-28 pb-12 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-
-    <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
-      <div>
-        <h1 class="text-3xl md:text-4xl font-serif font-bold text-forest-900">My Library</h1>
-        <p class="text-stone-500 mt-2 flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-forest-800"></span>
-          You have 3 active loans and 2 holds.
-        </p>
-      </div>
-
-      <!-- Quick Stats -->
-      <div class="flex gap-4">
-        <div class="bg-white p-3 px-5 rounded-xl border border-stone-200 shadow-sm text-center">
-          <div class="text-2xl font-serif font-bold text-forest-800">12</div>
-          <div class="text-xs text-stone-500 uppercase tracking-wide">Books Read</div>
-        </div>
-        <div class="bg-white p-3 px-5 rounded-xl border border-stone-200 shadow-sm text-center">
-          <div class="text-2xl font-serif font-bold text-gold-500">4.2k</div>
-          <div class="text-xs text-stone-500 uppercase tracking-wide">Pages Turned</div>
-        </div>
-      </div>
-    </header>
-
-    <!-- Tabs -->
-    <div class="border-b border-stone-200 mb-8 overflow-x-auto">
-      <nav class="flex space-x-8" aria-label="Tabs">
-        <button class="border-b-2 border-forest-800 py-4 px-1 text-sm font-bold text-forest-800 whitespace-nowrap">
-          Current Loans (3)
-        </button>
-        <button
-          class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-stone-500 hover:text-stone-700 hover:border-stone-300 whitespace-nowrap transition-colors">
-          Holds & Waitlist (2)
-        </button>
-        <button
-          class="border-b-2 border-transparent py-4 px-1 text-sm font-medium text-stone-500 hover:text-stone-700 hover:border-stone-300 whitespace-nowrap transition-colors">
-          Reading History
-        </button>
-      </nav>
+  <header class="mb-10 flex flex-col md:flex-row md:items-end justify-between gap-4">
+    <div>
+      <h1 class="text-3xl md:text-4xl font-serif font-bold text-forest-900">My Library</h1>
+      <p class="text-stone-500 mt-2 flex items-center gap-2">
+        <span class="w-2 h-2 rounded-full bg-forest-800"></span>
+        You have {{ activeLoans.length }} active loan{{ activeLoans.length !== 1 ? 's' : '' }}.
+      </p>
     </div>
 
-    <div class="flex flex-col lg:flex-row gap-8">
-
-      <!-- Main Column: Current Loans -->
-      <div class="flex-1 space-y-6">
-
-        <!-- Loan Item 1 (Overdue) -->
-        <div
-          class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-stone-200 flex flex-col sm:flex-row gap-6 relative overflow-hidden group">
-          <div class="absolute top-0 left-0 w-1 h-full bg-red-500"></div>
-
-          <!-- Cover -->
-          <div class="w-24 sm:w-28 flex-shrink-0 mx-auto sm:mx-0">
-            <div class="aspect-[2/3] bg-stone-800 rounded book-cover-sm relative overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-br from-stone-800 to-stone-950"></div>
-              <div class="absolute bottom-4 left-0 right-0 text-center px-2 border-t border-b border-white/20 py-1">
-                <h3 class="text-white font-serif text-xs">Dune</h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Details -->
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-1">
-                <h3 class="text-xl font-serif font-bold text-stone-900">Dune</h3>
-                <span
-                  class="bg-red-100 text-red-700 px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wide animate-pulse">Overdue</span>
-              </div>
-              <p class="text-stone-500 text-sm mb-4">Frank Herbert</p>
-
-              <!-- Progress -->
-              <div class="mb-4">
-                <div class="flex justify-between text-xs text-stone-500 mb-1">
-                  <span>Progress</span>
-                  <span>85%</span>
-                </div>
-                <div class="w-full bg-stone-100 rounded-full h-2 overflow-hidden">
-                  <div class="bg-forest-800 h-2 rounded-full progress-fill" style="width: 85%"></div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Footer / Actions -->
-            <div
-              class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-stone-100 mt-2">
-              <div class="text-sm font-medium text-red-600 flex items-center gap-1">
-                <i-lucide [img]="Icons.AlertCircle" class="w-4 h-4"></i-lucide>
-                Due 2 days ago (Oct 22)
-              </div>
-              <div class="flex gap-2 w-full sm:w-auto">
-                <button
-                  class="flex-1 sm:flex-none px-4 py-2 border border-forest-800 text-forest-800 rounded-lg text-sm font-medium hover:bg-forest-50 transition-colors">Return
-                  Now</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Loan Item 2 (Due Soon) -->
-        <div
-          class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-stone-200 flex flex-col sm:flex-row gap-6 relative overflow-hidden">
-          <div class="absolute top-0 left-0 w-1 h-full bg-orange-400"></div>
-
-          <!-- Cover -->
-          <div class="w-24 sm:w-28 flex-shrink-0 mx-auto sm:mx-0">
-            <div class="aspect-[2/3] bg-indigo-900 rounded book-cover-sm relative overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-br from-indigo-900 to-slate-900"></div>
-              <div class="absolute top-4 left-0 right-0 text-center px-2">
-                <h3 class="text-white font-serif text-xs leading-tight">The<br>Midnight<br>Library</h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Details -->
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-1">
-                <h3 class="text-xl font-serif font-bold text-stone-900">The Midnight Library</h3>
-                <span
-                  class="bg-orange-100 text-orange-700 px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wide">Due
-                  Soon</span>
-              </div>
-              <p class="text-stone-500 text-sm mb-4">Matt Haig</p>
-
-              <div class="mb-4">
-                <div class="flex justify-between text-xs text-stone-500 mb-1">
-                  <span>Progress</span>
-                  <span>42%</span>
-                </div>
-                <div class="w-full bg-stone-100 rounded-full h-2 overflow-hidden">
-                  <div class="bg-forest-800 h-2 rounded-full progress-fill" style="width: 42%"></div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-stone-100 mt-2">
-              <div class="text-sm font-medium text-orange-600 flex items-center gap-1">
-                <i-lucide [img]="Icons.Clock" class="w-4 h-4"></i-lucide>
-                Due in 3 days (Oct 27)
-              </div>
-              <div class="flex gap-2 w-full sm:w-auto">
-                <button
-                  class="flex-1 sm:flex-none px-4 py-2 border border-stone-300 text-stone-600 rounded-lg text-sm font-medium hover:bg-stone-50 transition-colors">Renew</button>
-                <button
-                  class="flex-1 sm:flex-none px-4 py-2 bg-forest-800 text-white rounded-lg text-sm font-medium hover:bg-forest-900 transition-colors">Read</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Loan Item 3 (Safe) -->
-        <div
-          class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-stone-200 flex flex-col sm:flex-row gap-6 relative overflow-hidden">
-          <div class="absolute top-0 left-0 w-1 h-full bg-green-500"></div>
-
-          <!-- Cover -->
-          <div class="w-24 sm:w-28 flex-shrink-0 mx-auto sm:mx-0">
-            <div class="aspect-[2/3] bg-emerald-800 rounded book-cover-sm relative overflow-hidden">
-              <div class="absolute inset-0 bg-gradient-to-br from-emerald-800 to-teal-900"></div>
-              <div class="absolute top-1/2 left-0 right-0 -translate-y-1/2 text-center px-1">
-                <h3 class="text-white font-sans font-bold uppercase text-xs">Atomic<br>Habits</h3>
-              </div>
-            </div>
-          </div>
-
-          <!-- Details -->
-          <div class="flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex justify-between items-start mb-1">
-                <h3 class="text-xl font-serif font-bold text-stone-900">Atomic Habits</h3>
-                <span
-                  class="bg-green-100 text-green-700 px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wide">On
-                  Track</span>
-              </div>
-              <p class="text-stone-500 text-sm mb-4">James Clear</p>
-
-              <div class="mb-4">
-                <div class="flex justify-between text-xs text-stone-500 mb-1">
-                  <span>Progress</span>
-                  <span>15%</span>
-                </div>
-                <div class="w-full bg-stone-100 rounded-full h-2 overflow-hidden">
-                  <div class="bg-forest-800 h-2 rounded-full progress-fill" style="width: 15%"></div>
-                </div>
-              </div>
-            </div>
-
-            <div
-              class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-stone-100 mt-2">
-              <div class="text-sm font-medium text-stone-500 flex items-center gap-1">
-                <i-lucide [img]="Icons.Calendar" class="w-4 h-4"></i-lucide>
-                Due in 14 days (Nov 07)
-              </div>
-              <div class="flex gap-2 w-full sm:w-auto">
-                <button
-                  class="flex-1 sm:flex-none px-4 py-2 border border-stone-300 text-stone-600 rounded-lg text-sm font-medium hover:bg-stone-50 transition-colors">Return</button>
-                <button
-                  class="flex-1 sm:flex-none px-4 py-2 bg-forest-800 text-white rounded-lg text-sm font-medium hover:bg-forest-900 transition-colors">Read</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
+    <!-- Quick Stats -->
+    <div class="flex gap-4">
+      <div class="bg-white p-3 px-5 rounded-xl border border-stone-200 shadow-sm text-center">
+        <div class="text-2xl font-serif font-bold text-forest-800">{{ totalCount }}</div>
+        <div class="text-xs text-stone-500 uppercase tracking-wide">Total Loans</div>
       </div>
-
-      <!-- Sidebar Column: Holds -->
-      <aside class="w-full lg:w-80 flex-shrink-0 space-y-6">
-
-        <div class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
-          <div class="p-4 border-b border-stone-100 bg-stone-50/50 flex justify-between items-center">
-            <h3 class="font-serif font-bold text-stone-800">Current Holds</h3>
-            <span class="text-xs bg-stone-200 text-stone-600 px-2 py-0.5 rounded-full font-bold">2</span>
-          </div>
-
-          <div class="divide-y divide-stone-100">
-            <!-- Hold 1 -->
-            <div class="p-4 flex gap-3 group">
-              <div class="w-12 h-16 bg-rose-900 rounded flex-shrink-0 relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-br from-rose-800 to-rose-950"></div>
-              </div>
-              <div class="flex-1 min-w-0">
-                <h4 class="font-bold text-stone-800 text-sm truncate">Sapiens</h4>
-                <p class="text-xs text-stone-500 mb-2 truncate">Yuval Noah Harari</p>
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-bold text-forest-800 bg-forest-50 px-2 py-0.5 rounded">#3
-                    in line</span>
-                  <span class="text-[10px] text-stone-400">~2 weeks</span>
-                </div>
-              </div>
-            </div>
-
-            <!-- Hold 2 -->
-            <div class="p-4 flex gap-3 group">
-              <div class="w-12 h-16 bg-amber-900 rounded flex-shrink-0 relative overflow-hidden">
-                <div class="absolute inset-0 bg-gradient-to-br from-amber-800 to-orange-950"></div>
-              </div>
-              <div class="flex-1 min-w-0">
-                <h4 class="font-bold text-stone-800 text-sm truncate">Educated</h4>
-                <p class="text-xs text-stone-500 mb-2 truncate">Tara Westover</p>
-                <div class="flex items-center justify-between">
-                  <span class="text-xs font-bold text-stone-600 bg-stone-100 px-2 py-0.5 rounded">#12
-                    in line</span>
-                  <span class="text-[10px] text-stone-400">~5 weeks</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3 bg-stone-50/50 text-center border-t border-stone-100">
-            <a href="#" class="text-xs font-bold text-forest-800 hover:underline">Manage Holds</a>
-          </div>
-        </div>
-
-        <!-- Wishlist Teaser -->
-        <div class="bg-forest-900 rounded-xl p-6 text-white relative overflow-hidden">
-          <div class="absolute top-0 right-0 p-4 opacity-10">
-            <i-lucide [img]="Icons.Heart" class="w-16 h-16 fill-current"></i-lucide>
-          </div>
-          <h3 class="font-serif font-bold text-lg mb-2 relative z-10">Wishlist</h3>
-          <p class="text-forest-200 text-sm mb-4 relative z-10">You have 14 books saved for later.</p>
-          <button
-            class="w-full bg-white/10 hover:bg-white/20 border border-white/20 text-white text-sm font-medium py-2 rounded-lg transition-colors relative z-10">View
-            Wishlist</button>
-        </div>
-
-      </aside>
+      <div class="bg-white p-3 px-5 rounded-xl border border-stone-200 shadow-sm text-center">
+        <div class="text-2xl font-serif font-bold text-red-600">{{ overdueCount }}</div>
+        <div class="text-xs text-stone-500 uppercase tracking-wide">Overdue</div>
+      </div>
     </div>
+  </header>
 
-  </main>
+  <!-- Tabs -->
+  <div class="border-b border-stone-200 mb-8 overflow-x-auto">
+    <nav class="flex space-x-8" aria-label="Tabs">
+      <button (click)="activeTab = 'active'"
+        class="py-4 px-1 text-sm font-medium whitespace-nowrap transition-colors border-b-2"
+        [class.border-forest-800]="activeTab === 'active'"
+        [class.text-forest-800]="activeTab === 'active'"
+        [class.font-bold]="activeTab === 'active'"
+        [class.border-transparent]="activeTab !== 'active'"
+        [class.text-stone-500]="activeTab !== 'active'">
+        Current Loans ({{ activeLoans.length }})
+      </button>
+      <button (click)="activeTab = 'history'"
+        class="py-4 px-1 text-sm font-medium whitespace-nowrap transition-colors border-b-2"
+        [class.border-forest-800]="activeTab === 'history'"
+        [class.text-forest-800]="activeTab === 'history'"
+        [class.font-bold]="activeTab === 'history'"
+        [class.border-transparent]="activeTab !== 'history'"
+        [class.text-stone-500]="activeTab !== 'history'">
+        Reading History ({{ historyLoans.length }})
+      </button>
+    </nav>
+  </div>
 
+  <!-- Loan List -->
+  <div class="space-y-6">
+
+    @if (!open) {
+      <div class="flex justify-center items-center py-24 text-stone-400">
+        <i-lucide [img]="Icons.BookOpen" class="w-6 h-6 animate-spin mr-2"></i-lucide>
+        Loading...
+      </div>
+    }
+
+    @if (open && displayedLoans.length === 0) {
+      <div class="flex flex-col items-center justify-center py-24 text-stone-400 gap-3">
+        <i-lucide [img]="Icons.BookOpen" class="w-12 h-12"></i-lucide>
+        <p class="text-sm">No loans to show here.</p>
+      </div>
+    }
+
+    @for (loan of displayedLoans; track loan.id) {
+      <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-stone-200 flex flex-col sm:flex-row gap-6 relative overflow-hidden">
+
+        <!-- Status bar -->
+        <div class="absolute top-0 left-0 w-1 h-full rounded-l-xl" [ngClass]="getBorderColor(loan)"></div>
+
+        <!-- Book Cover Placeholder -->
+        <div class="w-24 sm:w-28 flex-shrink-0 mx-auto sm:mx-0">
+          <div class="aspect-[2/3] bg-stone-800 rounded relative overflow-hidden">
+            <div class="absolute inset-0 bg-gradient-to-br from-stone-700 to-stone-950"></div>
+            <div class="absolute bottom-4 left-0 right-0 text-center px-2 border-t border-b border-white/20 py-1">
+              <h3 class="text-white font-serif text-xs leading-tight line-clamp-2">{{ loan.bookTitle }}</h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Details -->
+        <div class="flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-start mb-1">
+              <h3 class="text-xl font-serif font-bold text-stone-900">{{ loan.bookTitle }}</h3>
+              <span class="px-2 py-1 rounded-md text-xs font-bold uppercase tracking-wide"
+                [ngClass]="getBadgeClass(loan)"
+                [class.animate-pulse]="loan.isOverdue">
+                {{ getStatusLabel(loan) }}
+              </span>
+            </div>
+
+            <!-- Loan dates -->
+            <div class="flex flex-wrap gap-4 text-xs text-stone-400 mt-2 mb-4">
+              <span class="flex items-center gap-1">
+                <i-lucide [img]="Icons.Calendar" class="w-3.5 h-3.5"></i-lucide>
+                Borrowed: {{ loan.loanDate | date: 'MMM d, y' }}
+              </span>
+              <span class="flex items-center gap-1">
+                <i-lucide [img]="Icons.Clock" class="w-3.5 h-3.5"></i-lucide>
+                Due: {{ loan.dueDate | date: 'MMM d, y' }}
+              </span>
+              @if (loan.returnDate) {
+                <span class="flex items-center gap-1 text-green-600">
+                  <i-lucide [img]="Icons.CheckCircle2" class="w-3.5 h-3.5"></i-lucide>
+                  Returned: {{ loan.returnDate | date: 'MMM d, y' }}
+                </span>
+              }
+            </div>
+          </div>
+
+          <!-- Footer -->
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-stone-100">
+            <div class="text-sm font-medium flex items-center gap-1.5" [ngClass]="getDueDateClass(loan)">
+              <i-lucide [img]="getDueDateIcon(loan)" class="w-4 h-4"></i-lucide>
+              {{ getDueDateText(loan) }}
+            </div>
+          </div>
+        </div>
+      </div>
+    }
+
+    <!-- Pagination -->
+    @if (totalPages > 1) {
+      <div class="mt-8 flex justify-center items-center gap-2">
+        <button (click)="goToPage(currentPage - 1)" [disabled]="!hasPreviousPage"
+          class="w-10 h-10 rounded-lg border border-stone-200 flex items-center justify-center transition-colors"
+          [class.text-stone-300]="!hasPreviousPage"
+          [class.cursor-not-allowed]="!hasPreviousPage"
+          [class.text-stone-600]="hasPreviousPage">
+          <i-lucide [img]="Icons.ChevronLeft" class="w-4 h-4"></i-lucide>
+        </button>
+        @for (page of getPageNumbers(); track $index) {
+          @if (page === '...') {
+            <span class="text-stone-400 px-2">...</span>
+          } @else {
+            <button (click)="goToPage(page)"
+              class="w-10 h-10 rounded-lg font-medium flex items-center justify-center transition-colors"
+              [class.bg-forest-800]="page === currentPage"
+              [class.text-white]="page === currentPage"
+              [class.font-bold]="page === currentPage"
+              [class.border]="page !== currentPage"
+              [class.border-stone-200]="page !== currentPage"
+              [class.text-stone-600]="page !== currentPage">
+              {{ page }}
+            </button>
+          }
+        }
+        <button (click)="goToPage(currentPage + 1)" [disabled]="!hasNextPage"
+          class="w-10 h-10 rounded-lg border border-stone-200 flex items-center justify-center transition-colors"
+          [class.text-stone-300]="!hasNextPage"
+          [class.cursor-not-allowed]="!hasNextPage"
+          [class.text-stone-600]="hasNextPage">
+          <i-lucide [img]="Icons.ChevronRight" class="w-4 h-4"></i-lucide>
+        </button>
+      </div>
+    }
+
+  </div>
+</main>
