@@ -1,0 +1,10 @@
+SELECT TOP (1000) [CustomerSK]
+      ,[CustomerID]
+      ,[CustomerName]
+      ,[CustomerCategoryName]
+      ,[BuyingGroupName]
+  FROM [WWI_DataWarehouse].[dbo].[Dim_Customer]
+
+
+
+   SELECT COUNT(*)     FROM [WWI_DataWarehouse].[dbo].[Dim_Customer]
