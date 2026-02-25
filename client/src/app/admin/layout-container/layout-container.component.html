@@ -1,1 +1,91 @@
-<p>layout-container works!</p>
+<main class="text-slate-800 antialiased h-screen overflow-hidden flex flex-col md:flex-row">
+
+  <!-- Background Decoration -->
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <!-- Mobile Header -->
+  <header class="md:hidden glass-panel flex items-center justify-between p-4 sticky top-0 z-50">
+    <div class="flex items-center gap-2 font-bold text-xl text-indigo-700">
+      <i data-lucide="layout-dashboard"></i> <span>FrostedUI</span>
+    </div>
+    <button id="mobile-menu-btn" class="p-2 text-slate-600 hover:bg-white/50 rounded-lg">
+      <i data-lucide="menu"></i>
+    </button>
+  </header>
+
+  <!-- Sidebar (Desktop Fixed / Mobile Hidden initially) -->
+  <aside id="sidebar" class="hidden md:flex w-64 flex-col glass-panel h-full z-40 transition-transform duration-300">
+    <div class="p-6 flex items-center gap-3 border-b border-glass-border">
+      <div
+        class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
+        <i data-lucide="hexagon" size="18"></i>
+      </div>
+      <h1 class="font-bold text-xl tracking-tight text-slate-800">Frosted<span class="text-indigo-600">UI</span>
+      </h1>
+    </div>
+
+    <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
+      <button routerLink="/admin/dashboard"
+        class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-indigo-700 bg-indigo-50/50 shadow-sm border border-indigo-100">
+        <i data-lucide="layout-grid" size="20"></i> Dashboard
+      </button>
+      <button routerLink="/admin/users"
+        class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
+        <i data-lucide="users" size="20"></i> Users
+      </button>
+      <button routerLink="/admin/products"
+        class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
+        <i data-lucide="package" size="20"></i> Products
+      </button>
+      <button routerLink="/admin/orders"
+        class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
+        <i data-lucide="shopping-cart" size="20"></i> Orders
+      </button>
+      <button routerLink="/admin/categories"
+        class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
+        <i data-lucide="settings" size="20"></i> Categories
+      </button>
+
+    </nav>
+
+    <div class="p-4 border-t border-glass-border">
+      <div
+        class="flex items-center gap-3 p-3 rounded-xl bg-gradient-to-br from-white/40 to-white/10 border border-white/60">
+        <img src="https://ui-avatars.com/api/?name=Admin+User&background=4f46e5&color=fff" alt="User"
+          class="w-10 h-10 rounded-full shadow-sm">
+        <div class="flex-1 min-w-0">
+          <p class="text-sm font-semibold text-slate-800 truncate">Admin User</p>
+          <p class="text-xs text-slate-500 truncate">admin&#64;frosted.ui</p>
+        </div>
+        <button class="text-slate-400 hover:text-slate-600"><i data-lucide="log-out" size="18"></i></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Mobile Sidebar Overlay & Menu -->
+  <div id="mobile-overlay"
+    class="fixed inset-0 bg-black/20 backdrop-blur-sm z-30 hidden md:hidden opacity-0 transition-opacity"></div>
+  <div id="mobile-sidebar"
+    class="fixed inset-y-0 left-0 w-64 glass-panel z-40 transform -translate-x-full transition-transform duration-300 md:hidden flex flex-col">
+    <!-- Cloned Content for Mobile via JS or hardcoded structure below -->
+    <div class="p-6 flex justify-between items-center border-b border-glass-border">
+      <span class="font-bold text-xl text-slate-800">Menu</span>
+      <button id="close-mobile-menu" class="p-1 text-slate-500"><i data-lucide="x"></i></button>
+    </div>
+    <nav class="flex-1 p-4 space-y-2" id="mobile-nav-container">
+      <!-- Mobile Nav Items will be handled by JS to mirror desktop -->
+    </nav>
+  </div>
+
+<main class="flex-1 h-full overflow-y-auto relative p-4">
+
+  <!-- Main Content Area -->
+  <router-outlet></router-outlet>
+</main>
+
+
+
+
+</main>
