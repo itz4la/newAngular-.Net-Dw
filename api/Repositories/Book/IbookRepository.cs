@@ -11,5 +11,6 @@ namespace api.Repositories.Book
         Task<bool> DeleteAsync(int id);
         Task<bool> BookExistsAsync(int id);
         Task<bool> GenreExistsAsync(int genreId);
+        Task<List<BookDto>> GetAvailableBooksAsync();
         }
     }

@@ -40,6 +40,11 @@ namespace api.Repositories.Loan
                 query = query.Where(l => l.UserId == filter.UserId);
                 }
 
+            if (!string.IsNullOrWhiteSpace(filter.UserName))
+                {
+                query = query.Where(l => l.User.UserName.Contains(filter.UserName));
+                }
+
             if (filter.BookId.HasValue)
                 {
                 query = query.Where(l => l.BookId == filter.BookId.Value);

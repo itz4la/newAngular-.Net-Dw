@@ -74,6 +74,13 @@ namespace api.Controllers
             return Ok(book);
             }
 
+        [HttpGet("available")]
+        public async Task<ActionResult<List<BookDto>>> GetAvailable()
+            {
+            var books = await _bookRepository.GetAvailableBooksAsync();
+            return Ok(books);
+            }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
             {

@@ -1,0 +1,70 @@
+<!-- Header -->
+<div class="flex items-center justify-between mb-8">
+  <div class="flex items-center gap-3">
+    <button routerLink="/admin/users"
+      class="p-2 rounded-xl hover:bg-white/50 text-slate-500 hover:text-slate-800 transition-colors">
+      <i-lucide [img]="Icons.ArrowLeft" class="w-5 h-5"></i-lucide>
+    </button>
+    <div>
+      <h2 class="text-2xl font-bold text-slate-800">New Admin User</h2>
+      <p class="text-slate-500 text-sm">Will be created with the <span class="font-semibold text-indigo-600">Admin</span> role.</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-3">
+    <button routerLink="/admin/users" type="button"
+      class="px-4 py-2 rounded-xl text-sm text-slate-600 hover:bg-white/50 transition-colors font-medium">
+      Cancel
+    </button>
+    <button (click)="submit()" [disabled]="saving"
+      class="flex items-center gap-2 px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white text-sm font-medium shadow-lg shadow-indigo-200 transition-all active:scale-95">
+      <i-lucide [img]="Icons.Check" class="w-4 h-4"></i-lucide>
+      {{ saving ? 'Saving...' : 'Create User' }}
+    </button>
+  </div>
+</div>
+
+<div class="w-full max-w-lg mx-auto fade-in">
+  @if (errorMsg) {
+    <div class="mb-6 flex items-center gap-3 px-4 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-sm">
+      <i-lucide [img]="Icons.AlertCircle" class="w-4 h-4 shrink-0"></i-lucide>
+      {{ errorMsg }}
+    </div>
+  }
+
+  <div class="glass-card rounded-2xl p-6 space-y-5">
+    <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wide">Account Details</h3>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1.5">Username <span class="text-rose-400">*</span></label>
+      <input type="text" [formControl]="f.userName" placeholder="e.g. john_doe"
+        class="glass-input w-full px-3 py-2.5 rounded-xl text-sm text-slate-800 placeholder-slate-400">
+      @if (f.userName.touched && f.userName.errors?.['required']) {
+        <p class="mt-1 text-xs text-rose-500">Username is required.</p>
+      }
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1.5">Email <span class="text-rose-400">*</span></label>
+      <input type="email" [formControl]="f.email" placeholder="john@example.com"
+        class="glass-input w-full px-3 py-2.5 rounded-xl text-sm text-slate-800 placeholder-slate-400">
+      @if (f.email.touched && f.email.errors?.['required']) {
+        <p class="mt-1 text-xs text-rose-500">Email is required.</p>
+      }
+      @if (f.email.touched && f.email.errors?.['email']) {
+        <p class="mt-1 text-xs text-rose-500">Enter a valid email.</p>
+      }
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1.5">Password <span class="text-rose-400">*</span></label>
+      <input type="password" [formControl]="f.password" placeholder="Minimum 6 characters"
+        class="glass-input w-full px-3 py-2.5 rounded-xl text-sm text-slate-800 placeholder-slate-400">
+      @if (f.password.touched && f.password.errors?.['required']) {
+        <p class="mt-1 text-xs text-rose-500">Password is required.</p>
+      }
+      @if (f.password.touched && f.password.errors?.['minlength']) {
+        <p class="mt-1 text-xs text-rose-500">Password must be at least 6 characters.</p>
+      }
+    </div>
+  </div>
+</div>

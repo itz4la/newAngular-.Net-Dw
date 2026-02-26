@@ -1,0 +1,94 @@
+<!-- Header -->
+<div class="flex items-center justify-between mb-8">
+  <div class="flex items-center gap-3">
+    <button routerLink="/admin/orders"
+      class="p-2 rounded-xl hover:bg-white/50 text-slate-500 hover:text-slate-800 transition-colors">
+      <i-lucide [img]="Icons.ArrowLeft" class="w-5 h-5"></i-lucide>
+    </button>
+    <div>
+      <h2 class="text-2xl font-bold text-slate-800">New Loan</h2>
+      <p class="text-slate-500 text-sm">Select a book and a user to create a loan.</p>
+    </div>
+  </div>
+  <div class="flex items-center gap-3">
+    <button routerLink="/admin/orders" type="button"
+      class="px-4 py-2 rounded-xl text-sm text-slate-600 hover:bg-white/50 transition-colors font-medium">
+      Cancel
+    </button>
+    <button (click)="submit()" [disabled]="saving"
+      class="flex items-center gap-2 px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white text-sm font-medium shadow-lg shadow-indigo-200 transition-all active:scale-95">
+      <i-lucide [img]="Icons.Check" class="w-4 h-4"></i-lucide>
+      {{ saving ? 'Saving...' : 'Save Loan' }}
+    </button>
+  </div>
+</div>
+
+<!-- Form -->
+<div class="w-full max-w-2xl mx-auto fade-in">
+
+  @if (errorMsg) {
+    <div class="mb-6 flex items-center gap-3 px-4 py-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-600 text-sm">
+      <i-lucide [img]="Icons.AlertCircle" class="w-4 h-4 shrink-0"></i-lucide>
+      {{ errorMsg }}
+    </div>
+  }
+
+  <div class="glass-card rounded-2xl p-6 space-y-6">
+    <h3 class="text-sm font-semibold text-slate-700 uppercase tracking-wide">Loan Details</h3>
+
+    <!-- Book select -->
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1.5">
+        Book <span class="text-rose-400">*</span>
+      </label>
+      @if (loadingBooks) {
+        <div class="h-10 w-full skeleton rounded-xl"></div>
+      } @else {
+        <select [formControl]="f.bookId"
+          class="glass-input w-full px-3 py-2.5 rounded-xl text-sm text-slate-800 cursor-pointer">
+          <option [ngValue]="null" disabled>-- Select an available book --</option>
+          @for (book of availableBooks; track book.id) {
+            <option [ngValue]="book.id">{{ book.title }} — {{ book.author }}</option>
+          }
+        </select>
+        @if (availableBooks.length === 0) {
+          <p class="mt-1 text-xs text-slate-400">No available books at the moment.</p>
+        }
+      }
+      @if (f.bookId.touched && f.bookId.errors?.['required']) {
+        <p class="mt-1 text-xs text-rose-500">Please select a book.</p>
+      }
+    </div>
+
+    <!-- User select -->
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1.5">
+        User <span class="text-rose-400">*</span>
+      </label>
+      @if (loadingUsers) {
+        <div class="h-10 w-full skeleton rounded-xl"></div>
+      } @else {
+        <select [formControl]="f.userId"
+          class="glass-input w-full px-3 py-2.5 rounded-xl text-sm text-slate-800 cursor-pointer">
+          <option value="" disabled>-- Select a user --</option>
+          @for (user of nonAdminUsers; track user.id) {
+            <option [ngValue]="user.id">{{ user.userName }} ({{ user.email }})</option>
+          }
+        </select>
+      }
+      @if (f.userId.touched && f.userId.errors?.['required']) {
+        <p class="mt-1 text-xs text-rose-500">Please select a user.</p>
+      }
+    </div>
+
+    <!-- Custom Due Date -->
+    <div>
+      <label class="block text-sm font-medium text-slate-600 mb-1.5">
+        Custom Due Date
+        <span class="ml-1 text-xs font-normal text-slate-400">(optional — defaults to 14 days)</span>
+      </label>
+      <input type="date" [formControl]="f.customDueDate"
+        class="glass-input w-full px-3 py-2.5 rounded-xl text-sm text-slate-800">
+    </div>
+  </div>
+</div>

@@ -1,24 +1,131 @@
-<!-- GENERIC PLACEHOLDER for Orders/Settings -->
-<template id="tmpl-generic">
-  <div class="glass-panel p-10 rounded-2xl flex flex-col items-center justify-center text-center fade-in min-h-[400px]">
-    <div class="p-6 bg-indigo-50 rounded-full text-indigo-400 mb-6">
-      <i data-lucide="construction" size="48"></i>
-    </div>
-    <h3 class="text-2xl font-bold text-slate-800 mb-2">Under Construction</h3>
-    <p class="text-slate-500 max-w-md mx-auto">This module is currently being built with the same frosted glass
-      care as the rest of the application.</p>
-    <button
-      class="mt-6 px-6 py-2 bg-indigo-600 text-white rounded-xl hover:bg-indigo-700 transition-colors shadow-lg shadow-indigo-200">Notify
-      Me</button>
+<!-- Header -->
+<div class="hidden md:flex justify-between items-center mb-8">
+  <div>
+    <h2 class="text-2xl font-bold text-slate-800">Category Management</h2>
+    <p class="text-slate-500 text-sm">Manage your book genres and categories.</p>
   </div>
-</template>
+  <div class="flex items-center gap-4">
+    <button routerLink="/admin/categories/create"
+      class="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white shadow-lg shadow-indigo-200 transition-all active:scale-95">
+      <i-lucide [img]="Icons.Plus" class="w-4 h-4"></i-lucide>
+      <span class="text-sm font-medium">New Category</span>
+    </button>
+  </div>
+</div>
 
-<template id="tmpl-generic-skeleton">
-  <div class="glass-panel p-10 rounded-2xl flex flex-col items-center justify-center text-center min-h-[400px]">
-    <div class="skeleton w-24 h-24 rounded-full mb-6"></div>
-    <div class="skeleton w-64 h-8 rounded mb-3"></div>
-    <div class="skeleton w-96 h-4 rounded mb-2"></div>
-    <div class="skeleton w-48 h-4 rounded mb-6"></div>
-    <div class="skeleton w-32 h-10 rounded-xl"></div>
+<!-- Table Card -->
+<div id="content-area" class="w-full max-w-7xl mx-auto pb-10">
+  <div class="glass-panel rounded-2xl overflow-hidden fade-in">
+
+    <!-- Search & Filter Bar -->
+    <div class="p-5 border-b border-glass-border flex justify-between items-center">
+      <div class="relative w-64">
+        <i-lucide [img]="Icons.Search" class="absolute left-3 top-2.5 text-slate-400 w-4 h-4"></i-lucide>
+        <input type="text" placeholder="Search categories..."
+          [ngModel]="searchTerm"
+          (ngModelChange)="onSearchChange($event)"
+          class="w-full pl-10 pr-4 py-2 rounded-xl bg-white/40 border border-white/60 focus:ring-2 focus:ring-indigo-500 focus:bg-white/70 outline-none transition-all text-sm text-slate-700">
+      </div>
+      <div class="text-sm text-slate-500">
+        {{ totalCount }} total categories
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="overflow-x-auto">
+      <table class="w-full text-left text-sm text-slate-600">
+        <thead class="bg-indigo-50/30 text-xs uppercase font-semibold text-slate-500">
+          <tr>
+            <th class="px-6 py-4">ID</th>
+            <th class="px-6 py-4">Name</th>
+            <th class="px-6 py-4">Books Count</th>
+            <th class="px-6 py-4 text-right">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-indigo-50/50">
+          <!-- Loading skeleton -->
+          @if (loading) {
+            @for (i of [1,2,3,4,5]; track i) {
+              <tr>
+                <td class="px-6 py-4"><div class="h-4 w-10 skeleton rounded"></div></td>
+                <td class="px-6 py-4"><div class="h-4 w-40 skeleton rounded"></div></td>
+                <td class="px-6 py-4"><div class="h-4 w-16 skeleton rounded"></div></td>
+                <td class="px-6 py-4 text-right"><div class="h-4 w-16 skeleton rounded ml-auto"></div></td>
+              </tr>
+            }
+          }
+
+          <!-- Data rows -->
+          @if (!loading) {
+            @for (genre of genres; track genre.id) {
+              <tr class="hover:bg-indigo-50/30 transition-colors group">
+                <td class="px-6 py-4">
+                  <span class="font-medium text-slate-800">#{{ genre.id }}</span>
+                </td>
+                <td class="px-6 py-4">
+                  <div class="flex items-center gap-3">
+                    <div class="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center">
+                      <i-lucide [img]="Icons.Book" class="w-4 h-4"></i-lucide>
+                    </div>
+                    <span class="font-medium text-slate-800">{{ genre.name }}</span>
+                  </div>
+                </td>
+                <td class="px-6 py-4">
+                  <span class="px-2 py-1 rounded-full text-xs font-semibold bg-blue-100 text-blue-600">
+                    {{ genre.booksCount }} books
+                  </span>
+                </td>
+                <td class="px-6 py-4 text-right">
+                  <button (click)="editGenre(genre.id)"
+                    class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-sm text-indigo-600 hover:bg-indigo-50 transition-colors">
+                    <i-lucide [img]="Icons.Edit" class="w-4 h-4"></i-lucide>
+                    Edit
+                  </button>
+                </td>
+              </tr>
+            }
+
+            @if (genres.length === 0) {
+              <tr>
+                <td colspan="4" class="px-6 py-12 text-center text-slate-400">
+                  <i-lucide [img]="Icons.Search" class="w-8 h-8 mx-auto mb-2 opacity-50"></i-lucide>
+                  <p>No categories found.</p>
+                </td>
+              </tr>
+            }
+          }
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Pagination -->
+    @if (totalPages > 1) {
+      <div class="p-5 border-t border-glass-border flex items-center justify-between">
+        <div class="text-sm text-slate-500">
+          Page {{ pageNumber }} of {{ totalPages }}
+        </div>
+        <div class="flex items-center gap-1">
+          <button (click)="previousPage()" [disabled]="!hasPreviousPage"
+            class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+            [class]="hasPreviousPage ? 'text-slate-600 hover:bg-white/50' : 'text-slate-300 cursor-not-allowed'">
+            <i-lucide [img]="Icons.ChevronLeft" class="w-4 h-4"></i-lucide>
+          </button>
+
+          @for (page of pages; track page) {
+            <button (click)="goToPage(page)"
+              class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+              [class]="page === pageNumber ? 'bg-indigo-600 text-white shadow-sm' : 'text-slate-600 hover:bg-white/50'">
+              {{ page }}
+            </button>
+          }
+
+          <button (click)="nextPage()" [disabled]="!hasNextPage"
+            class="px-3 py-1.5 rounded-lg text-sm font-medium transition-colors"
+            [class]="hasNextPage ? 'text-slate-600 hover:bg-white/50' : 'text-slate-300 cursor-not-allowed'">
+            <i-lucide [img]="Icons.ChevronRight" class="w-4 h-4"></i-lucide>
+          </button>
+        </div>
+      </div>
+    }
   </div>
-</template>
+</div>

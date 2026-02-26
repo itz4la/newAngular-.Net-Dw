@@ -1,0 +1,47 @@
+/* ─── Dashboard Glass Card ────────────────────────────── */
+.chart-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    0 2px 4px -1px rgba(0, 0, 0, 0.03);
+  border-radius: 1rem;
+  padding: 1.5rem;
+  transition: box-shadow 0.25s ease;
+
+  &:hover {
+    box-shadow: 0 8px 30px -5px rgba(99, 102, 241, 0.12);
+  }
+}
+
+.chart-title {
+  font-weight: 700;
+  font-size: 1rem;
+  color: #1e293b; // slate-800
+  line-height: 1.4;
+}
+
+.chart-subtitle {
+  font-size: 0.75rem;
+  color: #94a3b8; // slate-400
+  margin-bottom: 0.75rem;
+}
+
+/* ─── Fade-in animation ──────────────────────────────── */
+.fade-in {
+  animation: fadeIn 0.45s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

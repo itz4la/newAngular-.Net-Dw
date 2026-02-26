@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="27"
-  DTS:VersionGUID="{EE00116C-CC53-4F6D-9526-E11B420E1E70}">
+  DTS:VersionBuild="30"
+  DTS:VersionGUID="{2EE9A422-33F4-40C9-813B-B9D7901E7E19}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -4585,206 +4585,56 @@ OPTION (MAXRECURSION 0);</property>
       <GraphLayout
         Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph">
         <NodeLayout
-          Size="153.6,41.6"
-          Id="Package\Load_Dim_Date"
-          TopLeft="127.166660019093,61.8333329415984" />
+          Size="146.4,41.6"
+          Id="Package\Load Dim_City"
+          TopLeft="934.66661589924,64.4333329235183" />
         <NodeLayout
           Size="173.6,41.6"
           Id="Package\Load Dim_Customer"
           TopLeft="308.833318399059,60.6333331585593" />
         <NodeLayout
           Size="175.2,41.6"
+          Id="Package\Load Dim_Employee"
+          TopLeft="729.666632017329,65.1666668776009" />
+        <NodeLayout
+          Size="175.2,41.6"
           Id="Package\Load Dim_StockItem"
           TopLeft="511.333308974075,62.0333333574401" />
         <NodeLayout
-          Size="175.2,41.6"
-          Id="Package\Load Dim_Employee"
-          TopLeft="725.499965578319,64.3000002169609" />
-        <NodeLayout
-          Size="146.4,41.6"
-          Id="Package\Load Dim_City"
-          TopLeft="932.166616035834,65.2999995841583" />
+          Size="153.6,41.6"
+          Id="Package\Load_Dim_Date"
+          TopLeft="127.166660019093,61.8333329415984" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
   <TaskHost
-    design-time-name="Package\Load_Dim_Date">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="152,41.6"
-          Id="Package\Load_Dim_Date\OLE DB Source"
-          TopLeft="136.333329463171,53.3666667510403" />
-        <NodeLayout
-          Size="156,41.6"
-          Id="Package\Load_Dim_Date\Data Conversion"
-          TopLeft="138.833330965705,153.566666262878" />
-        <EdgeLayout
-          Id="Package\Load_Dim_Date.Paths[OLE DB Source Output]"
-          TopLeft="214.583330214438,94.9666667510403">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,58.599999511838"
-              Start="0,0"
-              End="0,51.099999511838">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,51.099999511838" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="171.2,41.6"
-          Id="Package\Load_Dim_Date\OLE DB Destination"
-          TopLeft="131.333333014614,325.699998607834" />
-        <NodeLayout
-          Size="112.8,41.6"
-          Id="Package\Load_Dim_Date\Lookup"
-          TopLeft="158.833333151208,236.099999439518" />
-        <EdgeLayout
-          Id="Package\Load_Dim_Date.Paths[Data Conversion Output]"
-          TopLeft="216.033332058456,195.166666262878">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,40.9333331766394"
-              Start="0,0"
-              End="0,33.4333331766394">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,33.4333331766394" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\Load_Dim_Date.Paths[Lookup No Match Output]"
-          TopLeft="216.083333082911,277.699999439518">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,47.9999991683165"
-              Start="0,0"
-              End="0,40.4999991683165">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,40.4999991683165" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,14.4453120841582,111.6127734375,11.609375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load_Dim_Date\OLE DB Source">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load_Dim_Date\OLE DB Destination">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load_Dim_Date\Lookup">
-    <Properties>
-      <Property>
-        <Name>OverwriteParamsSQLProp</Name>
-        <Value
-          type="q2:boolean">false</Value>
-      </Property>
-      <Property>
-        <Name>UsedTableName</Name>
-        <Value
-          type="q3:string">[dbo].[Dim_Date]</Value>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q4:int">0</Value>
-      </Property>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <TaskHost
-    design-time-name="Package\Load Dim_Customer">
+    design-time-name="Package\Load Dim_City">
     <LayoutInfo>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="152,41.6"
-          Id="Package\Load Dim_Customer\OLE DB Source"
-          TopLeft="233.1,5.49999999999984" />
-        <NodeLayout
-          Size="152.8,41.6"
-          Id="Package\Load Dim_Customer\Derived Column"
-          TopLeft="232.7,107.1" />
-        <EdgeLayout
-          Id="Package\Load Dim_Customer.Paths[OLE DB Source Output]"
-          TopLeft="309.1,47.0999999999998">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,59.9999999999999"
-              Start="0,0"
-              End="0,52.4999999999999">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.4999999999999" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
+          Size="176,41.6"
+          Id="Package\Load Dim_City\OLE DB Command 1"
+          TopLeft="815.09999460578,278.699998956919" />
         <NodeLayout
           Size="208,41.6"
-          Id="Package\Load Dim_Customer\Slowly Changing Dimension"
-          TopLeft="205.1,208.7" />
+          Id="Package\Load Dim_City\Slowly Changing Dimension"
+          TopLeft="567.09999460578,177.099998956919" />
+        <NodeLayout
+          Size="167.2,41.6"
+          Id="Package\Load Dim_City\OLE DB Command"
+          TopLeft="587.49999460578,278.699998956919" />
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Load Dim_City\OLE DB Source"
+          TopLeft="595.09999460578,75.4999989569186" />
+        <NodeLayout
+          Size="159.2,41.6"
+          Id="Package\Load Dim_City\Insert Destination"
+          TopLeft="367.49999460578,278.699998956919" />
         <EdgeLayout
-          Id="Package\Load Dim_Customer.Paths[Derived Column Output]"
-          TopLeft="309.1,148.7">
+          Id="Package\Load Dim_City.Paths[OLE DB Source Output]"
+          TopLeft="671.09999460578,117.099998956919">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4804,13 +4654,223 @@ OPTION (MAXRECURSION 0);</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Dim_City.Paths[New Output]"
+          TopLeft="621.09999460578,218.699998956919">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-174,60"
+              Start="0,0"
+              End="-174,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.506329113924" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.506329113924"
+                    Point2="0,20.506329113924"
+                    Point3="-4,20.506329113924" />
+                  <mssgle:LineSegment
+                    End="-170,20.506329113924" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-170,20.506329113924"
+                    Point2="-174,20.506329113924"
+                    Point3="-174,24.506329113924" />
+                  <mssgle:LineSegment
+                    End="-174,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-114.09138671875,25.506329113924,54.1827734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Dim_City.Paths[Inferred Member Updates Output]"
+          TopLeft="671.09999460578,218.699998956919">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-74.40298828125,20.4208984375,148.8059765625,11.658203125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Dim_City.Paths[Changing Attribute Updates Output]"
+          TopLeft="721.09999460578,218.699998956919">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="182,60"
+              Start="0,0"
+              End="182,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.506329113924" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.506329113924"
+                    Point2="0,20.506329113924"
+                    Point3="4,20.506329113924" />
+                  <mssgle:LineSegment
+                    End="178,20.506329113924" />
+                  <mssgle:CubicBezierSegment
+                    Point1="178,20.506329113924"
+                    Point2="182,20.506329113924"
+                    Point3="182,24.506329113924" />
+                  <mssgle:LineSegment
+                    End="182,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="12.46609375,25.506329113924,157.0678125,11.6630859375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Dim_City\Slowly Changing Dimension">
+    <Properties>
+      <Property>
+        <Name>SCDMetadata</Name>
+        <Value
+          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SCDWizardMetadata xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionID&gt;{F81D6105-2691-4A9F-B3A7-B5F2980436E9}&lt;/ConnectionID&gt;
+  &lt;TableName&gt;[dbo].[Dim_City]&lt;/TableName&gt;
+  &lt;InputToColumnsCollection&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[CityID]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;CityID&lt;/ColumnName&gt;
+      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[CityName]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;CityName&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesTerritory]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;SalesTerritory&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[StateProvinceName]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;StateProvinceName&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+  &lt;/InputToColumnsCollection&gt;
+  &lt;GeneratedComponentsIdentificationStrings&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command 1&lt;/anyType&gt;
+  &lt;/GeneratedComponentsIdentificationStrings&gt;
+  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
+  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
+  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
+  &lt;CurrentIndicatorColumn /&gt;
+  &lt;InferredIndicatorColumn /&gt;
+  &lt;ValueCurrent /&gt;
+  &lt;ValueExpired /&gt;
+  &lt;StartDateColumn /&gt;
+  &lt;EndDateColumn /&gt;
+  &lt;DateVariable /&gt;
+  &lt;EnableInferredSupport&gt;true&lt;/EnableInferredSupport&gt;
+&lt;/SCDWizardMetadata&gt;</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Dim_City\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load Dim_Customer">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Load Dim_Customer\OLE DB Source"
+          TopLeft="586.09999473989,61.4999991655348" />
         <NodeLayout
           Size="159.2,41.6"
           Id="Package\Load Dim_Customer\Insert Destination"
-          TopLeft="5.50000000000009,310.3" />
+          TopLeft="358.49999473989,366.299999165535" />
+        <NodeLayout
+          Size="176,41.6"
+          Id="Package\Load Dim_Customer\OLE DB Command 1"
+          TopLeft="806.09999473989,366.299999165535" />
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\Load Dim_Customer\Slowly Changing Dimension"
+          TopLeft="558.09999473989,264.699999165535" />
+        <NodeLayout
+          Size="167.2,41.6"
+          Id="Package\Load Dim_Customer\OLE DB Command"
+          TopLeft="578.49999473989,366.299999165535" />
+        <NodeLayout
+          Size="152.8,41.6"
+          Id="Package\Load Dim_Customer\Derived Column"
+          TopLeft="585.69999473989,163.099999165535" />
+        <EdgeLayout
+          Id="Package\Load Dim_Customer.Paths[OLE DB Source Output]"
+          TopLeft="662.09999473989,103.099999165535">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,59.9999999999999"
+              Start="0,0"
+              End="0,52.4999999999999">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.4999999999999" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Dim_Customer.Paths[New Output]"
-          TopLeft="259.1,250.3">
+          TopLeft="612.09999473989,306.299999165535">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4844,13 +4904,9 @@ OPTION (MAXRECURSION 0);</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="167.2,41.6"
-          Id="Package\Load Dim_Customer\OLE DB Command"
-          TopLeft="225.5,310.3" />
         <EdgeLayout
           Id="Package\Load Dim_Customer.Paths[Inferred Member Updates Output]"
-          TopLeft="309.1,250.3">
+          TopLeft="662.09999473989,306.299999165535">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4872,13 +4928,31 @@ OPTION (MAXRECURSION 0);</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="176,41.6"
-          Id="Package\Load Dim_Customer\OLE DB Command 1"
-          TopLeft="453.1,310.3" />
+        <EdgeLayout
+          Id="Package\Load Dim_Customer.Paths[Derived Column Output]"
+          TopLeft="662.09999473989,204.699999165535">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
         <EdgeLayout
           Id="Package\Load Dim_Customer.Paths[Changing Attribute Updates Output]"
-          TopLeft="359.1,250.3">
+          TopLeft="712.09999473989,306.299999165535">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -4980,167 +5054,33 @@ OPTION (MAXRECURSION 0);</property>
     </Properties>
   </PipelineComponentMetadata>
   <TaskHost
-    design-time-name="Package\Load Dim_StockItem">
-    <LayoutInfo>
-      <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
-        <NodeLayout
-          Size="152,41.6"
-          Id="Package\Load Dim_StockItem\OLE DB Source"
-          TopLeft="233.1,5.49999999999984" />
-        <NodeLayout
-          Size="208,41.6"
-          Id="Package\Load Dim_StockItem\Slowly Changing Dimension"
-          TopLeft="205.1,107.1" />
-        <EdgeLayout
-          Id="Package\Load Dim_StockItem.Paths[OLE DB Source Output]"
-          TopLeft="309.1,47.0999999999998">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <EdgeLabelCollection />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="159.2,41.6"
-          Id="Package\Load Dim_StockItem\Insert Destination"
-          TopLeft="5.50000000000009,208.7" />
-        <EdgeLayout
-          Id="Package\Load Dim_StockItem.Paths[New Output]"
-          TopLeft="259.1,148.7">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="-174,60"
-              Start="0,0"
-              End="-174,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,16.506329113924" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16.506329113924"
-                    Point2="0,20.506329113924"
-                    Point3="-4,20.506329113924" />
-                  <mssgle:LineSegment
-                    End="-170,20.506329113924" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-170,20.506329113924"
-                    Point2="-174,20.506329113924"
-                    Point3="-174,24.506329113924" />
-                  <mssgle:LineSegment
-                    End="-174,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-114.09138671875,25.506329113924,54.1827734375,11.43359375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="167.2,41.6"
-          Id="Package\Load Dim_StockItem\OLE DB Command"
-          TopLeft="225.5,208.7" />
-        <EdgeLayout
-          Id="Package\Load Dim_StockItem.Paths[Inferred Member Updates Output]"
-          TopLeft="309.1,148.7">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="0,60"
-              Start="0,0"
-              End="0,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-74.40298828125,20.4208984375,148.8059765625,11.658203125"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="176,41.6"
-          Id="Package\Load Dim_StockItem\OLE DB Command 1"
-          TopLeft="453.1,208.7" />
-        <EdgeLayout
-          Id="Package\Load Dim_StockItem.Paths[Changing Attribute Updates Output]"
-          TopLeft="359.1,148.7">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="182,60"
-              Start="0,0"
-              End="182,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,16.506329113924" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16.506329113924"
-                    Point2="0,20.506329113924"
-                    Point3="4,20.506329113924" />
-                  <mssgle:LineSegment
-                    End="178,20.506329113924" />
-                  <mssgle:CubicBezierSegment
-                    Point1="178,20.506329113924"
-                    Point2="182,20.506329113924"
-                    Point3="182,24.506329113924" />
-                  <mssgle:LineSegment
-                    End="182,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="12.46609375,25.506329113924,157.0678125,11.6630859375"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-      </GraphLayout>
-    </LayoutInfo>
-  </TaskHost>
-  <TaskHost
     design-time-name="Package\Load Dim_Employee">
     <LayoutInfo>
       <GraphLayout
         Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="152,41.6"
-          Id="Package\Load Dim_Employee\OLE DB Source"
-          TopLeft="233.1,5.49999999999984" />
+          Size="176,41.6"
+          Id="Package\Load Dim_Employee\OLE DB Command 1"
+          TopLeft="828.099994412064,276.699998986721" />
         <NodeLayout
           Size="208,41.6"
           Id="Package\Load Dim_Employee\Slowly Changing Dimension"
-          TopLeft="205.1,107.1" />
+          TopLeft="580.099994412064,175.099998986721" />
+        <NodeLayout
+          Size="167.2,41.6"
+          Id="Package\Load Dim_Employee\OLE DB Command"
+          TopLeft="600.499994412064,276.699998986721" />
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Load Dim_Employee\OLE DB Source"
+          TopLeft="608.099994412064,73.4999989867209" />
+        <NodeLayout
+          Size="159.2,41.6"
+          Id="Package\Load Dim_Employee\Insert Destination"
+          TopLeft="380.499994412065,276.699998986721" />
         <EdgeLayout
           Id="Package\Load Dim_Employee.Paths[OLE DB Source Output]"
-          TopLeft="309.1,47.0999999999998">
+          TopLeft="684.099994412064,115.099998986721">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5160,13 +5100,9 @@ OPTION (MAXRECURSION 0);</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="159.2,41.6"
-          Id="Package\Load Dim_Employee\Insert Destination"
-          TopLeft="5.50000000000009,208.7" />
         <EdgeLayout
           Id="Package\Load Dim_Employee.Paths[New Output]"
-          TopLeft="259.1,148.7">
+          TopLeft="634.099994412064,216.699998986721">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5200,13 +5136,9 @@ OPTION (MAXRECURSION 0);</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="167.2,41.6"
-          Id="Package\Load Dim_Employee\OLE DB Command"
-          TopLeft="225.5,208.7" />
         <EdgeLayout
           Id="Package\Load Dim_Employee.Paths[Inferred Member Updates Output]"
-          TopLeft="309.1,148.7">
+          TopLeft="684.099994412064,216.699998986721">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5228,13 +5160,9 @@ OPTION (MAXRECURSION 0);</property>
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="176,41.6"
-          Id="Package\Load Dim_Employee\OLE DB Command 1"
-          TopLeft="453.1,208.7" />
         <EdgeLayout
           Id="Package\Load Dim_Employee.Paths[Changing Attribute Updates Output]"
-          TopLeft="359.1,148.7">
+          TopLeft="734.099994412064,216.699998986721">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
@@ -5272,13 +5200,215 @@ OPTION (MAXRECURSION 0);</property>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Dim_StockItem\OLE DB Source">
+    design-time-name="Package\Load Dim_Employee\Slowly Changing Dimension">
+    <Properties>
+      <Property>
+        <Name>SCDMetadata</Name>
+        <Value
+          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;SCDWizardMetadata xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
+  &lt;ConnectionID&gt;{F81D6105-2691-4A9F-B3A7-B5F2980436E9}&lt;/ConnectionID&gt;
+  &lt;TableName&gt;[dbo].[Dim_Employee]&lt;/TableName&gt;
+  &lt;InputToColumnsCollection&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[EmployeeName]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;EmployeeName&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[IsSalesperson]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;IsSalesperson&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[PersonID]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;PersonID&lt;/ColumnName&gt;
+      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
+      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+    &lt;InputColumnToDBColumn&gt;
+      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[PreferredName]&lt;/IdentificationString&gt;
+      &lt;ColumnName&gt;PreferredName&lt;/ColumnName&gt;
+      &lt;KeyType&gt;None&lt;/KeyType&gt;
+      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
+    &lt;/InputColumnToDBColumn&gt;
+  &lt;/InputToColumnsCollection&gt;
+  &lt;GeneratedComponentsIdentificationStrings&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
+    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command 1&lt;/anyType&gt;
+  &lt;/GeneratedComponentsIdentificationStrings&gt;
+  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
+  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
+  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
+  &lt;CurrentIndicatorColumn /&gt;
+  &lt;InferredIndicatorColumn /&gt;
+  &lt;ValueCurrent /&gt;
+  &lt;ValueExpired /&gt;
+  &lt;StartDateColumn /&gt;
+  &lt;EndDateColumn /&gt;
+  &lt;DateVariable /&gt;
+  &lt;EnableInferredSupport&gt;true&lt;/EnableInferredSupport&gt;
+&lt;/SCDWizardMetadata&gt;</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load Dim_Employee\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\Load Dim_StockItem">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="167.2,41.6"
+          Id="Package\Load Dim_StockItem\OLE DB Command"
+          TopLeft="617.499994158745,287.699998822808" />
+        <NodeLayout
+          Size="159.2,41.6"
+          Id="Package\Load Dim_StockItem\Insert Destination"
+          TopLeft="397.499994158745,287.699998822808" />
+        <NodeLayout
+          Size="176,41.6"
+          Id="Package\Load Dim_StockItem\OLE DB Command 1"
+          TopLeft="845.099994158745,287.699998822808" />
+        <NodeLayout
+          Size="152,41.6"
+          Id="Package\Load Dim_StockItem\OLE DB Source"
+          TopLeft="625.099994158745,84.4999988228081" />
+        <NodeLayout
+          Size="208,41.6"
+          Id="Package\Load Dim_StockItem\Slowly Changing Dimension"
+          TopLeft="597.099994158745,186.099998822808" />
+        <EdgeLayout
+          Id="Package\Load Dim_StockItem.Paths[OLE DB Source Output]"
+          TopLeft="701.099994158745,126.099998822808">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Dim_StockItem.Paths[New Output]"
+          TopLeft="651.099994158745,227.699998822808">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-174,60"
+              Start="0,0"
+              End="-174,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.506329113924" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.506329113924"
+                    Point2="0,20.506329113924"
+                    Point3="-4,20.506329113924" />
+                  <mssgle:LineSegment
+                    End="-170,20.506329113924" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-170,20.506329113924"
+                    Point2="-174,20.506329113924"
+                    Point3="-174,24.506329113924" />
+                  <mssgle:LineSegment
+                    End="-174,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-114.09138671875,25.506329113924,54.1827734375,11.43359375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Dim_StockItem.Paths[Inferred Member Updates Output]"
+          TopLeft="701.099994158745,227.699998822808">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,60"
+              Start="0,0"
+              End="0,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="-74.40298828125,20.4208984375,148.8059765625,11.658203125"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\Load Dim_StockItem.Paths[Changing Attribute Updates Output]"
+          TopLeft="751.099994158745,227.699998822808">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="182,60"
+              Start="0,0"
+              End="182,52.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.506329113924" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.506329113924"
+                    Point2="0,20.506329113924"
+                    Point3="4,20.506329113924" />
+                  <mssgle:LineSegment
+                    End="178,20.506329113924" />
+                  <mssgle:CubicBezierSegment
+                    Point1="178,20.506329113924"
+                    Point2="182,20.506329113924"
+                    Point3="182,24.506329113924" />
+                  <mssgle:LineSegment
+                    End="182,52.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="12.46609375,25.506329113924,157.0678125,11.6630859375"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
   <PipelineComponentMetadata
     design-time-name="Package\Load Dim_StockItem\Slowly Changing Dimension">
     <Properties>
@@ -5348,96 +5478,48 @@ OPTION (MAXRECURSION 0);</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Dim_Employee\OLE DB Source">
+    design-time-name="Package\Load Dim_StockItem\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\Load Dim_Employee\Slowly Changing Dimension">
-    <Properties>
-      <Property>
-        <Name>SCDMetadata</Name>
-        <Value
-          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SCDWizardMetadata xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;ConnectionID&gt;{F81D6105-2691-4A9F-B3A7-B5F2980436E9}&lt;/ConnectionID&gt;
-  &lt;TableName&gt;[dbo].[Dim_Employee]&lt;/TableName&gt;
-  &lt;InputToColumnsCollection&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[EmployeeName]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;EmployeeName&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[IsSalesperson]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;IsSalesperson&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[PersonID]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;PersonID&lt;/ColumnName&gt;
-      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
-      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[PreferredName]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;PreferredName&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-  &lt;/InputToColumnsCollection&gt;
-  &lt;GeneratedComponentsIdentificationStrings&gt;
-    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
-    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
-    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command 1&lt;/anyType&gt;
-  &lt;/GeneratedComponentsIdentificationStrings&gt;
-  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
-  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
-  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
-  &lt;CurrentIndicatorColumn /&gt;
-  &lt;InferredIndicatorColumn /&gt;
-  &lt;ValueCurrent /&gt;
-  &lt;ValueExpired /&gt;
-  &lt;StartDateColumn /&gt;
-  &lt;EndDateColumn /&gt;
-  &lt;DateVariable /&gt;
-  &lt;EnableInferredSupport&gt;true&lt;/EnableInferredSupport&gt;
-&lt;/SCDWizardMetadata&gt;</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <TaskHost
-    design-time-name="Package\Load Dim_City">
+    design-time-name="Package\Load_Dim_Date">
     <LayoutInfo>
       <GraphLayout
-        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
           Size="152,41.6"
-          Id="Package\Load Dim_City\OLE DB Source"
-          TopLeft="233.1,5.49999999999984" />
+          Id="Package\Load_Dim_Date\OLE DB Source"
+          TopLeft="349.666651140485,50.7666667691204" />
         <NodeLayout
-          Size="208,41.6"
-          Id="Package\Load Dim_City\Slowly Changing Dimension"
-          TopLeft="205.1,107.1" />
+          Size="171.2,41.6"
+          Id="Package\Load_Dim_Date\OLE DB Destination"
+          TopLeft="344.666654691928,323.099998625914" />
+        <NodeLayout
+          Size="112.8,41.6"
+          Id="Package\Load_Dim_Date\Lookup"
+          TopLeft="372.166654828522,233.499999457598" />
+        <NodeLayout
+          Size="156,41.6"
+          Id="Package\Load_Dim_Date\Data Conversion"
+          TopLeft="352.166652643019,150.966666280958" />
         <EdgeLayout
-          Id="Package\Load Dim_City.Paths[OLE DB Source Output]"
-          TopLeft="309.1,47.0999999999998">
+          Id="Package\Load_Dim_Date.Paths[OLE DB Source Output]"
+          TopLeft="427.916651891752,92.3666667691204">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="0,58.599999511838"
               Start="0,0"
-              End="0,52.5">
+              End="0,51.099999511838">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.5" />
+                    End="0,51.099999511838" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -5446,119 +5528,57 @@ OPTION (MAXRECURSION 0);</property>
             <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="159.2,41.6"
-          Id="Package\Load Dim_City\Insert Destination"
-          TopLeft="5.50000000000009,208.7" />
         <EdgeLayout
-          Id="Package\Load Dim_City.Paths[New Output]"
-          TopLeft="259.1,148.7">
+          Id="Package\Load_Dim_Date.Paths[Lookup No Match Output]"
+          TopLeft="429.416654760225,275.099999457598">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="-174,60"
+              EndConnector="0,47.9999991683165"
               Start="0,0"
-              End="-174,52.5">
+              End="0,40.4999991683165">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,16.506329113924" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16.506329113924"
-                    Point2="0,20.506329113924"
-                    Point3="-4,20.506329113924" />
-                  <mssgle:LineSegment
-                    End="-170,20.506329113924" />
-                  <mssgle:CubicBezierSegment
-                    Point1="-170,20.506329113924"
-                    Point2="-174,20.506329113924"
-                    Point3="-174,24.506329113924" />
-                  <mssgle:LineSegment
-                    End="-174,52.5" />
+                    End="0,40.4999991683165" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-114.09138671875,25.506329113924,54.1827734375,11.43359375"
+              BoundingBox="-55.80638671875,14.4453120841582,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
-        <NodeLayout
-          Size="167.2,41.6"
-          Id="Package\Load Dim_City\OLE DB Command"
-          TopLeft="225.5,208.7" />
         <EdgeLayout
-          Id="Package\Load Dim_City.Paths[Inferred Member Updates Output]"
-          TopLeft="309.1,148.7">
+          Id="Package\Load_Dim_Date.Paths[Data Conversion Output]"
+          TopLeft="429.36665373577,192.566666280958">
           <EdgeLayout.Curve>
             <mssgle:Curve
               StartConnector="{assembly:Null}"
-              EndConnector="0,60"
+              EndConnector="0,40.9333331766394"
               Start="0,0"
-              End="0,52.5">
+              End="0,33.4333331766394">
               <mssgle:Curve.Segments>
                 <mssgle:SegmentCollection
                   Capacity="5">
                   <mssgle:LineSegment
-                    End="0,52.5" />
+                    End="0,33.4333331766394" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="-74.40298828125,20.4208984375,148.8059765625,11.658203125"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <NodeLayout
-          Size="176,41.6"
-          Id="Package\Load Dim_City\OLE DB Command 1"
-          TopLeft="453.1,208.7" />
-        <EdgeLayout
-          Id="Package\Load Dim_City.Paths[Changing Attribute Updates Output]"
-          TopLeft="359.1,148.7">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="182,60"
-              Start="0,0"
-              End="182,52.5">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,16.506329113924" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,16.506329113924"
-                    Point2="0,20.506329113924"
-                    Point3="4,20.506329113924" />
-                  <mssgle:LineSegment
-                    End="178,20.506329113924" />
-                  <mssgle:CubicBezierSegment
-                    Point1="178,20.506329113924"
-                    Point2="182,20.506329113924"
-                    Point3="182,24.506329113924" />
-                  <mssgle:LineSegment
-                    End="182,52.5" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="12.46609375,25.506329113924,157.0678125,11.6630859375"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Dim_City\OLE DB Source">
+    design-time-name="Package\Load_Dim_Date\OLE DB Source">
     <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
@@ -5566,58 +5586,38 @@ OPTION (MAXRECURSION 0);</property>
     </Properties>
   </PipelineComponentMetadata>
   <PipelineComponentMetadata
-    design-time-name="Package\Load Dim_City\Slowly Changing Dimension">
+    design-time-name="Package\Load_Dim_Date\OLE DB Destination">
     <Properties>
       <Property>
-        <Name>SCDMetadata</Name>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
         <Value
-          type="q2:string">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SCDWizardMetadata xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"&gt;
-  &lt;ConnectionID&gt;{F81D6105-2691-4A9F-B3A7-B5F2980436E9}&lt;/ConnectionID&gt;
-  &lt;TableName&gt;[dbo].[Dim_City]&lt;/TableName&gt;
-  &lt;InputToColumnsCollection&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[CityID]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;CityID&lt;/ColumnName&gt;
-      &lt;KeyType&gt;BusinessKey&lt;/KeyType&gt;
-      &lt;ChangeType&gt;None&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[CityName]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;CityName&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesTerritory]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;SalesTerritory&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-    &lt;InputColumnToDBColumn&gt;
-      &lt;IdentificationString&gt;OLE DB Source.Outputs[OLE DB Source Output].Columns[StateProvinceName]&lt;/IdentificationString&gt;
-      &lt;ColumnName&gt;StateProvinceName&lt;/ColumnName&gt;
-      &lt;KeyType&gt;None&lt;/KeyType&gt;
-      &lt;ChangeType&gt;ChangingAttribute&lt;/ChangeType&gt;
-    &lt;/InputColumnToDBColumn&gt;
-  &lt;/InputToColumnsCollection&gt;
-  &lt;GeneratedComponentsIdentificationStrings&gt;
-    &lt;anyType xsi:type="xsd:string"&gt;Insert Destination&lt;/anyType&gt;
-    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command&lt;/anyType&gt;
-    &lt;anyType xsi:type="xsd:string"&gt;OLE DB Command 1&lt;/anyType&gt;
-  &lt;/GeneratedComponentsIdentificationStrings&gt;
-  &lt;FailFixedAttribute&gt;false&lt;/FailFixedAttribute&gt;
-  &lt;FailChangeAttribute&gt;false&lt;/FailChangeAttribute&gt;
-  &lt;UseStartEndDate&gt;false&lt;/UseStartEndDate&gt;
-  &lt;CurrentIndicatorColumn /&gt;
-  &lt;InferredIndicatorColumn /&gt;
-  &lt;ValueCurrent /&gt;
-  &lt;ValueExpired /&gt;
-  &lt;StartDateColumn /&gt;
-  &lt;EndDateColumn /&gt;
-  &lt;DateVariable /&gt;
-  &lt;EnableInferredSupport&gt;true&lt;/EnableInferredSupport&gt;
-&lt;/SCDWizardMetadata&gt;</Value>
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Load_Dim_Date\Lookup">
+    <Properties>
+      <Property>
+        <Name>OverwriteParamsSQLProp</Name>
+        <Value
+          type="q2:string">false</Value>
+      </Property>
+      <Property>
+        <Name>UsedTableName</Name>
+        <Value
+          type="q3:string">[dbo].[Dim_Date]</Value>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q4:string">0</Value>
+      </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
       </Property>
     </Properties>
   </PipelineComponentMetadata>

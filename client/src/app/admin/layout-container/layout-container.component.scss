@@ -118,3 +118,11 @@
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(148, 163, 184, 0.8);
 }
+
+.active-link {
+  color: #4338ca !important; /* Tailwind's blue-500 */
+  font-weight: 500 !important;
+  background-color: #eef2ff80 !important;
+  border-color: #e0e7ff !important;
+  border-width: 1px !important;
+}

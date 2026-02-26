@@ -8,10 +8,13 @@
   <!-- Mobile Header -->
   <header class="md:hidden glass-panel flex items-center justify-between p-4 sticky top-0 z-50">
     <div class="flex items-center gap-2 font-bold text-xl text-indigo-700">
-      <i data-lucide="layout-dashboard"></i> <span>FrostedUI</span>
+      <div class="flex items-center text-white mb-4">
+        <i-lucide [img]="Icons.Library" class="w-6 h-6 mr-2"></i-lucide>
+        <span class="font-serif text-xl font-bold">Libris</span>
+      </div>
     </div>
     <button id="mobile-menu-btn" class="p-2 text-slate-600 hover:bg-white/50 rounded-lg">
-      <i data-lucide="menu"></i>
+      <i-lucide [img]="Icons.Menu" class="w-5 h-5"></i-lucide>
     </button>
   </header>
 
@@ -20,33 +23,35 @@
     <div class="p-6 flex items-center gap-3 border-b border-glass-border">
       <div
         class="w-8 h-8 rounded-lg bg-indigo-600 flex items-center justify-center text-white shadow-lg shadow-indigo-200">
-        <i data-lucide="hexagon" size="18"></i>
+        <i-lucide [img]="Icons.Library" class="w-4 h-4"></i-lucide>
       </div>
-      <h1 class="font-bold text-xl tracking-tight text-slate-800">Frosted<span class="text-indigo-600">UI</span>
+      <h1 class="font-bold text-xl tracking-tight text-slate-800">Libr<span class="text-indigo-600">is</span>
       </h1>
+
     </div>
 
     <nav class="flex-1 p-4 space-y-2 overflow-y-auto">
-      <button routerLink="/admin/dashboard"
-        class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 text-indigo-700 bg-indigo-50/50 shadow-sm border border-indigo-100">
-        <i data-lucide="layout-grid" size="20"></i> Dashboard
+      <button routerLink="/admin/dashboard" routerLinkActive="active-link"
+        class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ">
+        <i-lucide [img]="Icons.LayoutGrid" class="w-5 h-5"></i-lucide> Dashboard
       </button>
-      <button routerLink="/admin/users"
+      <button routerLink="/admin/categories" routerLinkActive="active-link"
         class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
-        <i data-lucide="users" size="20"></i> Users
+        <i-lucide [img]="Icons.Settings" class="w-5 h-5"></i-lucide> Categories
       </button>
-      <button routerLink="/admin/products"
+      <button routerLink="/admin/products" routerLinkActive="active-link"
         class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
-        <i data-lucide="package" size="20"></i> Products
+        <i-lucide [img]="Icons.Package" class="w-5 h-5"></i-lucide> Products
       </button>
-      <button routerLink="/admin/orders"
+      <button routerLink="/admin/orders" routerLinkActive="active-link"
         class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
-        <i data-lucide="shopping-cart" size="20"></i> Orders
+        <i-lucide [img]="Icons.ShoppingCart" class="w-5 h-5"></i-lucide> Orders
       </button>
-      <button routerLink="/admin/categories"
+      <button routerLink="/admin/users" routerLinkActive="active-link"
         class="nav-item w-full flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium text-slate-600 hover:bg-white/60 hover:text-indigo-600 transition-all duration-200">
-        <i data-lucide="settings" size="20"></i> Categories
+        <i-lucide [img]="Icons.Users" class="w-5 h-5"></i-lucide> Users
       </button>
+
 
     </nav>
 
@@ -57,9 +62,10 @@
           class="w-10 h-10 rounded-full shadow-sm">
         <div class="flex-1 min-w-0">
           <p class="text-sm font-semibold text-slate-800 truncate">Admin User</p>
-          <p class="text-xs text-slate-500 truncate">admin&#64;frosted.ui</p>
+          <p class="text-xs text-slate-500 truncate">{{ avatarSeed }}</p>
         </div>
-        <button class="text-slate-400 hover:text-slate-600"><i data-lucide="log-out" size="18"></i></button>
+        <button (click)="signOut()" class="text-slate-400 hover:text-slate-600"><i-lucide [img]="Icons.LogOut"
+            class="w-4 h-4"></i-lucide></button>
       </div>
     </div>
   </aside>
@@ -72,18 +78,19 @@
     <!-- Cloned Content for Mobile via JS or hardcoded structure below -->
     <div class="p-6 flex justify-between items-center border-b border-glass-border">
       <span class="font-bold text-xl text-slate-800">Menu</span>
-      <button id="close-mobile-menu" class="p-1 text-slate-500"><i data-lucide="x"></i></button>
+      <button id="close-mobile-menu" class="p-1 text-slate-500"><i-lucide [img]="Icons.X"
+          class="w-4 h-4"></i-lucide></button>
     </div>
     <nav class="flex-1 p-4 space-y-2" id="mobile-nav-container">
       <!-- Mobile Nav Items will be handled by JS to mirror desktop -->
     </nav>
   </div>
 
-<main class="flex-1 h-full overflow-y-auto relative p-4">
+  <main class="flex-1 h-full overflow-y-auto relative p-4">
 
-  <!-- Main Content Area -->
-  <router-outlet></router-outlet>
-</main>
+    <!-- Main Content Area -->
+    <router-outlet></router-outlet>
+  </main>
 
 
 

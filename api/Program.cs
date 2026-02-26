@@ -10,6 +10,7 @@ using api.Repositories.Analytics;
 using api.Repositories.Book;
 using api.Repositories.Genre;
 using api.Repositories.Loan;
+using api.Repositories.User;
 
 namespace api
     {
@@ -35,6 +36,7 @@ namespace api
             builder.Services.AddScoped<IGenreRepository, GenreRepository>();
             builder.Services.AddScoped<ILoanRepository, LoanRepository>();
             builder.Services.AddScoped<IAnalyticsRepository, AnalyticsRepository>();
+            builder.Services.AddScoped<IUserRepository, UserRepository>();
 
             builder.Services.AddSwaggerGen();
 

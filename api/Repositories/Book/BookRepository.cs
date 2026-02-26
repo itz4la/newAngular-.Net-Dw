@@ -142,6 +142,23 @@ namespace api.Repositories.Book
             return await _context.Genres.AnyAsync(g => g.Id == genreId);
             }
 
+        public async Task<List<BookDto>> GetAvailableBooksAsync()
+            {
+            var busyBookIds = await _context.Loans
+                .Where(l => l.ReturnDate == null)
+                .Select(l => l.BookId)
+                .Distinct()
+                .ToListAsync();
+
+            var books = await _context.Books
+                .Include(b => b.Genre)
+                .Where(b => !busyBookIds.Contains(b.Id))
+                .OrderBy(b => b.Title)
+                .ToListAsync();
+
+            return books.Select(b => MapToDto(b, true)).ToList();
+            }
+
         private async Task<bool> CheckBookAvailabilityAsync(int bookId)
             {
             var hasActiveLoans = await _context.Loans
