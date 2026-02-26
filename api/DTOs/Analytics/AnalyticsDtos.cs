@@ -112,4 +112,10 @@ namespace api.DTOs.Analytics
         public decimal TotalRevenue { get; set; }
         public int TotalUnitsSold { get; set; }
         }
+
+    public class DateRangeDto
+        {
+        public DateTime MinDate { get; set; }
+        public DateTime MaxDate { get; set; }
+        }
     }

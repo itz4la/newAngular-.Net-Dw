@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { AnalyticsService } from '../services/analytics.service';
+import { DateFilterService } from '../services/date-filter.service';
 import { DashboardSummary } from '../models/analytics.models';
 
 interface KpiCard {
@@ -76,10 +77,16 @@ export class KpiCardsComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private analytics: AnalyticsService) {}
+  constructor(private analytics: AnalyticsService, private dateFilter: DateFilterService) {}
 
   ngOnInit(): void {
-    this.analytics.getDashboardSummary().pipe(takeUntil(this.destroy$)).subscribe({
+    this.dateFilter.dateFilter$.pipe(
+      switchMap(filter => {
+        this.loading = true;
+        return this.analytics.getDashboardSummary(filter);
+      }),
+      takeUntil(this.destroy$),
+    ).subscribe({
       next: (data) => this.buildCards(data),
       error: () => (this.loading = false),
     });

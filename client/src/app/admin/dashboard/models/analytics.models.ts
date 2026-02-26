@@ -96,3 +96,13 @@ export interface CityAvgOrder {
   averageOrderValue: number;
   totalOrders: number;
 }
+
+export interface DateRange {
+  minDate: string;
+  maxDate: string;
+}
+
+export interface DateFilter {
+  from: string | null;
+  to: string | null;
+}

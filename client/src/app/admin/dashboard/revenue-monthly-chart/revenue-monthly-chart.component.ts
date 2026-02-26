@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { AnalyticsService } from '../services/analytics.service';
+import { DateFilterService } from '../services/date-filter.service';
 import { MonthlyRevenue } from '../models/analytics.models';
 import { CHART_COLORS, CHART_FONT_FAMILY, abbreviateNumber } from '../charts/chart.helpers';
 
@@ -45,10 +46,16 @@ export class RevenueMonthlyChartComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private analytics: AnalyticsService) {}
+  constructor(private analytics: AnalyticsService, private dateFilter: DateFilterService) {}
 
   ngOnInit(): void {
-    this.analytics.getMonthlyRevenue().pipe(takeUntil(this.destroy$)).subscribe({
+    this.dateFilter.dateFilter$.pipe(
+      switchMap(filter => {
+        this.series = [];
+        return this.analytics.getMonthlyRevenue(filter);
+      }),
+      takeUntil(this.destroy$),
+    ).subscribe({
       next: (data) => {
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const years = [...new Set(data.map(d => d.year))].sort();

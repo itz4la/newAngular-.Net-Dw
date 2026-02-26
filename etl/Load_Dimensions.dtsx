@@ -11,8 +11,8 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:VersionBuild="30"
-  DTS:VersionGUID="{2EE9A422-33F4-40C9-813B-B9D7901E7E19}">
+  DTS:VersionBuild="31"
+  DTS:VersionGUID="{A4536DA7-79E9-4F19-8742-7CAF6B5B98A6}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -4587,23 +4587,23 @@ OPTION (MAXRECURSION 0);</property>
         <NodeLayout
           Size="146.4,41.6"
           Id="Package\Load Dim_City"
-          TopLeft="934.66661589924,64.4333329235183" />
+          TopLeft="638.833298729527,108.633332616157" />
         <NodeLayout
           Size="173.6,41.6"
           Id="Package\Load Dim_Customer"
-          TopLeft="308.833318399059,60.6333331585593" />
+          TopLeft="207.166657287214,29.4333333755202" />
         <NodeLayout
           Size="175.2,41.6"
           Id="Package\Load Dim_Employee"
-          TopLeft="729.666632017329,65.1666668776009" />
+          TopLeft="627.999970905484,33.9666670945618" />
         <NodeLayout
           Size="175.2,41.6"
           Id="Package\Load Dim_StockItem"
-          TopLeft="511.333308974075,62.0333333574401" />
+          TopLeft="409.66664786223,30.833333574401" />
         <NodeLayout
           Size="153.6,41.6"
           Id="Package\Load_Dim_Date"
-          TopLeft="127.166660019093,61.8333329415984" />
+          TopLeft="25.4999989072477,30.6333331585593" />
       </GraphLayout>
     </LayoutInfo>
   </Package>
@@ -4651,7 +4651,9 @@ OPTION (MAXRECURSION 0);</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4865,7 +4867,9 @@ OPTION (MAXRECURSION 0);</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -4947,7 +4951,9 @@ OPTION (MAXRECURSION 0);</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5097,7 +5103,9 @@ OPTION (MAXRECURSION 0);</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5307,7 +5315,9 @@ OPTION (MAXRECURSION 0);</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5525,7 +5535,9 @@ OPTION (MAXRECURSION 0);</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -5571,7 +5583,9 @@ OPTION (MAXRECURSION 0);</property>
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>

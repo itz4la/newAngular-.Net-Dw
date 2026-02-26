@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { AnalyticsService } from '../services/analytics.service';
+import { DateFilterService } from '../services/date-filter.service';
 import { CHART_COLORS, CHART_FONT_FAMILY } from '../charts/chart.helpers';
 
 @Component({
@@ -45,10 +46,16 @@ export class SalesDayChartComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private dayOrder = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
 
-  constructor(private analytics: AnalyticsService) {}
+  constructor(private analytics: AnalyticsService, private dateFilter: DateFilterService) {}
 
   ngOnInit(): void {
-    this.analytics.getSalesByDayOfWeek().pipe(takeUntil(this.destroy$)).subscribe({
+    this.dateFilter.dateFilter$.pipe(
+      switchMap(filter => {
+        this.series = [];
+        return this.analytics.getSalesByDayOfWeek(filter);
+      }),
+      takeUntil(this.destroy$),
+    ).subscribe({
       next: (data) => {
         const sorted = [...data].sort((a, b) => this.dayOrder.indexOf(a.dayOfWeek) - this.dayOrder.indexOf(b.dayOfWeek));
         this.xaxis = { categories: sorted.map(d => d.dayOfWeek.substring(0, 3)), labels: { style: { colors: '#64748b', fontSize: '12px' } } };

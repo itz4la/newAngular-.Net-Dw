@@ -1,5 +1,6 @@
 using api.DTOs.Analytics;
 using api.models;
+using api.models.DW;
 using Microsoft.EntityFrameworkCore;
 
 namespace api.Repositories.Analytics
@@ -13,10 +14,35 @@ namespace api.Repositories.Analytics
             _context = context;
             }
 
-        // Stat 1 – Total revenue grouped by year
-        public async Task<List<RevenueByYearDto>> GetRevenueByYearAsync()
+        /// <summary>
+        /// Returns an IQueryable of FactSales filtered by the optional date range.
+        /// Uses a subquery on Dim_Date so that callers can continue to join other dimensions.
+        /// </summary>
+        private IQueryable<FactSales> FilteredSales(DateTime? from, DateTime? to)
             {
-            return await _context.Fact_Sales
+            if (!from.HasValue && !to.HasValue)
+                return _context.Fact_Sales;
+
+            var dateSKs = _context.Dim_Date.AsQueryable();
+            if (from.HasValue) dateSKs = dateSKs.Where(d => d.FullDate >= from.Value.Date);
+            if (to.HasValue) dateSKs = dateSKs.Where(d => d.FullDate <= to.Value.Date);
+
+            return _context.Fact_Sales
+                .Where(f => dateSKs.Select(d => (int?)d.DateSK).Contains(f.DateSK));
+            }
+
+        // ── Date Range ────────────────────────────────────────────────────────
+        public async Task<DateRangeDto> GetDateRangeAsync()
+            {
+            var minDate = await _context.Dim_Date.MinAsync(d => d.FullDate);
+            var maxDate = await _context.Dim_Date.MaxAsync(d => d.FullDate);
+            return new DateRangeDto { MinDate = minDate, MaxDate = maxDate };
+            }
+
+        // Stat 1 – Total revenue grouped by year
+        public async Task<List<RevenueByYearDto>> GetRevenueByYearAsync(DateTime? from = null, DateTime? to = null)
+            {
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_Date,
                     f => f.DateSK,
                     d => (int?)d.DateSK,
@@ -33,9 +59,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 2 – Top N products by units sold
-        public async Task<List<TopProductDto>> GetTopSellingProductsAsync(int top = 10)
+        public async Task<List<TopProductDto>> GetTopSellingProductsAsync(int top = 10, DateTime? from = null, DateTime? to = null)
             {
-            var results = await _context.Fact_Sales
+            var results = await FilteredSales(from, to)
                 .Join(_context.Dim_StockItem,
                     f => f.StockItemSK,
                     s => (int?)s.StockItemSK,
@@ -58,9 +84,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 3 – Salesperson leaderboard by revenue generated
-        public async Task<List<SalespersonDto>> GetSalespersonLeaderboardAsync()
+        public async Task<List<SalespersonDto>> GetSalespersonLeaderboardAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_Employee,
                     f => f.EmployeeSK,
                     e => (int?)e.EmployeeSK,
@@ -78,9 +104,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 4 – Revenue broken down by sales territory
-        public async Task<List<RevenueByTerritoryDto>> GetRevenueByTerritoryAsync()
+        public async Task<List<RevenueByTerritoryDto>> GetRevenueByTerritoryAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_City,
                     f => f.CitySK,
                     c => (int?)c.CitySK,
@@ -97,9 +123,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 5 – Revenue and unique customer count per customer category
-        public async Task<List<CustomerCategoryRevenueDto>> GetRevenueByCustomerCategoryAsync()
+        public async Task<List<CustomerCategoryRevenueDto>> GetRevenueByCustomerCategoryAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_Customer,
                     f => f.CustomerSK,
                     c => (int?)c.CustomerSK,
@@ -117,9 +143,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 6 – Units sold and revenue per day of the week
-        public async Task<List<SalesByDayDto>> GetSalesByDayOfWeekAsync()
+        public async Task<List<SalesByDayDto>> GetSalesByDayOfWeekAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_Date,
                     f => f.DateSK,
                     d => (int?)d.DateSK,
@@ -136,9 +162,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 7 – Top N customers by total lifetime spend (VIP list)
-        public async Task<List<TopCustomerDto>> GetTopCustomersByLifetimeValueAsync(int top = 5)
+        public async Task<List<TopCustomerDto>> GetTopCustomersByLifetimeValueAsync(int top = 5, DateTime? from = null, DateTime? to = null)
             {
-            var results = await _context.Fact_Sales
+            var results = await FilteredSales(from, to)
                 .Join(_context.Dim_Customer,
                     f => f.CustomerSK,
                     c => (int?)c.CustomerSK,
@@ -162,9 +188,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 8 – Revenue and units sold per product brand (N/A brands excluded)
-        public async Task<List<BrandPerformanceDto>> GetBrandPerformanceAsync()
+        public async Task<List<BrandPerformanceDto>> GetBrandPerformanceAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_StockItem,
                     f => f.StockItemSK,
                     s => (int?)s.StockItemSK,
@@ -183,9 +209,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 9 – Average order value per city (pricing strategy insight)
-        public async Task<List<CityAvgOrderDto>> GetAverageOrderValueByCityAsync()
+        public async Task<List<CityAvgOrderDto>> GetAverageOrderValueByCityAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_City,
                     f => f.CitySK,
                     c => (int?)c.CitySK,
@@ -203,9 +229,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 10 – Monthly revenue (use for year-over-year line chart)
-        public async Task<List<MonthlyRevenueDto>> GetMonthlyRevenueAsync()
+        public async Task<List<MonthlyRevenueDto>> GetMonthlyRevenueAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_Date,
                     f => f.DateSK,
                     d => (int?)d.DateSK,
@@ -225,9 +251,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 11 – Quarterly revenue breakdown
-        public async Task<List<QuarterlyRevenueDto>> GetQuarterlyRevenueAsync()
+        public async Task<List<QuarterlyRevenueDto>> GetQuarterlyRevenueAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_Date,
                     f => f.DateSK,
                     d => (int?)d.DateSK,
@@ -246,26 +272,28 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 12 – High-level KPI dashboard (single-query aggregation)
-        public async Task<DashboardSummaryDto> GetDashboardSummaryAsync()
+        public async Task<DashboardSummaryDto> GetDashboardSummaryAsync(DateTime? from = null, DateTime? to = null)
             {
-            var totalOrders = await _context.Fact_Sales.CountAsync();
+            var sales = FilteredSales(from, to);
+
+            var totalOrders = await sales.CountAsync();
             if (totalOrders == 0)
                 return new DashboardSummaryDto();
 
-            var totalRevenue = await _context.Fact_Sales.SumAsync(f => f.TotalAmount);
-            var totalUnitsSold = await _context.Fact_Sales.SumAsync(f => f.Quantity);
-            var avgOrderValue = await _context.Fact_Sales.AverageAsync(f => f.TotalAmount);
-            var totalCustomers = await _context.Fact_Sales
+            var totalRevenue = await sales.SumAsync(f => f.TotalAmount);
+            var totalUnitsSold = await sales.SumAsync(f => f.Quantity);
+            var avgOrderValue = await sales.AverageAsync(f => f.TotalAmount);
+            var totalCustomers = await sales
                 .Where(f => f.CustomerSK != null)
                 .Select(f => f.CustomerSK)
                 .Distinct()
                 .CountAsync();
-            var totalProducts = await _context.Fact_Sales
+            var totalProducts = await sales
                 .Where(f => f.StockItemSK != null)
                 .Select(f => f.StockItemSK)
                 .Distinct()
                 .CountAsync();
-            var totalSalespersons = await _context.Fact_Sales
+            var totalSalespersons = await sales
                 .Where(f => f.EmployeeSK != null)
                 .Select(f => f.EmployeeSK)
                 .Distinct()
@@ -284,9 +312,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 13 – Revenue aggregated by state/province
-        public async Task<List<RevenueByStateDto>> GetRevenueByStateAsync()
+        public async Task<List<RevenueByStateDto>> GetRevenueByStateAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_City,
                     f => f.CitySK,
                     c => (int?)c.CitySK,
@@ -304,9 +332,9 @@ namespace api.Repositories.Analytics
             }
 
         // Stat 14 – Revenue by product color (N/A colors excluded)
-        public async Task<List<ColorRevenueDto>> GetRevenueByColorAsync()
+        public async Task<List<ColorRevenueDto>> GetRevenueByColorAsync(DateTime? from = null, DateTime? to = null)
             {
-            return await _context.Fact_Sales
+            return await FilteredSales(from, to)
                 .Join(_context.Dim_StockItem,
                     f => f.StockItemSK,
                     s => (int?)s.StockItemSK,

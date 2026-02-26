@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { AnalyticsService } from '../services/analytics.service';
+import { DateFilterService } from '../services/date-filter.service';
 import { CHART_FONT_FAMILY } from '../charts/chart.helpers';
 
 @Component({
@@ -51,10 +52,16 @@ export class RevenueStateChartComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private analytics: AnalyticsService) {}
+  constructor(private analytics: AnalyticsService, private dateFilter: DateFilterService) {}
 
   ngOnInit(): void {
-    this.analytics.getRevenueByState().pipe(takeUntil(this.destroy$)).subscribe({
+    this.dateFilter.dateFilter$.pipe(
+      switchMap(filter => {
+        this.series = [];
+        return this.analytics.getRevenueByState(filter);
+      }),
+      takeUntil(this.destroy$),
+    ).subscribe({
       next: (data) => {
         const top20 = [...data].sort((a, b) => b.totalRevenue - a.totalRevenue).slice(0, 20);
         this.series = [{

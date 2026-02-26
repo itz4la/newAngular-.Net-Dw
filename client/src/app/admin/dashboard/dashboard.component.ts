@@ -13,10 +13,12 @@ import { CustomerCategoryChartComponent } from './customer-category-chart/custom
 import { TopCustomersChartComponent } from './top-customers-chart/top-customers-chart.component';
 import { SalesDayChartComponent } from './sales-day-chart/sales-day-chart.component';
 import { CityAvgOrderChartComponent } from './city-avg-order-chart/city-avg-order-chart.component';
+import { DateFilterComponent } from './date-filter/date-filter.component';
 
 @Component({
   selector: 'app-dashboard',
   imports: [
+    DateFilterComponent,
     KpiCardsComponent,
     RevenueYearlyChartComponent,
     RevenueMonthlyChartComponent,

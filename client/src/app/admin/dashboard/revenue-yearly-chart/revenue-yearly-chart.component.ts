@@ -1,7 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { NgApexchartsModule } from 'ng-apexcharts';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject, switchMap, takeUntil } from 'rxjs';
 import { AnalyticsService } from '../services/analytics.service';
+import { DateFilterService } from '../services/date-filter.service';
 import { CHART_COLORS, CHART_FONT_FAMILY, abbreviateNumber } from '../charts/chart.helpers';
 
 @Component({
@@ -44,10 +45,16 @@ export class RevenueYearlyChartComponent implements OnInit, OnDestroy {
 
   private destroy$ = new Subject<void>();
 
-  constructor(private analytics: AnalyticsService) {}
+  constructor(private analytics: AnalyticsService, private dateFilter: DateFilterService) {}
 
   ngOnInit(): void {
-    this.analytics.getRevenueByYear().pipe(takeUntil(this.destroy$)).subscribe({
+    this.dateFilter.dateFilter$.pipe(
+      switchMap(filter => {
+        this.series = [];
+        return this.analytics.getRevenueByYear(filter);
+      }),
+      takeUntil(this.destroy$),
+    ).subscribe({
       next: (data) => {
         const sorted = [...data].sort((a, b) => a.year - b.year);
         this.xaxis = { categories: sorted.map(d => d.year.toString()), labels: { style: { colors: '#64748b', fontSize: '12px' } } };
