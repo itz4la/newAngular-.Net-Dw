@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { LucideAngularModule } from 'lucide-angular';
+import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
+import { PagedResult } from '../../shared/dtos/paged-result.dto';
+import { UserDto } from '../../shared/dtos/user.dto';
 import { Icons } from '../../shared/icons';
 import { RequestsService } from '../../shared/services/requests.service';
-import { UserDto } from '../../shared/dtos/user.dto';
-import { PagedResult } from '../../shared/dtos/paged-result.dto';
-import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
 
 @Component({
   selector: 'app-users',
@@ -15,6 +15,7 @@ import { Subject, debounceTime, distinctUntilChanged } from 'rxjs';
   templateUrl: './users.component.html',
   styleUrl: './users.component.scss'
 })
+
 export class UsersComponent implements OnInit {
   readonly Icons = Icons;
 

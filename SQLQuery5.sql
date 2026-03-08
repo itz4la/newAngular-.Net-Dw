@@ -1,10 +1,9 @@
-SELECT TOP (1000) [CustomerSK]
-      ,[CustomerID]
-      ,[CustomerName]
-      ,[CustomerCategoryName]
-      ,[BuyingGroupName]
-  FROM [WWI_DataWarehouse].[dbo].[Dim_Customer]
-
-
-
-   SELECT COUNT(*)     FROM [WWI_DataWarehouse].[dbo].[Dim_Customer]
+SELECT TOP (1000) [StockItemSK]
+      ,[StockItemID]
+      ,[StockItemName]
+      ,[Brand]
+      ,[Size]
+      ,[ColorName]
+      ,[UnitPrice]
+  FROM [WWI_DataWarehouse].[dbo].[Dim_StockItem]
+    SELECT COUNT(*)   FROM [WWI_DataWarehouse].[dbo].[Dim_StockItem]
