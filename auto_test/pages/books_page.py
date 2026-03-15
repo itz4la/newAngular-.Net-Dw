@@ -4,24 +4,26 @@
 # =============================================================================
 
 from selenium.webdriver.common.by import By
+
 from .base_page import BasePage
 
 
 class BooksPage(BasePage):
     """
-    Represents the /books route – the main book catalogue page.
+    Represents admin products and client browse pages.
     """
 
-    PATH = "/books"
+    ADMIN_PATH = "/admin/products"
+    CLIENT_PATH = "/client/browse"
 
     # ── Locators ──────────────────────────────────────────────────────────────
-    BOOK_LIST         = (By.CSS_SELECTOR, ".book-list, .books-container, app-book-list")
-    BOOK_CARD         = (By.CSS_SELECTOR, ".book-card, .book-item, app-book-card")
-    SEARCH_INPUT      = (By.CSS_SELECTOR, "input[placeholder*='Search'], input[placeholder*='search'], .search-input")
-    ADD_BOOK_BUTTON   = (By.CSS_SELECTOR, "button.add-book, button[routerlink*='add'], a[routerlink*='add']")
+    BOOK_LIST         = (By.CSS_SELECTOR, "#content-area, table, app-product-card, .book-card")
+    BOOK_CARD         = (By.CSS_SELECTOR, "tbody tr, app-product-card .book-card")
+    SEARCH_INPUT      = (By.CSS_SELECTOR, "input[placeholder*='Search'], input[placeholder*='search'], input[placeholder*='Filter titles'], .search-input")
+    ADD_BOOK_BUTTON   = (By.CSS_SELECTOR, "button.add-book, button[routerlink*='create'], a[routerlink*='create'], button[routerlink='/admin/products/create']")
     BOOK_TITLE        = (By.CSS_SELECTOR, ".book-title, h3.title, .card-title")
     LOADING_SPINNER   = (By.CSS_SELECTOR, ".spinner, .loading, app-loading")
-    BORROW_BUTTON     = (By.CSS_SELECTOR, "button.borrow-btn, button[class*='borrow']")
+    BORROW_BUTTON     = (By.XPATH, "//button[contains(., 'Borrow')]")
     AVAILABLE_BADGE   = (By.CSS_SELECTOR, ".badge-success, .available-badge, .status-available")
     PAGINATION        = (By.CSS_SELECTOR, ".pagination, app-pagination, ngb-pagination")
 
@@ -31,7 +33,7 @@ class BooksPage(BasePage):
     GENRE_SELECT      = (By.CSS_SELECTOR, "select[formcontrolname='genreId'], select[name='genreId']")
     DATE_INPUT        = (By.CSS_SELECTOR, "input[formcontrolname='publishedDate'], input[type='date']")
     COVER_URL_INPUT   = (By.CSS_SELECTOR, "input[formcontrolname='coverImageUrl'], input[name='coverImageUrl']")
-    SAVE_BUTTON       = (By.CSS_SELECTOR, "button[type='submit'], button.save-btn")
+    SAVE_BUTTON       = (By.XPATH, "//button[contains(., 'Save Book') or @type='submit']")
     CANCEL_BUTTON     = (By.CSS_SELECTOR, "button.cancel-btn, button[type='button'][class*='cancel']")
     SUCCESS_TOAST     = (By.CSS_SELECTOR, ".toast-success, .alert-success, [class*='success']")
     ERROR_TOAST       = (By.CSS_SELECTOR, ".toast-error, .alert-danger, [class*='error']")
@@ -39,8 +41,11 @@ class BooksPage(BasePage):
 
     # ── Actions ───────────────────────────────────────────────────────────────
 
-    def navigate(self, base_url: str):
-        self.open(base_url + self.PATH)
+    def navigate(self, base_url: str, area: str = "admin"):
+        if area == "client":
+            self.open(base_url + self.CLIENT_PATH)
+            return
+        self.open(base_url + self.ADMIN_PATH)
 
     def wait_for_books_to_load(self):
         """Wait until the book list container is present."""
@@ -72,6 +77,12 @@ class BooksPage(BasePage):
     def get_book_count(self) -> int:
         """Return the number of visible book cards."""
         return len(self.driver.find_elements(*self.BOOK_CARD))
+
+    def open_first_book_details(self):
+        """Open the first visible client catalogue card details page."""
+        cards = self.driver.find_elements(*self.BOOK_CARD)
+        if cards:
+            cards[0].click()
 
     def is_book_visible(self, title: str) -> bool:
         """Return True if a book with the given title is displayed."""

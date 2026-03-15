@@ -13,10 +13,14 @@
 #                  All test logic was reviewed and validated manually.
 # =============================================================================
 
-import pytest
 import uuid
+
+import pytest
 from conftest import BASE_URL
 from pages.login_page import LoginPage, RegisterPage
+
+LOGIN_PATH = "/authentication/login"
+REGISTER_PATH = "/authentication/register"
 
 
 class TestLogin:
@@ -37,7 +41,7 @@ class TestLogin:
 
         # The page title or URL should indicate we're on the login screen
         current_url = page.get_current_url()
-        assert "login" in current_url.lower() or BASE_URL in current_url, \
+        assert LOGIN_PATH in current_url or BASE_URL in current_url, \
             f"Expected to land on login page but got: {current_url}"
 
     # ─────────────────────────────────────────────────────────────────────────
@@ -55,15 +59,16 @@ class TestLogin:
 
         page.login("admin@library.com", "Admin@123")
 
-        # After successful login, user should be redirected away from /login
+        # After successful login, user should be redirected to role route
         try:
-            page.wait_for_url_contains("dashboard", timeout=8)
+            page.wait_for_url_contains("admin", timeout=8)
             redirected = True
         except Exception:
-            redirected = "/login" not in page.get_current_url()
+            current = page.get_current_url()
+            redirected = ("/admin" in current) or ("/client" in current)
 
         assert redirected, \
-            "Expected redirect after successful login, still on login page"
+            "Expected redirect to admin/client after successful login"
 
     # ─────────────────────────────────────────────────────────────────────────
     # TC-SE-AUTH-003  Login with wrong password displays error (TC007 template)

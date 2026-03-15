@@ -12,10 +12,11 @@
 # =============================================================================
 
 import pytest
-import uuid
 from conftest import BASE_URL
-from pages.login_page import LoginPage
 from pages.books_page import BooksPage
+from pages.login_page import LoginPage
+
+ADMIN_PRODUCTS_PATH = "/admin/products"
 
 
 @pytest.fixture(scope="class")
@@ -28,7 +29,7 @@ def authenticated_driver(driver):
     login.navigate(BASE_URL)
     login.login("admin@library.com", "Admin@123")
     try:
-        login.wait_for_url_contains("dashboard", timeout=10)
+        login.wait_for_url_contains("admin", timeout=10)
     except Exception:
         pass  # Proceed even if URL doesn't contain 'dashboard'
     return driver
@@ -44,14 +45,14 @@ class TestBooksCatalogue:
     # ─────────────────────────────────────────────────────────────────────────
     def test_books_page_loads(self, authenticated_driver):
         """
-        After logging in, navigating to /books should show the book list.
+        After logging in, navigating to admin products should show the list.
         Technique: Equivalence class (happy path)
         """
         page = BooksPage(authenticated_driver)
         page.navigate(BASE_URL)
 
         assert page.is_element_present(*BooksPage.BOOK_LIST), \
-            "Book list container should be visible on /books"
+            "Book list container should be visible on /admin/products"
 
     # ─────────────────────────────────────────────────────────────────────────
     # TC-SE-BOOK-002  Books page shows book cards
@@ -107,8 +108,8 @@ class TestBooksCatalogue:
         # Pagination presence depends on data quantity – not a hard failure
         has_pagination = page.is_element_present(*BooksPage.PAGINATION, timeout=5)
         # Just verify the page rendered without error
-        assert "/books" in page.get_current_url() or True, \
-            "Books page should be accessible"
+        assert ADMIN_PRODUCTS_PATH in page.get_current_url() or has_pagination or True, \
+            "Admin products page should be accessible"
 
 
 class TestBookManagement:
@@ -130,6 +131,11 @@ class TestBookManagement:
             pytest.skip("Add Book button not found – may require admin role visibility")
 
         page.click_add_book()
+
+        try:
+            page.wait_for_url_contains("products/create", timeout=8)
+        except Exception:
+            pass
 
         # Should navigate to add form or show a modal
         current = page.get_current_url()
@@ -153,6 +159,11 @@ class TestBookManagement:
             pytest.skip("Add Book button not found")
 
         page.click_add_book()
+
+        try:
+            page.wait_for_url_contains("products/create", timeout=8)
+        except Exception:
+            pass
 
         if not page.is_element_present(*BooksPage.SAVE_BUTTON, timeout=5):
             pytest.skip("Save button not found on form")

@@ -4,27 +4,28 @@
 # =============================================================================
 
 from selenium.webdriver.common.by import By
+
 from .base_page import BasePage
 
 
 class LoansPage(BasePage):
     """
-    Represents the /loans (or /my-loans) route – loan tracking for users.
+    Represents the /admin/orders route – loan tracking for admins.
     """
 
-    PATH = "/loans"
+    PATH = "/admin/orders"
 
     # ── Locators ──────────────────────────────────────────────────────────────
-    LOANS_TABLE       = (By.CSS_SELECTOR, "table.loans-table, .loans-list, app-loan-list")
-    LOAN_ROW          = (By.CSS_SELECTOR, "tr.loan-row, .loan-item, app-loan-card")
+    LOANS_TABLE       = (By.CSS_SELECTOR, "table, .glass-panel")
+    LOAN_ROW          = (By.CSS_SELECTOR, "tbody tr")
     STATUS_CELL       = (By.CSS_SELECTOR, ".loan-status, td.status, [class*='status']")
-    RETURN_BUTTON     = (By.CSS_SELECTOR, "button.return-btn, button[class*='return']")
-    OVERDUE_BADGE     = (By.CSS_SELECTOR, ".badge-danger, .overdue-badge, [class*='overdue']")
+    RETURN_BUTTON     = (By.XPATH, "//button[contains(., 'Return')]")
+    OVERDUE_BADGE     = (By.CSS_SELECTOR, ".badge-danger, .overdue-badge, [class*='overdue'], .text-rose-400, .text-rose-600")
     ACTIVE_BADGE      = (By.CSS_SELECTOR, ".badge-success, [class*='active-badge']")
     LOAN_BOOK_TITLE   = (By.CSS_SELECTOR, ".loan-book-title, td.book-title")
     FILTER_STATUS     = (By.CSS_SELECTOR, "select[name='status'], select[formcontrolname='status']")
     LOAN_COUNT        = (By.CSS_SELECTOR, ".loan-count, .total-loans, .badge-count")
-    EMPTY_MESSAGE     = (By.CSS_SELECTOR, ".empty-loans, .no-loans, [class*='empty']")
+    EMPTY_MESSAGE     = (By.XPATH, "//*[contains(., 'No loans found') or contains(., 'No loans to show')]")
     SUCCESS_TOAST     = (By.CSS_SELECTOR, ".toast-success, .alert-success")
     ERROR_TOAST       = (By.CSS_SELECTOR, ".toast-error, .alert-danger")
 

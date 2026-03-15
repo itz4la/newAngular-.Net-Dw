@@ -12,10 +12,15 @@
 # =============================================================================
 
 import pytest
+from selenium.webdriver.common.by import By
+
 from conftest import BASE_URL
-from pages.login_page import LoginPage
 from pages.books_page import BooksPage
 from pages.loans_page import LoansPage
+from pages.login_page import LoginPage
+
+ADMIN_ORDERS_PATH = "/admin/orders"
+CLIENT_BROWSE_PATH = "/client/browse"
 
 
 @pytest.fixture(scope="class")
@@ -25,7 +30,7 @@ def admin_driver(driver):
     login.navigate(BASE_URL)
     login.login("admin@library.com", "Admin@123")
     try:
-        login.wait_for_url_contains("dashboard", timeout=10)
+        login.wait_for_url_contains("admin", timeout=10)
     except Exception:
         pass
     return driver
@@ -49,9 +54,9 @@ class TestLoansPage:
 
         current = page.get_current_url()
         # The page should load (no redirect to 403/404)
-        assert "loan" in current.lower() or page.is_element_present(
+        assert ADMIN_ORDERS_PATH in current or page.is_element_present(
             *LoansPage.LOANS_TABLE, timeout=5
-        ) or True, "Loans page should be accessible for admin"
+        ), "Loans page should be accessible for admin"
 
     # ─────────────────────────────────────────────────────────────────────────
     # TC-SE-LOAN-002  Loans table renders when there are loans
@@ -85,11 +90,13 @@ class TestLoansPage:
         if not page.is_element_present(*LoansPage.LOAN_ROW, timeout=8):
             pytest.skip("No loans in the database to test Return button")
 
-        loan_count  = page.get_loan_count()
+        loan_count = page.get_loan_count()
         return_btns = len(admin_driver.find_elements(*LoansPage.RETURN_BUTTON))
 
-        # There should be at least one Return button if there are active loans
-        assert return_btns >= 0, "Return buttons count should be non-negative"
+        # Return buttons are shown only for non-returned loans.
+        # If all loans are returned, no Return button is expected.
+        assert 0 <= return_btns <= loan_count, \
+            "Return button count should be between 0 and total visible loan rows"
 
     # ─────────────────────────────────────────────────────────────────────────
     # TC-SE-LOAN-004  Overdue loans displayed with overdue indicator
@@ -122,10 +129,13 @@ class TestLoansPage:
         page = LoansPage(admin_driver)
         page.navigate(BASE_URL)
 
-        # Loan count badge may or may not exist depending on UI implementation
+        # Loan count badge may or may not exist depending on UI implementation.
+        # At minimum, page should render either table rows or empty state.
         has_count = page.is_element_present(*LoansPage.LOAN_COUNT, timeout=5)
-        # Non-critical – just verifying the page doesn't crash
-        assert True, "Loans page should render without JavaScript errors"
+        has_rows = page.is_element_present(*LoansPage.LOAN_ROW, timeout=3)
+        has_empty = page.is_element_present(*LoansPage.EMPTY_MESSAGE, timeout=3)
+        assert has_count or has_rows or has_empty, \
+            "Loans page should render a count, rows, or an empty state"
 
 
 class TestBorrowWorkflow:
@@ -153,25 +163,38 @@ class TestBorrowWorkflow:
         login.login("john.doe@library.com", "Client@123")
 
         try:
-            login.wait_for_url_contains("dashboard", timeout=8)
+            login.wait_for_url_contains("client", timeout=8)
         except Exception:
             pass  # Continue even if no explicit redirect URL
 
-        # Navigate to books
+        # Navigate to client browse
         books = BooksPage(fresh_driver)
-        books.navigate(BASE_URL)
+        books.navigate(BASE_URL, area="client")
 
         if not books.is_element_present(*BooksPage.BOOK_LIST, timeout=8):
             pytest.skip("Book list not found – requires seeded data")
 
+        if "/client" not in books.get_current_url():
+            pytest.skip("Client browse route is not accessible for current user")
+
+        # Open details page because borrow action is triggered there in current UI.
+        books.open_first_book_details()
+        try:
+            books.wait_for_url_contains("product-details", timeout=8)
+        except Exception:
+            pytest.skip("Product details page did not open from catalogue card")
+
         # Check if borrow button exists
         if not books.is_element_present(*BooksPage.BORROW_BUTTON, timeout=5):
-            pytest.skip("Borrow button not found – client may not have permissions in current UI state")
+            pytest.skip("Borrow button not found on product details page")
 
         books.click_borrow(0)
 
         # After clicking borrow, expect success toast or loan confirmation
-        success = books.is_success_shown()
-        # Success may be communicated via redirect or toast
-        assert success or True, \
-            "Expected borrow confirmation after clicking Borrow"
+        success = books.is_success_shown() or books.is_element_present(
+            By.XPATH,
+            "//*[contains(., 'Borrowed Successfully') or contains(., 'Book borrowed! Due date:')]",
+            timeout=8,
+        )
+        # Success may be communicated via toast, in-page message, or disabled success state.
+        assert success, "Expected borrow confirmation after clicking Borrow"

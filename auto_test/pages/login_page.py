@@ -4,6 +4,7 @@
 # =============================================================================
 
 from selenium.webdriver.common.by import By
+
 from .base_page import BasePage
 
 
@@ -14,14 +15,14 @@ class LoginPage(BasePage):
     """
 
     # ── URL ───────────────────────────────────────────────────────────────────
-    PATH = "/login"
+    PATH = "/authentication/login"
 
     # ── Locators ──────────────────────────────────────────────────────────────
     # Using CSS selectors for robustness (no reliance on brittle XPath indices)
     USERNAME_INPUT    = (By.CSS_SELECTOR, "input[formcontrolname='username'], input[name='username'], input[placeholder*='sername'], input[placeholder*='Email']")
     PASSWORD_INPUT    = (By.CSS_SELECTOR, "input[type='password']")
     LOGIN_BUTTON      = (By.CSS_SELECTOR, "button[type='submit'], button.login-btn, button.btn-login")
-    ERROR_MESSAGE     = (By.CSS_SELECTOR, ".error-message, .alert-danger, .invalid-feedback, [class*='error']")
+    ERROR_MESSAGE     = (By.CSS_SELECTOR, ".error-message, .alert-danger, .invalid-feedback, [class*='error'], .text-danger, .text-red-500, .text-red-600")
     REGISTER_LINK     = (By.CSS_SELECTOR, "a[routerlink*='register'], a[href*='register']")
 
     # ── Actions ───────────────────────────────────────────────────────────────
@@ -55,7 +56,7 @@ class LoginPage(BasePage):
 
     def is_on_login_page(self) -> bool:
         """Return True if the browser is currently showing the login page."""
-        return "/login" in self.get_current_url()
+        return "/authentication/login" in self.get_current_url()
 
 
 class RegisterPage(BasePage):
@@ -63,15 +64,15 @@ class RegisterPage(BasePage):
     Represents the /register route of the Angular Library Management app.
     """
 
-    PATH = "/register"
+    PATH = "/authentication/register"
 
     USERNAME_INPUT    = (By.CSS_SELECTOR, "input[formcontrolname='username'], input[name='username']")
     EMAIL_INPUT       = (By.CSS_SELECTOR, "input[type='email'], input[formcontrolname='email']")
     PASSWORD_INPUT    = (By.CSS_SELECTOR, "input[type='password'][formcontrolname='password'], input[name='password']")
     CONFIRM_PASS_INPUT= (By.CSS_SELECTOR, "input[type='password'][formcontrolname='confirmPassword'], input[name='confirmPassword']")
     REGISTER_BUTTON   = (By.CSS_SELECTOR, "button[type='submit'], button.register-btn")
-    SUCCESS_MESSAGE   = (By.CSS_SELECTOR, ".success-message, .alert-success, [class*='success']")
-    ERROR_MESSAGE     = (By.CSS_SELECTOR, ".error-message, .alert-danger, [class*='error']")
+    SUCCESS_MESSAGE   = (By.CSS_SELECTOR, ".success-message, .alert-success, [class*='success'], .text-emerald-700")
+    ERROR_MESSAGE     = (By.CSS_SELECTOR, ".error-message, .alert-danger, [class*='error'], .text-red-500, .text-red-600")
 
     def navigate(self, base_url: str):
         self.open(base_url + self.PATH)
