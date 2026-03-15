@@ -12,12 +12,11 @@
 # =============================================================================
 
 import pytest
-from selenium.webdriver.common.by import By
-
 from conftest import BASE_URL
 from pages.books_page import BooksPage
 from pages.loans_page import LoansPage
 from pages.login_page import LoginPage
+from selenium.webdriver.common.by import By
 
 ADMIN_ORDERS_PATH = "/admin/orders"
 CLIENT_BROWSE_PATH = "/client/browse"
