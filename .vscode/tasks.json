@@ -1,0 +1,39 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Selenium: Install Dependencies",
+      "type": "shell",
+      "command": ".\\Tests\\selenium test\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "pip", "install", "-r", "requirements.txt"],
+      "options": {
+        "cwd": "${workspaceFolder}/Tests/selenium test"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Selenium: Run All Tests",
+      "type": "shell",
+      "command": ".\\Tests\\selenium test\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "pytest"],
+      "options": {
+        "cwd": "${workspaceFolder}/Tests/selenium test"
+      },
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "Selenium: Collect Tests",
+      "type": "shell",
+      "command": ".\\Tests\\selenium test\\.venv\\Scripts\\python.exe",
+      "args": ["-m", "pytest", "--collect-only"],
+      "options": {
+        "cwd": "${workspaceFolder}/Tests/selenium test"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
