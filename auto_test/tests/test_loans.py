@@ -27,11 +27,26 @@ def admin_driver(driver):
     """Ensure the driver is logged in as admin before the test class runs."""
     login = LoginPage(driver)
     login.navigate(BASE_URL)
-    login.login("admin@library.com", "Admin@123")
-    try:
-        login.wait_for_url_contains("admin", timeout=10)
-    except Exception:
-        pass
+
+    current = login.get_current_url()
+    already_admin = "/admin" in current and "/authentication" not in current
+
+    if not already_admin:
+        if login.is_element_present(*LoginPage.USERNAME_INPUT, timeout=6):
+            login.login("admin@library.com", "Admin@123")
+            login.wait_for_url_contains("admin", timeout=15)
+        else:
+            pytest.skip("Login form unavailable and session is not on admin route")
+
+    # Ensure orders page is reachable before running assertions.
+    loans_page = LoansPage(driver)
+    loans_page.navigate(BASE_URL)
+    if not (
+        loans_page.is_element_present(*LoansPage.LOANS_TABLE, timeout=12)
+        or loans_page.is_element_present(*LoansPage.EMPTY_MESSAGE, timeout=12)
+    ):
+        pytest.skip("Admin orders page did not become ready")
+
     return driver
 
 

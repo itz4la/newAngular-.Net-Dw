@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Selenium Test Summary</title>
+    <style>
+        body { font-family: Segoe UI, Tahoma, Arial, sans-serif; margin: 24px; color: #1f2937; }
+        .metrics { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+        .card { border: 1px solid #e5e7eb; border-radius: 10px; padding: 10px 14px; background: #f9fafb; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #e5e7eb; padding: 8px; text-align: left; vertical-align: top; }
+        th { background: #f3f4f6; }
+        .passed { color: #166534; font-weight: 700; }
+        .failed { color: #991b1b; font-weight: 700; }
+        .skipped { color: #92400e; font-weight: 700; }
+    </style>
+</head>
+<body>
+    <h1>Selenium Test Run Report</h1>
+    <p>Run date: 2026-03-15 03:44:44</p>
+    <div class="metrics">
+        <div class="card"><strong>Total</strong><br />6</div>
+        <div class="card"><strong>Passed</strong><br />5</div>
+        <div class="card"><strong>Failed</strong><br />1</div>
+        <div class="card"><strong>Skipped</strong><br />0</div>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>Test</th>
+                <th>Status</th>
+                <th>Duration (s)</th>
+                <th>Message</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr><td>tests/test_loans.py::TestBorrowWorkflow::test_client_can_borrow_book_from_catalogue</td><td class='failed'>FAILED</td><td>6.818</td><td>tests\test_loans.py:214: AssertionError</td></tr><tr><td>tests/test_loans.py::TestLoansPage::test_active_loans_have_return_button</td><td class='passed'>PASSED</td><td>0.622</td><td></td></tr><tr><td>tests/test_loans.py::TestLoansPage::test_loan_count_displayed</td><td class='passed'>PASSED</td><td>18.464</td><td></td></tr><tr><td>tests/test_loans.py::TestLoansPage::test_loans_page_accessible</td><td class='passed'>PASSED</td><td>1.088</td><td></td></tr><tr><td>tests/test_loans.py::TestLoansPage::test_loans_table_renders</td><td class='passed'>PASSED</td><td>10.648</td><td></td></tr><tr><td>tests/test_loans.py::TestLoansPage::test_overdue_loans_shown_with_indicator</td><td class='passed'>PASSED</td><td>0.718</td><td></td></tr>
+        </tbody>
+    </table>
+</body>
+</html>

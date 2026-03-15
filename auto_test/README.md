@@ -26,6 +26,13 @@ pip install -r requirements.txt
 pytest
 ```
 
+After each run, reports are generated automatically in the workspace `reports/` folder:
+
+- `selenium_report.html` (detailed pytest-html report)
+- `selenium_report_summary.md` (markdown summary)
+- `selenium_report_summary.html` (lightweight HTML summary)
+- `selenium_report_summary.xlsx` (Excel summary)
+
 Or use VS Code Testing panel with `pytest` selected.
 
 ## Notes
